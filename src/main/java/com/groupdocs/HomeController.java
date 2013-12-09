@@ -1,5 +1,8 @@
 package com.groupdocs;
 
+import com.groupdocs.viewer.config.ServiceConfiguration;
+import com.groupdocs.viewer.domain.Assets;
+import com.groupdocs.viewer.resources.ViewerHandler;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,12 +26,10 @@ public class HomeController {
     @RequestMapping(value="/index.htm", method= RequestMethod.GET)
     public String index(Model model /* , @RequestParam("json") String json */) throws Exception {
         // INITIALIZE GroupDocs Java Viewer Object
-        /*
-        Assets assets = new Assets("D:\\Projects\\GroupDocs\\app\\Viewer\\GroupDocsJavaViewerSampleTomcat\\target\\tomcat\\webapps", "");
+        Assets assets = new Assets("D:\\Projects\\GroupDocs\\app\\Viewer\\GroupDocsJavaViewerSampleTomcat\\target\\groupdocs-viewer-java-lib-sample-1.0.0\\WEB-INF", "");
         ServiceConfiguration config = new ServiceConfiguration("http://127.0.0.1:8080", "E:\\Projects\\GroupDocs", null, assets, Boolean.FALSE);
         ViewerHandler viewer = new ViewerHandler(config);
         model.addAttribute("header", viewer.getHeader());
-        */
         model.addAttribute("message", "Hello to sample application!");
         return "index";
     }

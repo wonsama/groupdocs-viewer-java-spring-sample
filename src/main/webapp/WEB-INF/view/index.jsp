@@ -9,7 +9,7 @@
     <head>
         <meta charset="utf-8">
         <title>GroupDocs Java Viewer Sample Tomcat</title>
-
+        ${header}
     </head> 
     <body>
         ${message}
