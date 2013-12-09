@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,15 +16,19 @@ import javax.servlet.http.HttpServletResponse;
  * User: liosha
  * Date: 05.12.13
  * Time: 22:54
- * To change this template use File | Settings | File Templates.
  */
 @Controller
-//@RequestMapping("/application/*")
 public class HomeController {
 
     @RequestMapping(value="/index.htm", method= RequestMethod.GET)
-    public String index(Model model /* , @RequestParam("json") String json */) {
-
+    public String index(Model model /* , @RequestParam("json") String json */) throws Exception {
+        // INITIALIZE GroupDocs Java Viewer Object
+        /*
+        Assets assets = new Assets("D:\\Projects\\GroupDocs\\app\\Viewer\\GroupDocsJavaViewerSampleTomcat\\target\\tomcat\\webapps", "");
+        ServiceConfiguration config = new ServiceConfiguration("http://127.0.0.1:8080", "E:\\Projects\\GroupDocs", null, assets, Boolean.FALSE);
+        ViewerHandler viewer = new ViewerHandler(config);
+        model.addAttribute("header", viewer.getHeader());
+        */
         model.addAttribute("message", "Hello to sample application!");
         return "index";
     }
@@ -70,7 +72,7 @@ public class HomeController {
      * @param request
      * @return
      */
-    @RequestMapping(value="/viewDocumentHandler", method= RequestMethod.GET)
+    @RequestMapping(value="/viewDocumentHandler", method= RequestMethod.POST)
     public ResponseEntity<String> viewDocumentHandler(HttpServletRequest request){
 
         String sampleJson = "{test: 'value'}";
@@ -86,7 +88,7 @@ public class HomeController {
      * @param request
      * @return
      */
-    @RequestMapping(value="/viewDocumentHandler", method= RequestMethod.POST)
+    @RequestMapping(value="/viewDocumentHandler", method= RequestMethod.GET)
     public ResponseEntity<String> viewDocumentHandler(String callback, String data, HttpServletRequest request){
 
         String sampleJson = "{test: 'value'}";
@@ -100,7 +102,7 @@ public class HomeController {
      * @param request
      * @return
      */
-    @RequestMapping(value="/loadFileBrowserTreeDataHandler", method= RequestMethod.GET)
+    @RequestMapping(value="/loadFileBrowserTreeDataHandler", method= RequestMethod.POST)
     public ResponseEntity<String> loadFileBrowserTreeDataHandler(HttpServletRequest request){
 
         String sampleJson = "{test: 'value'}";
@@ -115,7 +117,7 @@ public class HomeController {
      * @param data
      * @return
      */
-    @RequestMapping(value="/loadFileBrowserTreeDataHandler", method= RequestMethod.POST)
+    @RequestMapping(value="/loadFileBrowserTreeDataHandler", method= RequestMethod.GET)
     public ResponseEntity<String> loadFileBrowserTreeDataHandler(String callback, String data){
 
         String sampleJson = "{test: 'value'}";
@@ -129,7 +131,7 @@ public class HomeController {
      * @param request
      * @return
      */
-    @RequestMapping(value="/getImageUrlsHandler", method= RequestMethod.GET)
+    @RequestMapping(value="/getImageUrlsHandler", method= RequestMethod.POST)
     public ResponseEntity<String> getImageUrlsHandler(HttpServletRequest request){
 
         String sampleJson = "{test: 'value'}";
@@ -145,7 +147,7 @@ public class HomeController {
      * @param request
      * @return
      */
-    @RequestMapping(value="/getImageUrlsHandler", method= RequestMethod.POST)
+    @RequestMapping(value="/getImageUrlsHandler", method= RequestMethod.GET)
     public ResponseEntity<String> getImageUrlsHandler(String callback, String data, HttpServletRequest request){
 
         String sampleJson = "{test: 'value'}";
@@ -159,7 +161,7 @@ public class HomeController {
      * @param request
      * @return
      */
-    @RequestMapping(value="/getPdf2JavaScriptHandler", method= RequestMethod.GET)
+    @RequestMapping(value="/getPdf2JavaScriptHandler", method= RequestMethod.POST)
     public ResponseEntity<String> getPdf2JavaScriptHandler(HttpServletRequest request){
 
         String sampleJson = "{test: 'value'}";
@@ -174,7 +176,7 @@ public class HomeController {
      * @param data
      * @return
      */
-    @RequestMapping(value="/getPdf2JavaScriptHandler", method= RequestMethod.POST)
+    @RequestMapping(value="/getPdf2JavaScriptHandler", method= RequestMethod.GET)
     public ResponseEntity<String> getPdf2JavaScriptHandler(String callback, String data){
 
         String sampleJson = "{test: 'value'}";
@@ -188,7 +190,7 @@ public class HomeController {
      * @param request
      * @return
      */
-    @RequestMapping(value="/getPrintableHtmlHandler", method= RequestMethod.GET)
+    @RequestMapping(value="/getPrintableHtmlHandler", method= RequestMethod.POST)
     public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request){
 
         String sampleJson = "{test: 'value'}";
@@ -204,7 +206,7 @@ public class HomeController {
      * @param request
      * @return
      */
-    @RequestMapping(value="/getPrintableHtmlHandler", method= RequestMethod.POST)
+    @RequestMapping(value="/getPrintableHtmlHandler", method= RequestMethod.GET)
     public ResponseEntity<String> getPrintableHtmlHandler(String callback, String data, HttpServletRequest request){
 
         String sampleJson = "{test: 'value'}";
