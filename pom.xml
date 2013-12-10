@@ -108,7 +108,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.0</version>
                 <configuration>
-                    <path>/</path>
+                    <path>/groupdocs-viewer-java-lib-sample</path>
                 </configuration>
             </plugin>
             <plugin>

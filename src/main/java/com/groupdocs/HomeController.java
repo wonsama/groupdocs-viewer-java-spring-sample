@@ -46,7 +46,7 @@ public class HomeController {
             //
             System.out.println("assetsDir: " + assetsDir);
             // INITIALIZE GroupDocs Java Viewer Object
-            Assets assets = new Assets(assetsDir, "");
+            Assets assets = new Assets(assetsDir, "/groupdocs-viewer-java-lib-sample");
             ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, null, assets, Boolean.FALSE);
             viewerHandler = new ViewerHandler(config);
 
