@@ -6,5 +6,5 @@ How to run
 
 mvn clean install tomcat:run
 
-Open url: http://localhost:8080/groupdocs-viewer-java-lib-sample/index.htm
+Open url: http://127.0.0.1:8080/
 
