@@ -215,7 +215,7 @@ public class HomeController {
      * @param request
      * @return
      */
-    @RequestMapping(value = DOCUMENT_VIEWER + "/GetPrintableHtmlHandler", method = RequestMethod.POST)
+    @RequestMapping(value = "/GetPrintableHtmlHandler", method = RequestMethod.POST)
     public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request, HttpServletResponse response) {
 
         return typeOut(viewerHandler.getPrintableHtmlHandler(request), MediaType.TEXT_HTML);
@@ -229,7 +229,7 @@ public class HomeController {
      * @param request
      * @return
      */
-    @RequestMapping(value = DOCUMENT_VIEWER + "/GetPrintableHtmlHandler", method = RequestMethod.GET)
+    @RequestMapping(value = "/GetPrintableHtmlHandler", method = RequestMethod.GET)
     public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request, String callback, String data) {
 
         return jsonOut(viewerHandler.getPrintableHtmlHandler(callback, data, request));
