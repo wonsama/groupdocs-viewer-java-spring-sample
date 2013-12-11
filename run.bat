@@ -1,1 +1,1 @@
-call mvn clean install tomcat:run
+call mvn clean install tomcat7:run

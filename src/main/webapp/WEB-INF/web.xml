@@ -6,7 +6,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          id="WebApp_ID" version="2.5">
 
     <display-name>groupdocs-viewer-java-lib-sample</display-name>
-    
+
+    <filter>
+        <filter-name>cors</filter-name>
+        <filter-class>com.groupdocs.filter.CorsFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>cors</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
    <!--
 		- Location of the XML file that defines the root application context.
 		- Applied by ContextLoaderListener.

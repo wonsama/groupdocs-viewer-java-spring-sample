@@ -1,9 +1,11 @@
 package com.groupdocs;
 
+import com.google.gson.Gson;
 import com.groupdocs.config.ApplicationConfig;
 import com.groupdocs.viewer.config.ServiceConfiguration;
 import com.groupdocs.viewer.domain.Assets;
 import com.groupdocs.viewer.resources.ViewerHandler;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,11 +37,9 @@ public class HomeController {
     @Autowired
     protected ApplicationConfig applicationConfig;
 
-    @RequestMapping(value="/", method= RequestMethod.GET)
-    public String index(Model model, HttpServletRequest request) throws Exception {
-
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         ViewerHandler viewerHandler = null;
-
         Object obj = request.getSession().getAttribute(GROUPDOCS_VIEWER);
         if (obj == null) {
             String appPath = applicationConfig.getApplicationPath();
@@ -45,18 +48,18 @@ public class HomeController {
             //
             System.out.println("assetsDir: " + assetsDir);
             // INITIALIZE GroupDocs Java Viewer Object
-            Assets assets = new Assets(assetsDir, "/groupdocs-viewer-java-lib-sample");
+            Assets assets = new Assets(assetsDir, DOCUMENT_VIEWER);
             ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, null, assets, Boolean.FALSE);
             viewerHandler = new ViewerHandler(config);
 
-            if (request.getSession() != null){
+            if (request.getSession() != null) {
                 request.getSession().setAttribute(GROUPDOCS_VIEWER, viewerHandler);
             }
         } else if (request.getSession() == null) {
             // Session is null
             throw new Exception("Session is null");
         } else {
-            viewerHandler = (ViewerHandler)request.getSession().getAttribute(GROUPDOCS_VIEWER);
+            viewerHandler = (ViewerHandler) request.getSession().getAttribute(GROUPDOCS_VIEWER);
         }
 
         model.addAttribute("groupdocsHeader", viewerHandler.getHeader());
@@ -70,11 +73,21 @@ public class HomeController {
      * @param response
      * @return
      */
-    @RequestMapping(value= DOCUMENT_VIEWER + "/getFileHandler", method= RequestMethod.GET)
-    public ResponseEntity<String> getFileHandler(HttpServletRequest request, HttpServletResponse response, @RequestParam("path") String path){
-        ViewerHandler viewerHandler = (ViewerHandler)request.getSession().getAttribute(GROUPDOCS_VIEWER);
-        return jsonOut(viewerHandler.getFileHandler(path, response));
+//    @ResponseBody
+    @RequestMapping(value = "/GetFileHandler", method = RequestMethod.GET)
+    public void getFileHandler(HttpServletRequest request, HttpServletResponse response, @RequestParam("path") String path) throws Exception {
+        ViewerHandler viewerHandler = (ViewerHandler) request.getSession().getAttribute(GROUPDOCS_VIEWER);
+        response.setContentType("application/octet-stream");
+        File file = (File) viewerHandler.getFileHandler(path, response);
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+        OutputStream outputStream = response.getOutputStream();
+        FileInputStream fileInputStream = new FileInputStream(file);
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+        IOUtils.copy(bufferedInputStream, outputStream);
+        bufferedInputStream.close();
+        fileInputStream.close();
     }
+
     /**
      * Get image file [GET request]
      * @param guid
@@ -85,21 +98,30 @@ public class HomeController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value= DOCUMENT_VIEWER + "/getDocumentPageImageHandler", method= RequestMethod.GET)
-    public ResponseEntity<String> getDocumentPageImageHandler(HttpServletRequest request, String guid, String width, Integer quality, Boolean usePdf, Integer pageIndex) throws Exception {
-        ViewerHandler viewerHandler = (ViewerHandler)request.getSession().getAttribute(GROUPDOCS_VIEWER);
-        return jsonOut(viewerHandler.getDocumentPageImageHandler(guid, width, quality, usePdf, pageIndex));
+    @RequestMapping(value = "/GetDocumentPageImageHandler", method = RequestMethod.GET)
+    public void getDocumentPageImageHandler(HttpServletRequest request, HttpServletResponse response, String guid, String width, Integer quality, Boolean usePdf, Integer pageIndex) throws Exception {
+        ViewerHandler viewerHandler = (ViewerHandler) request.getSession().getAttribute(GROUPDOCS_VIEWER);
+        response.setContentType("image/jpeg");
+        File file = (File) viewerHandler.getDocumentPageImageHandler(guid, width, quality, usePdf, pageIndex);
+        OutputStream outputStream = response.getOutputStream();
+        FileInputStream fileInputStream = new FileInputStream(file);
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+        IOUtils.copy(bufferedInputStream, outputStream);
+        bufferedInputStream.close();
+        fileInputStream.close();
     }
+
     /**
      * Generate list of images/pages [POST request]
      * @param request
      * @return
      */
-    @RequestMapping(value= DOCUMENT_VIEWER + "/viewDocumentHandler", method= RequestMethod.POST)
-    public ResponseEntity<String> viewDocumentHandler(HttpServletRequest request){
-        ViewerHandler viewerHandler = (ViewerHandler)request.getSession().getAttribute(GROUPDOCS_VIEWER);
+    @RequestMapping(value = "/ViewDocumentHandler", method = RequestMethod.POST)
+    public ResponseEntity<String> viewDocumentHandler(HttpServletRequest request, HttpServletResponse response) {
+        ViewerHandler viewerHandler = (ViewerHandler) request.getSession().getAttribute(GROUPDOCS_VIEWER);
         return jsonOut(viewerHandler.viewDocumentHandler(request));
     }
+
     /**
      * Generate list of images/pages [GET request]
      * @param callback
@@ -107,42 +129,46 @@ public class HomeController {
      * @param request
      * @return
      */
-    @RequestMapping(value= DOCUMENT_VIEWER + "/viewDocumentHandler", method= RequestMethod.GET)
-    public ResponseEntity<String> viewDocumentHandler(HttpServletRequest request, String callback, String data){
-        ViewerHandler viewerHandler = (ViewerHandler)request.getSession().getAttribute(GROUPDOCS_VIEWER);
+    @RequestMapping(value = "/ViewDocumentHandler", method = RequestMethod.GET)
+    public ResponseEntity<String> viewDocumentHandler(HttpServletRequest request, String callback, String data) {
+        ViewerHandler viewerHandler = (ViewerHandler) request.getSession().getAttribute(GROUPDOCS_VIEWER);
         return jsonOut(viewerHandler.viewDocumentHandler(request));
     }
+
     /**
      * Load tree of files from base directory [POST request]
      * @param request
      * @return
      */
-    @RequestMapping(value= DOCUMENT_VIEWER + "/LoadFileBrowserTreeDataHandler", method= RequestMethod.POST)
-    public ResponseEntity<String> loadFileBrowserTreeDataHandler(HttpServletRequest request){
-        ViewerHandler viewerHandler = (ViewerHandler)request.getSession().getAttribute(GROUPDOCS_VIEWER);
+    @RequestMapping(value = "/LoadFileBrowserTreeDataHandler", method = RequestMethod.POST)
+    public ResponseEntity<String> loadFileBrowserTreeDataHandler(HttpServletRequest request, HttpServletResponse response) {
+        ViewerHandler viewerHandler = (ViewerHandler) request.getSession().getAttribute(GROUPDOCS_VIEWER);
         return jsonOut(viewerHandler.loadFileBrowserTreeDataHandler(request));
     }
+
     /**
      * Load tree of files from base directory [GET request]
      * @param callback
      * @param data
      * @return
      */
-    @RequestMapping(value= DOCUMENT_VIEWER + "/LoadFileBrowserTreeDataHandler", method= RequestMethod.GET)
-    public ResponseEntity<String> loadFileBrowserTreeDataHandler(HttpServletRequest request, String callback, String data){
-        ViewerHandler viewerHandler = (ViewerHandler)request.getSession().getAttribute(GROUPDOCS_VIEWER);
+    @RequestMapping(value = "/LoadFileBrowserTreeDataHandler", method = RequestMethod.GET)
+    public ResponseEntity<String> loadFileBrowserTreeDataHandler(HttpServletRequest request, String callback, String data) {
+        ViewerHandler viewerHandler = (ViewerHandler) request.getSession().getAttribute(GROUPDOCS_VIEWER);
         return jsonOut(viewerHandler.loadFileBrowserTreeDataHandler(callback, data));
     }
+
     /**
      * Get thumbs and other images files [POST request]
      * @param request
      * @return
      */
-    @RequestMapping(value= DOCUMENT_VIEWER + "/getImageUrlsHandler", method= RequestMethod.POST)
-    public ResponseEntity<String> getImageUrlsHandler(HttpServletRequest request){
-        ViewerHandler viewerHandler = (ViewerHandler)request.getSession().getAttribute(GROUPDOCS_VIEWER);
-        return jsonOut(viewerHandler.getImageUrlsHandler(request));
+    @RequestMapping(value = "/GetImageUrlsHandler", method = RequestMethod.POST)
+    public ResponseEntity<String> getImageUrlsHandler(HttpServletRequest request, HttpServletResponse response) {
+        ViewerHandler viewerHandler = (ViewerHandler) request.getSession().getAttribute(GROUPDOCS_VIEWER);
+        return jsonOut(new Gson().toJson(viewerHandler.getImageUrlsHandler(request)));
     }
+
     /**
      * Get thumbs and other images files [GET request]
      * @param callback
@@ -150,42 +176,46 @@ public class HomeController {
      * @param request
      * @return
      */
-    @RequestMapping(value= DOCUMENT_VIEWER + "/getImageUrlsHandler", method= RequestMethod.GET)
-    public ResponseEntity<String> getImageUrlsHandler(HttpServletRequest request, String callback, String data){
-        ViewerHandler viewerHandler = (ViewerHandler)request.getSession().getAttribute(GROUPDOCS_VIEWER);
+    @RequestMapping(value = "/GetImageUrlsHandler", method = RequestMethod.GET)
+    public ResponseEntity<String> getImageUrlsHandler(HttpServletRequest request, String callback, String data) {
+        ViewerHandler viewerHandler = (ViewerHandler) request.getSession().getAttribute(GROUPDOCS_VIEWER);
         return jsonOut(viewerHandler.getImageUrlsHandler(callback, data, request));
     }
+
     /**
      * Converts document to PDF and then to JavaScript for text search and selection [POST request]
      * @param request
      * @return
      */
-    @RequestMapping(value= DOCUMENT_VIEWER + "/getPdf2JavaScriptHandler", method= RequestMethod.POST)
-    public ResponseEntity<String> getPdf2JavaScriptHandler(HttpServletRequest request){
-        ViewerHandler viewerHandler = (ViewerHandler)request.getSession().getAttribute(GROUPDOCS_VIEWER);
+    @RequestMapping(value = "/GetPdf2JavaScriptHandler", method = RequestMethod.POST)
+    public ResponseEntity<String> getPdf2JavaScriptHandler(HttpServletRequest request, HttpServletResponse response) {
+        ViewerHandler viewerHandler = (ViewerHandler) request.getSession().getAttribute(GROUPDOCS_VIEWER);
         return jsonOut(viewerHandler.getPdf2JavaScriptHandler(request));
     }
+
     /**
      * Converts document to PDF and then to JavaScript for text search and selection [GET request]
      * @param callback
      * @param data
      * @return
      */
-    @RequestMapping(value= DOCUMENT_VIEWER + "/getPdf2JavaScriptHandler", method= RequestMethod.GET)
-    public ResponseEntity<String> getPdf2JavaScriptHandler(HttpServletRequest request, String callback, String data){
-        ViewerHandler viewerHandler = (ViewerHandler)request.getSession().getAttribute(GROUPDOCS_VIEWER);
+    @RequestMapping(value = "/GetPdf2JavaScriptHandler", method = RequestMethod.GET)
+    public ResponseEntity<String> getPdf2JavaScriptHandler(HttpServletRequest request, String callback, String data) {
+        ViewerHandler viewerHandler = (ViewerHandler) request.getSession().getAttribute(GROUPDOCS_VIEWER);
         return jsonOut(viewerHandler.getPdf2JavaScriptHandler(callback, data));
     }
+
     /**
      * Print document [POST request]
      * @param request
      * @return
      */
-    @RequestMapping(value= DOCUMENT_VIEWER + "/getPrintableHtmlHandler", method= RequestMethod.POST)
-    public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request){
-        ViewerHandler viewerHandler = (ViewerHandler)request.getSession().getAttribute(GROUPDOCS_VIEWER);
-        return jsonOut(viewerHandler.getPrintableHtmlHandler(request));
+    @RequestMapping(value = DOCUMENT_VIEWER + "/GetPrintableHtmlHandler", method = RequestMethod.POST)
+    public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request, HttpServletResponse response) {
+        ViewerHandler viewerHandler = (ViewerHandler) request.getSession().getAttribute(GROUPDOCS_VIEWER);
+        return typeOut(viewerHandler.getPrintableHtmlHandler(request), MediaType.TEXT_HTML);
     }
+
     /**
      * Print document [GET request]
      * @param callback
@@ -193,16 +223,19 @@ public class HomeController {
      * @param request
      * @return
      */
-    @RequestMapping(value= DOCUMENT_VIEWER + "/getPrintableHtmlHandler", method= RequestMethod.GET)
-    public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request, String callback, String data){
-        ViewerHandler viewerHandler = (ViewerHandler)request.getSession().getAttribute(GROUPDOCS_VIEWER);
+    @RequestMapping(value = DOCUMENT_VIEWER + "/GetPrintableHtmlHandler", method = RequestMethod.GET)
+    public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request, String callback, String data) {
+        ViewerHandler viewerHandler = (ViewerHandler) request.getSession().getAttribute(GROUPDOCS_VIEWER);
         return jsonOut(viewerHandler.getPrintableHtmlHandler(callback, data, request));
     }
 
+    protected static ResponseEntity<String> jsonOut(Object obj) {
+        return typeOut(obj, MediaType.APPLICATION_JSON);
+    }
 
-    protected static ResponseEntity<String> jsonOut(Object obj){
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setContentType(MediaType.APPLICATION_JSON);
-        return new ResponseEntity<String>(obj.toString(), responseHeaders, HttpStatus.CREATED);
+    protected static ResponseEntity<String> typeOut(Object obj, MediaType mediaType) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(mediaType);
+        return new ResponseEntity<String>(obj.toString(), httpHeaders, HttpStatus.CREATED);
     }
 }
