@@ -12,10 +12,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ApplicationConfig {
-    @Property(key = "application.path")
+    @Property(key = "groupdocs.viewer.applicationPath")
     protected String applicationPath;
-    @Property(key = "application.groupdocs.filespath")
+    @Property(key = "groupdocs.viewer.filePath")
     protected String basePath;
+    @Property(key = "groupdocs.viewer.licensePath")
+    protected String licensePath;
 
     public String getApplicationPath() {
         return applicationPath;
@@ -32,4 +34,13 @@ public class ApplicationConfig {
     public void setBasePath(String basePath) {
         this.basePath = basePath;
     }
+
+    public String getLicensePath() {
+        return licensePath;
+    }
+
+    public void setLicensePath(String licensePath) {
+        this.licensePath = licensePath;
+    }
+    
 }

@@ -26,14 +26,12 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 
 /**
- * Created with IntelliJ IDEA.
  * User: liosha
  * Date: 05.12.13
  * Time: 22:54
  */
 @Controller
 public class HomeController extends GroupDocsViewer {
-    private static final String DOCUMENT_VIEWER = "/document-viewer";
     @Autowired
     protected ApplicationConfig applicationConfig;
     protected ViewerHandler viewerHandler = null;
@@ -41,31 +39,40 @@ public class HomeController extends GroupDocsViewer {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (viewerHandler == null) {
+            // Application path
             String appPath = applicationConfig.getApplicationPath();
+            // File storage path
             String basePath = applicationConfig.getBasePath();
+            // File license path
+            String licensePath = applicationConfig.getLicensePath();
+            // Assets path, where all js and css files will be stored
             String assetsDir = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getAbsolutePath() + "\\assets\\";
-            //
-            System.out.println("assetsDir: " + assetsDir);
             // INITIALIZE GroupDocs Java Viewer Object
             Assets assets = new Assets(assetsDir, DOCUMENT_VIEWER);
-            ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, null, assets, Boolean.FALSE);
+            ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, licensePath, assets, Boolean.FALSE);
             viewerHandler = new ViewerHandler(config);
         }
-
+        // Setting header in jsp page
         model.addAttribute("groupdocsHeader", viewerHandler.getHeader());
-        model.addAttribute("message", "Hello to sample application!");
+        // Initialization of Viewer with document from this path
+        model.addAttribute("filePath", "10_page.pdf");
+        // Adding welcome text message on top of Viewer
+        model.addAttribute("message", "GroupDocs Viewer for Java Sample");
         return "index";
+    }
+    
+    @Override
+    public Object getFileHandler(HttpServletResponse httpServletResponse, String path) {
+        return viewerHandler.getFileHandler(path, httpServletResponse);
     }
 
     /**
      * Download file [GET request]
-     *
      * @param path
      * @param response
      * @return
      */
-//    @ResponseBody
-    @RequestMapping(value = "/GetFileHandler", method = RequestMethod.GET)
+    @RequestMapping(value = GET_FILE_HANDLER, method = RequestMethod.GET)
     public void getFileHandler(HttpServletRequest request, HttpServletResponse response, @RequestParam("path") String path) throws Exception {
         File file = (File) getFileHandler(response, path);
         OutputStream outputStream = response.getOutputStream();
@@ -75,10 +82,14 @@ public class HomeController extends GroupDocsViewer {
         bufferedInputStream.close();
         fileInputStream.close();
     }
+    
+    @Override
+    public Object getDocumentPageImageHandler(String guid, String width, Integer quality, Boolean usePdf, Integer pageIndex) throws Exception {
+        return viewerHandler.getDocumentPageImageHandler(guid, width, quality, usePdf, pageIndex);
+    }
 
     /**
      * Get image file [GET request]
-     *
      * @param guid
      * @param width
      * @param quality
@@ -87,15 +98,9 @@ public class HomeController extends GroupDocsViewer {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/GetDocumentPageImageHandler", method = RequestMethod.GET)
-    public void getDocumentPageImageHandler(
-            HttpServletRequest request, HttpServletResponse response,
-            @RequestParam("path") String guid,
-            @RequestParam("width") String width,
-            @RequestParam("quality") Integer quality,
-            @RequestParam("usePdf") Boolean usePdf,
-            @RequestParam("pageIndex") Integer pageIndex
-    ) throws Exception {
+    @RequestMapping(value = GET_DOCUMENT_PAGE_IMAGE_HANDLER, method = RequestMethod.GET)
+    public void getDocumentPageImageHandler(HttpServletRequest request, HttpServletResponse response, @RequestParam("path") String guid,@RequestParam("width") String width,
+            @RequestParam("quality") Integer quality, @RequestParam("usePdf") Boolean usePdf, @RequestParam("pageIndex") Integer pageIndex) throws Exception {
         File file = (File) getDocumentPageImageHandler(guid, width, quality, usePdf, pageIndex);
         OutputStream outputStream = response.getOutputStream();
         FileInputStream fileInputStream = new FileInputStream(file);
@@ -112,9 +117,8 @@ public class HomeController extends GroupDocsViewer {
      * @return
      */
     @Override
-    @RequestMapping(value = "/ViewDocumentHandler", method = RequestMethod.POST)
+    @RequestMapping(value = VIEW_DOCUMENT_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> viewDocumentHandler(HttpServletRequest request) {
-
         return jsonOut(viewerHandler.viewDocumentHandler(request));
     }
 
@@ -126,9 +130,9 @@ public class HomeController extends GroupDocsViewer {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/ViewDocumentHandler", method = RequestMethod.GET)
+    @Override
+    @RequestMapping(value = VIEW_DOCUMENT_HANDLER, method = RequestMethod.GET)
     public ResponseEntity<String> viewDocumentHandler(HttpServletRequest request, String callback, String data) {
-
         return jsonOut(viewerHandler.viewDocumentHandler(request));
     }
 
@@ -139,9 +143,8 @@ public class HomeController extends GroupDocsViewer {
      * @return
      */
     @Override
-    @RequestMapping(value = "/LoadFileBrowserTreeDataHandler", method = RequestMethod.POST)
+    @RequestMapping(value = LOAD_FILE_BROWSER_TREE_DATA_HANLER, method = RequestMethod.POST)
     public ResponseEntity<String> loadFileBrowserTreeDataHandler(HttpServletRequest request) {
-
         return jsonOut(viewerHandler.loadFileBrowserTreeDataHandler(request));
     }
 
@@ -153,9 +156,8 @@ public class HomeController extends GroupDocsViewer {
      * @return
      */
     @Override
-    @RequestMapping(value = "/LoadFileBrowserTreeDataHandler", method = RequestMethod.GET)
+    @RequestMapping(value = LOAD_FILE_BROWSER_TREE_DATA_HANLER, method = RequestMethod.GET)
     public ResponseEntity<String> loadFileBrowserTreeDataHandler(String callback, String data) {
-
         return jsonOut(viewerHandler.loadFileBrowserTreeDataHandler(callback, data));
     }
 
@@ -166,9 +168,8 @@ public class HomeController extends GroupDocsViewer {
      * @return
      */
     @Override
-    @RequestMapping(value = "/GetImageUrlsHandler", method = RequestMethod.POST)
+    @RequestMapping(value = GET_IMAGE_URL_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> getImageUrlsHandler(HttpServletRequest request) {
-
         return jsonOut(new Gson().toJson(viewerHandler.getImageUrlsHandler(request)));
     }
 
@@ -180,9 +181,9 @@ public class HomeController extends GroupDocsViewer {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/GetImageUrlsHandler", method = RequestMethod.GET)
+    @Override
+    @RequestMapping(value = GET_IMAGE_URL_HANDLER, method = RequestMethod.GET)
     public ResponseEntity<String> getImageUrlsHandler(HttpServletRequest request, String callback, String data) {
-
         return jsonOut(viewerHandler.getImageUrlsHandler(callback, data, request));
     }
 
@@ -193,9 +194,8 @@ public class HomeController extends GroupDocsViewer {
      * @return
      */
     @Override
-    @RequestMapping(value = "/GetPdf2JavaScriptHandler", method = RequestMethod.POST)
+    @RequestMapping(value = GET_PDF_2_JAVA_SCRIPT_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> getPdf2JavaScriptHandler(HttpServletRequest request) {
-
         return jsonOut(viewerHandler.getPdf2JavaScriptHandler(request));
     }
 
@@ -207,9 +207,8 @@ public class HomeController extends GroupDocsViewer {
      * @return
      */
     @Override
-    @RequestMapping(value = "/GetPdf2JavaScriptHandler", method = RequestMethod.GET)
+    @RequestMapping(value = GET_PDF_2_JAVA_SCRIPT_HANDLER, method = RequestMethod.GET)
     public ResponseEntity<String> getPdf2JavaScriptHandler(String callback, String data) {
-
         return jsonOut(viewerHandler.getPdf2JavaScriptHandler(callback, data));
     }
 
@@ -220,9 +219,8 @@ public class HomeController extends GroupDocsViewer {
      * @return
      */
     @Override
-    @RequestMapping(value = "/GetPrintableHtmlHandler", method = RequestMethod.POST)
+    @RequestMapping(value = GET_PRINTABLE_HTML_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request) {
-
         return typeOut(viewerHandler.getPrintableHtmlHandler(request), MediaType.TEXT_HTML);
     }
 
@@ -234,9 +232,9 @@ public class HomeController extends GroupDocsViewer {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/GetPrintableHtmlHandler", method = RequestMethod.GET)
+    @Override
+    @RequestMapping(value = GET_PRINTABLE_HTML_HANDLER, method = RequestMethod.GET)
     public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request, String callback, String data) {
-
         return jsonOut(viewerHandler.getPrintableHtmlHandler(callback, data, request));
     }
 
@@ -248,15 +246,5 @@ public class HomeController extends GroupDocsViewer {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(mediaType);
         return new ResponseEntity<String>(obj.toString(), httpHeaders, HttpStatus.CREATED);
-    }
-
-    @Override
-    public Object getFileHandler(HttpServletResponse httpServletResponse, String path) {
-        return viewerHandler.getFileHandler(path, httpServletResponse);
-    }
-
-    @Override
-    public Object getDocumentPageImageHandler(String guid, String width, Integer quality, Boolean usePdf, Integer pageIndex) throws Exception {
-        return viewerHandler.getDocumentPageImageHandler(guid, width, quality, usePdf, pageIndex);
     }
 }

@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>GroupDocs Java Viewer Sample Tomcat</title>
+        <title>GroupDocs Viewer for Java Sample (Tomcat)</title>
         ${groupdocsHeader}
     </head> 
     <body>
@@ -16,7 +16,7 @@
                 var localizedStrings = null;
                 var thumbsImageBase64Encoded = null;
                 $('#test').groupdocsViewer({
-                    filePath: '',
+                    filePath: '${filePath}',
                     docViewerId: 'doc_viewer1',
                     quality: 100,
                     showThumbnails: true,
