@@ -35,9 +35,14 @@ public class HomeController extends GroupDocsViewer {
     @Autowired
     protected ApplicationConfig applicationConfig;
     protected ViewerHandler viewerHandler = null;
-
+    
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return index(model, request, response, "");
+    }
+
+    @RequestMapping(value = "/view", method = RequestMethod.GET)
+    public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam("fileId") String fileId) throws Exception {
         if (viewerHandler == null) {
             // Application path
             String appPath = applicationConfig.getApplicationPath();
@@ -55,9 +60,19 @@ public class HomeController extends GroupDocsViewer {
         // Setting header in jsp page
         model.addAttribute("groupdocsHeader", viewerHandler.getHeader());
         // Initialization of Viewer with document from this path
-        model.addAttribute("filePath", "10_page.pdf");
-        // Adding welcome text message on top of Viewer
-        model.addAttribute("message", "GroupDocs Viewer for Java Sample");
+        model.addAttribute("filePath", fileId);
+        // Viewer config
+        model.addAttribute("showHeader", applicationConfig.getShowHeader());
+        model.addAttribute("showThumbnails", applicationConfig.getShowThumbnails());
+        model.addAttribute("openThumbnails", applicationConfig.getOpenThumbnails());
+        model.addAttribute("width", applicationConfig.getWidth());
+        model.addAttribute("height", applicationConfig.getHeight());
+        model.addAttribute("showFolderBrowser", applicationConfig.getShowFolderBrowser());
+        model.addAttribute("showPrint", applicationConfig.getShowPrint());
+        model.addAttribute("showDownload", applicationConfig.getShowDownload());
+        model.addAttribute("showZoom", applicationConfig.getShowZoom());
+        model.addAttribute("showPaging", applicationConfig.getShowPaging());
+        model.addAttribute("showSearch", applicationConfig.getShowSearch());
         return "index";
     }
     
@@ -99,7 +114,7 @@ public class HomeController extends GroupDocsViewer {
      * @throws Exception
      */
     @RequestMapping(value = GET_DOCUMENT_PAGE_IMAGE_HANDLER, method = RequestMethod.GET)
-    public void getDocumentPageImageHandler(HttpServletRequest request, HttpServletResponse response, @RequestParam("path") String guid,@RequestParam("width") String width,
+    public void getDocumentPageImageHandler(HttpServletRequest request, HttpServletResponse response, @RequestParam("path") String guid, @RequestParam("width") String width,
             @RequestParam("quality") Integer quality, @RequestParam("usePdf") Boolean usePdf, @RequestParam("pageIndex") Integer pageIndex) throws Exception {
         File file = (File) getDocumentPageImageHandler(guid, width, quality, usePdf, pageIndex);
         OutputStream outputStream = response.getOutputStream();

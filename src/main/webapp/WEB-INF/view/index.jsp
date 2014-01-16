@@ -5,12 +5,11 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>GroupDocs Viewer for Java Sample (Tomcat)</title>
+        <title>GroupDocs Viewer for Java Sample</title>
         ${groupdocsHeader}
     </head> 
     <body>
-        ${message}
-        <div id="test" style="width:1000px;height:500px;overflow:hidden;position:relative;margin-bottom:20px;background-color:gray;border:1px solid #ccc;"></div>
+        <div id="test" style="width:${width}px;height:${height}px;overflow:hidden;position:relative;margin-bottom:20px;background-color:gray;border:1px solid #ccc;"></div>
         <script type="text/javascript">
             $(function() {
                 var localizedStrings = null;
@@ -19,21 +18,21 @@
                     filePath: '${filePath}',
                     docViewerId: 'doc_viewer1',
                     quality: 100,
-                    showThumbnails: true,
-                    openThumbnails: true,
+                    showThumbnails: ${showThumbnails},
+                    openThumbnails: ${openThumbnails},
                     initialZoom: 100,
                     zoomToFitWidth: true,
                     zoomToFitHeight: false,
-                    width: 1000,
-                    height: 500,
+                    width: ${width},
+                    height: ${height},
                     backgroundColor: '',
-                    showFolderBrowser: true,
-                    showPrint: true,
-                    showDownload: true,
-                    showZoom: true,
-                    showPaging: true,
+                    showFolderBrowser: ${showFolderBrowser},
+                    showPrint: ${showPrint},
+                    showDownload: ${showDownload},
+                    showZoom: ${showZoom},
+                    showPaging: ${showPaging},
                     showViewerStyleControl: true,
-                    showSearch: true,
+                    showSearch: ${showSearch},
                     preloadPagesCount: 0,
                     viewerStyle: 1,
                     supportTextSelection: true,
@@ -52,7 +51,7 @@
                     jqueryFileDownloadCookieName: 'jqueryFileDownloadJSForGD',
                     showDownloadErrorsInPopup: true,
                     showImageWidth: false,
-                    showHeader: true,
+                    showHeader: ${showHeader},
                     minimumImageWidth: 0,
                     enableStandardErrorHandling: true
                 });
