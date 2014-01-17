@@ -1,4 +1,4 @@
-groupdocs-viewer-java-lib-sample
+groupdocs-viewer-java-tomcat-sample
 ================================
 
 1. Download sample sources to any directory
