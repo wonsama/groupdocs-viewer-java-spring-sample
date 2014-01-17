@@ -45,7 +45,7 @@ public class HomeController extends GroupDocsViewer {
     public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam("fileId") String fileId) throws Exception {
         if (viewerHandler == null) {
             // Application path
-            String appPath = applicationConfig.getApplicationPath();
+            String appPath = "http://" + request.getServerName() + ":" + request.getServerPort();
             // File storage path
             String basePath = applicationConfig.getBasePath();
             // File license path

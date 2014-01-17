@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ApplicationConfig {
-    @Property(key = "groupdocs.viewer.applicationPath")
-    protected String applicationPath;
     @Property(key = "groupdocs.viewer.filePath")
     protected String basePath;
     @Property(key = "groupdocs.viewer.licensePath")
@@ -40,14 +38,6 @@ public class ApplicationConfig {
     protected Boolean showPaging;
     @Property(key = "groupdocs.viewer.showSearch")
     protected Boolean showSearch;
-
-    public String getApplicationPath() {
-        return applicationPath;
-    }
-
-    public void setApplicationPath(String applicationPath) {
-        this.applicationPath = applicationPath;
-    }
 
     public String getBasePath() {
         return basePath;
