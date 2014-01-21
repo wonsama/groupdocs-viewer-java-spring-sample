@@ -5,7 +5,7 @@
     <version>1.1.0</version>
     <packaging>war</packaging>
   
-    <name>GroupDocs Java Viewer - Spring Sample</name>
+    <name>GroupDocs Java Viewer - Sample Spring</name>
     <url>http://maven.apache.org</url>
 	
     <properties>
