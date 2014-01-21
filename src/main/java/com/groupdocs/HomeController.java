@@ -83,7 +83,11 @@ public class HomeController extends GroupDocsViewer {
 
     @Override
     public Object getFileHandler(HttpServletResponse httpServletResponse, String path){
-        return viewerHandler.getFileHandler(path, httpServletResponse);
+        try{
+            return viewerHandler.getFileHandler(path, httpServletResponse);
+        }catch(Exception ex){
+            return null;
+        }
     }
 
     /**
