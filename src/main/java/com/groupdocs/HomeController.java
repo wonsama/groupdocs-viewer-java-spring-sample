@@ -155,7 +155,7 @@ public class HomeController extends GroupDocsViewer {
     @Override
     @RequestMapping(value = VIEW_DOCUMENT_HANDLER, method = RequestMethod.GET)
     public ResponseEntity<String> viewDocumentHandler(HttpServletRequest request, String callback, String data) {
-        return jsonOut(viewerHandler.viewDocumentHandler(request));
+        return jsonOut(viewerHandler.viewDocumentHandler(callback, data, request));
     }
 
     /**
