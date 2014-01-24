@@ -82,7 +82,7 @@ public class HomeController extends GroupDocsViewer {
     }
 
     @Override
-    public Object getFileHandler(HttpServletResponse httpServletResponse, String path){
+    public Object getFileHandler(String path, HttpServletResponse httpServletResponse){
         try{
             return viewerHandler.getFileHandler(path, httpServletResponse);
         }catch(Exception ex){
@@ -98,7 +98,7 @@ public class HomeController extends GroupDocsViewer {
      */
     @RequestMapping(value = GET_FILE_HANDLER, method = RequestMethod.GET)
     public void getFileHandler(HttpServletRequest request, HttpServletResponse response, @RequestParam("path") String path) throws Exception {
-        File file = (File) getFileHandler(response, path);
+        File file = (File) getFileHandler(path, response);
         if (file != null) {
             OutputStream outputStream = response.getOutputStream();
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -158,7 +158,7 @@ public class HomeController extends GroupDocsViewer {
      */
     @Override
     @RequestMapping(value = VIEW_DOCUMENT_HANDLER, method = RequestMethod.GET)
-    public ResponseEntity<String> viewDocumentHandler(HttpServletRequest request, String callback, String data) {
+    public ResponseEntity<String> viewDocumentHandler(String callback, String data, HttpServletRequest request) {
         return jsonOut(viewerHandler.viewDocumentHandler(callback, data, request));
     }
 
@@ -209,7 +209,7 @@ public class HomeController extends GroupDocsViewer {
      */
     @Override
     @RequestMapping(value = GET_IMAGE_URL_HANDLER, method = RequestMethod.GET)
-    public ResponseEntity<String> getImageUrlsHandler(HttpServletRequest request, String callback, String data) {
+    public ResponseEntity<String> getImageUrlsHandler(String callback, String data, HttpServletRequest request) {
         return jsonOut(viewerHandler.getImageUrlsHandler(callback, data, request));
     }
 
@@ -260,7 +260,7 @@ public class HomeController extends GroupDocsViewer {
      */
     @Override
     @RequestMapping(value = GET_PRINTABLE_HTML_HANDLER, method = RequestMethod.GET)
-    public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request, String callback, String data) {
+    public ResponseEntity<String> getPrintableHtmlHandler(String callback, String data, HttpServletRequest request) {
         return jsonOut(viewerHandler.getPrintableHtmlHandler(callback, data, request));
     }
 
