@@ -270,7 +270,11 @@ public class HomeController extends GroupDocsViewer {
 
     protected static ResponseEntity<String> typeOut(Object obj, MediaType mediaType) {
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(mediaType);
+        if (mediaType == MediaType.APPLICATION_JSON) {
+            httpHeaders.set("Content-type", "application/json;charset=UTF-8");
+        } else {
+            httpHeaders.setContentType(mediaType);
+        }
         return new ResponseEntity<String>(obj.toString(), httpHeaders, HttpStatus.CREATED);
     }
 }
