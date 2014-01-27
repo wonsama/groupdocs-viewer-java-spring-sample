@@ -2,10 +2,12 @@ package com.groupdocs;
 
 import com.google.gson.Gson;
 import com.groupdocs.config.ApplicationConfig;
+import com.groupdocs.handler.CustomInputDataHandler;
 import com.groupdocs.viewer.config.ServiceConfiguration;
 import com.groupdocs.viewer.domain.Assets;
 import com.groupdocs.viewer.domain.GroupDocsFilePath;
 import com.groupdocs.viewer.resources.GroupDocsViewer;
+import com.groupdocs.viewer.resources.InputDataHandler;
 import com.groupdocs.viewer.resources.ViewerHandler;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -58,6 +60,7 @@ public class HomeController extends GroupDocsViewer {
             Assets assets = new Assets(assetsDir, DOCUMENT_VIEWER);
             ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, licensePath, assets, Boolean.FALSE);
             viewerHandler = new ViewerHandler(config);
+            // InputDataHandler.setInputDataHandler(new CustomInputDataHandler(config));
         }
         // Setting header in jsp page
         model.addAttribute("groupdocsHeader", viewerHandler.getHeader());
