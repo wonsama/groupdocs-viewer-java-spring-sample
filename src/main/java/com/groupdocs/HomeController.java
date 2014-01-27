@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.groupdocs.config.ApplicationConfig;
 import com.groupdocs.viewer.config.ServiceConfiguration;
 import com.groupdocs.viewer.domain.Assets;
+import com.groupdocs.viewer.domain.GroupDocsFilePath;
 import com.groupdocs.viewer.resources.GroupDocsViewer;
 import com.groupdocs.viewer.resources.ViewerHandler;
 import org.apache.commons.io.IOUtils;
@@ -61,11 +62,13 @@ public class HomeController extends GroupDocsViewer {
         // Setting header in jsp page
         model.addAttribute("groupdocsHeader", viewerHandler.getHeader());
         // Initialization of Viewer with document from this path
+        GroupDocsFilePath groupDocsFilePath;
         if (StringUtils.isNotEmpty(fileUrl)) {
-            model.addAttribute("filePath", fileUrl);
+            groupDocsFilePath = new GroupDocsFilePath(fileUrl);
         } else {
-            model.addAttribute("filePath", fileId);
+            groupDocsFilePath = new GroupDocsFilePath(fileId);
         }
+        model.addAttribute("filePath", groupDocsFilePath.getPath());
         // Viewer config
         model.addAttribute("showHeader", applicationConfig.getShowHeader());
         model.addAttribute("showThumbnails", applicationConfig.getShowThumbnails());
