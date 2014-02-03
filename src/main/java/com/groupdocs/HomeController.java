@@ -2,14 +2,11 @@ package com.groupdocs;
 
 import com.google.gson.Gson;
 import com.groupdocs.config.ApplicationConfig;
-import com.groupdocs.handler.CustomInputDataHandler;
 import com.groupdocs.viewer.config.ServiceConfiguration;
 import com.groupdocs.viewer.domain.Assets;
 import com.groupdocs.viewer.domain.GroupDocsFilePath;
 import com.groupdocs.viewer.resources.GroupDocsViewer;
-import com.groupdocs.viewer.resources.InputDataHandler;
 import com.groupdocs.viewer.resources.ViewerHandler;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -24,10 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.OutputStream;
 
 /**
  * User: liosha
@@ -59,8 +53,7 @@ public class HomeController extends GroupDocsViewer {
             // INITIALIZE GroupDocs Java Viewer Object
             Assets assets = new Assets(assetsDir, DOCUMENT_VIEWER);
             ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, licensePath, assets, Boolean.FALSE);
-            viewerHandler = new ViewerHandler(config);
-            // InputDataHandler.setInputDataHandler(new CustomInputDataHandler(config));
+            viewerHandler = new ViewerHandler(config /*, new CustomInputDataHandler(config)*/);
         }
         // Setting header in jsp page
         model.addAttribute("groupdocsHeader", viewerHandler.getHeader());
@@ -87,59 +80,34 @@ public class HomeController extends GroupDocsViewer {
         return "index";
     }
 
-    @Override
-    public Object getFileHandler(String path, HttpServletResponse httpServletResponse){
-        try{
-            return viewerHandler.getFileHandler(path, httpServletResponse);
-        }catch(Exception ex){
-            return null;
-        }
-    }
-
     /**
      * Download file [GET request]
+     * 
      * @param path
      * @param response
-     * @return
+     * @throws java.lang.Exception
      */
-    @RequestMapping(value = GET_FILE_HANDLER, method = RequestMethod.GET)
-    public void getFileHandler(HttpServletRequest request, HttpServletResponse response, @RequestParam("path") String path) throws Exception {
-        File file = (File) getFileHandler(path, response);
-        if (file != null) {
-            OutputStream outputStream = response.getOutputStream();
-            FileInputStream fileInputStream = new FileInputStream(file);
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
-            IOUtils.copy(bufferedInputStream, outputStream);
-            bufferedInputStream.close();
-            fileInputStream.close();
-        }
-    }
-
     @Override
-    public Object getDocumentPageImageHandler(String guid, String width, Integer quality, Boolean usePdf, Integer pageIndex) throws Exception {
-        return viewerHandler.getDocumentPageImageHandler(guid, width, quality, usePdf, pageIndex);
+    @RequestMapping(value = GET_FILE_HANDLER, method = RequestMethod.GET)
+    public void getFileHandler(@RequestParam("path") String path, HttpServletResponse response) throws Exception {
+        viewerHandler.getFileHandler(path, response);
     }
 
     /**
      * Get image file [GET request]
+     * 
      * @param guid
      * @param width
      * @param quality
      * @param usePdf
      * @param pageIndex
-     * @return
+     * @param response
      * @throws Exception
      */
+    @Override
     @RequestMapping(value = GET_DOCUMENT_PAGE_IMAGE_HANDLER, method = RequestMethod.GET)
-    public void getDocumentPageImageHandler(HttpServletRequest request, HttpServletResponse response, @RequestParam("path") String guid, @RequestParam("width") String width,
-                                            @RequestParam("quality") Integer quality, @RequestParam("usePdf") Boolean usePdf, @RequestParam("pageIndex") Integer pageIndex) throws Exception {
-        File file = (File) getDocumentPageImageHandler(guid, width, quality, usePdf, pageIndex);
-        OutputStream outputStream = response.getOutputStream();
-        FileInputStream fileInputStream = new FileInputStream(file);
-        BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
-        IOUtils.copy(bufferedInputStream, outputStream);
-        bufferedInputStream.close();
-        fileInputStream.close();
+    public void getDocumentPageImageHandler(@RequestParam("path") String guid, @RequestParam("width") String width, @RequestParam("quality") Integer quality, @RequestParam("usePdf") Boolean usePdf, @RequestParam("pageIndex") Integer pageIndex, HttpServletResponse response) throws Exception {
+        viewerHandler.getDocumentPageImageHandler(guid, width, quality, usePdf, pageIndex, response);
     }
 
     /**

@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.groupdocs</groupId>
     <artifactId>viewer-tomcat</artifactId>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
     <packaging>war</packaging>
   
     <name>GroupDocs Java Viewer - Sample Spring</name>
@@ -88,7 +88,7 @@
         <dependency>
             <groupId>com.groupdocs</groupId>
             <artifactId>viewer</artifactId>
-            <version>1.6.8</version>
+            <version>1.6.9</version>
             <type>jar</type>
         </dependency>
         <!-- Properties -->
