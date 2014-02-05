@@ -2,11 +2,12 @@ package com.groupdocs.handler;
 
 import com.groupdocs.viewer.config.ServiceConfiguration;
 import com.groupdocs.viewer.domain.FileType;
-import com.groupdocs.viewer.resources.InputDataHandler;
+import com.groupdocs.viewer.handlers.InputDataHandler;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
 
@@ -14,8 +15,8 @@ import java.util.HashMap;
  * Created by liosha on 23.01.14.
  */
 public class CustomInputDataHandler extends InputDataHandler {
-    private HashMap<String, String> fileId2FilePath = new HashMap<String, String>();
-    private HashMap<String, String> fileId2FileName = new HashMap<String, String>();
+    private final HashMap<String, String> fileId2FilePath = new HashMap<String, String>();
+    private final HashMap<String, String> fileId2FileName = new HashMap<String, String>();
     private String basePath = null;
 
     public CustomInputDataHandler(ServiceConfiguration serviceConfiguration) {
@@ -37,7 +38,7 @@ public class CustomInputDataHandler extends InputDataHandler {
     public InputStream getFile(String guid) {
         try {
             return new FileInputStream(fileId2FilePath.get(guid));
-        } catch (Exception e){
+        } catch (FileNotFoundException e){
             return null;
         }
     }
