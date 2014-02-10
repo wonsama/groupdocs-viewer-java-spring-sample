@@ -3,7 +3,6 @@ package com.groupdocs;
 import com.google.gson.Gson;
 import com.groupdocs.config.ApplicationConfig;
 import com.groupdocs.viewer.config.ServiceConfiguration;
-import com.groupdocs.viewer.domain.Assets;
 import com.groupdocs.viewer.domain.GroupDocsFilePath;
 import com.groupdocs.viewer.handlers.ViewerHandler;
 import com.groupdocs.viewer.resources.GroupDocsViewer;
@@ -21,7 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
+import java.io.IOException;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * User: liosha
@@ -52,11 +52,8 @@ public class HomeController extends GroupDocsViewer {
             boolean useAuth = applicationConfig.useAuthorization();
             // Use cache
             boolean useCache = applicationConfig.useCache();
-            // Assets path, where all js and css files will be stored
-            String assetsDir = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getAbsolutePath() + "\\assets\\";
             // INITIALIZE GroupDocs Java Viewer Object
-            Assets assets = new Assets(assetsDir, "");
-            ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, licensePath, assets, useAuth, useCache);
+            ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, licensePath, useAuth, useCache);
             viewerHandler = new ViewerHandler(config /*, new CustomInputDataHandler(config)*/);
         }
         // Setting header in jsp page
@@ -83,13 +80,37 @@ public class HomeController extends GroupDocsViewer {
         model.addAttribute("showSearch", applicationConfig.getShowSearch());
         return "index";
     }
+    
+    /*
+     * Get JavaScript files for Viewer UI building
+     */
+    @Override
+    @RequestMapping(value = GET_JS_HANDLER, method = RequestMethod.GET)
+    public void getJsHandler(@RequestParam("script") String script, HttpServletResponse response) throws IOException {
+        viewerHandler.getJsHandler(script, response);
+    }
 
-    /**
+    /*
+     * Get CSS files for Viewer UI building
+     */
+    @Override
+    @RequestMapping(value = GET_CSS_HANDLER, method = RequestMethod.GET)
+    public void getCssHandler(@RequestParam("script") String script, HttpServletResponse response) throws IOException {
+        viewerHandler.getCssHandler(script, response);
+    }
+
+    /*
+     * Get images for Viewer UI building
+     */
+    @Override
+    @RequestMapping(value = GET_IMAGE_HANDLER, method = RequestMethod.GET)
+    public void getImageHandler(@PathVariable("name") String name, HttpServletResponse response) throws IOException {
+        System.out.println(name);
+        viewerHandler.getImageHandler(name, response);
+    }
+
+    /*
      * Download file [GET request]
-     * 
-     * @param path
-     * @param response
-     * @throws java.lang.Exception
      */
     @Override
     @RequestMapping(value = GET_FILE_HANDLER, method = RequestMethod.GET)
@@ -97,16 +118,8 @@ public class HomeController extends GroupDocsViewer {
         viewerHandler.getFileHandler(path, response);
     }
 
-    /**
+    /*
      * Get image file [GET request]
-     * 
-     * @param guid
-     * @param width
-     * @param quality
-     * @param usePdf
-     * @param pageIndex
-     * @param response
-     * @throws Exception
      */
     @Override
     @RequestMapping(value = GET_DOCUMENT_PAGE_IMAGE_HANDLER, method = RequestMethod.GET)
@@ -114,11 +127,8 @@ public class HomeController extends GroupDocsViewer {
         viewerHandler.getDocumentPageImageHandler(guid, width, quality, usePdf, pageIndex, response);
     }
 
-    /**
+    /*
      * Generate list of images/pages [POST request]
-     *
-     * @param request
-     * @return
      */
     @Override
     @RequestMapping(value = VIEW_DOCUMENT_HANDLER, method = RequestMethod.POST)
@@ -126,13 +136,8 @@ public class HomeController extends GroupDocsViewer {
         return jsonOut(viewerHandler.viewDocumentHandler(request));
     }
 
-    /**
+    /*
      * Generate list of images/pages [GET request]
-     *
-     * @param callback
-     * @param data
-     * @param request
-     * @return
      */
     @Override
     @RequestMapping(value = VIEW_DOCUMENT_HANDLER, method = RequestMethod.GET)
@@ -140,11 +145,8 @@ public class HomeController extends GroupDocsViewer {
         return jsonOut(viewerHandler.viewDocumentHandler(callback, data, request));
     }
 
-    /**
+    /*
      * Load tree of files from base directory [POST request]
-     *
-     * @param request
-     * @return
      */
     @Override
     @RequestMapping(value = LOAD_FILE_BROWSER_TREE_DATA_HANLER, method = RequestMethod.POST)
@@ -152,12 +154,8 @@ public class HomeController extends GroupDocsViewer {
         return jsonOut(viewerHandler.loadFileBrowserTreeDataHandler(request));
     }
 
-    /**
+    /*
      * Load tree of files from base directory [GET request]
-     *
-     * @param callback
-     * @param data
-     * @return
      */
     @Override
     @RequestMapping(value = LOAD_FILE_BROWSER_TREE_DATA_HANLER, method = RequestMethod.GET)
@@ -165,11 +163,8 @@ public class HomeController extends GroupDocsViewer {
         return jsonOut(viewerHandler.loadFileBrowserTreeDataHandler(callback, data));
     }
 
-    /**
+    /*
      * Get thumbs and other images files [POST request]
-     *
-     * @param request
-     * @return
      */
     @Override
     @RequestMapping(value = GET_IMAGE_URL_HANDLER, method = RequestMethod.POST)
@@ -177,13 +172,8 @@ public class HomeController extends GroupDocsViewer {
         return jsonOut(new Gson().toJson(viewerHandler.getImageUrlsHandler(request)));
     }
 
-    /**
+    /*
      * Get thumbs and other images files [GET request]
-     *
-     * @param callback
-     * @param data
-     * @param request
-     * @return
      */
     @Override
     @RequestMapping(value = GET_IMAGE_URL_HANDLER, method = RequestMethod.GET)
@@ -191,11 +181,8 @@ public class HomeController extends GroupDocsViewer {
         return jsonOut(viewerHandler.getImageUrlsHandler(callback, data, request));
     }
 
-    /**
+    /*
      * Converts document to PDF and then to JavaScript for text search and selection [POST request]
-     *
-     * @param request
-     * @return
      */
     @Override
     @RequestMapping(value = GET_PDF_2_JAVA_SCRIPT_HANDLER, method = RequestMethod.POST)
@@ -203,12 +190,8 @@ public class HomeController extends GroupDocsViewer {
         return jsonOut(viewerHandler.getPdf2JavaScriptHandler(request));
     }
 
-    /**
+    /*
      * Converts document to PDF and then to JavaScript for text search and selection [GET request]
-     *
-     * @param callback
-     * @param data
-     * @return
      */
     @Override
     @RequestMapping(value = GET_PDF_2_JAVA_SCRIPT_HANDLER, method = RequestMethod.GET)
@@ -216,11 +199,8 @@ public class HomeController extends GroupDocsViewer {
         return jsonOut(viewerHandler.getPdf2JavaScriptHandler(callback, data));
     }
 
-    /**
+    /*
      * Print document [POST request]
-     *
-     * @param request
-     * @return
      */
     @Override
     @RequestMapping(value = GET_PRINTABLE_HTML_HANDLER, method = RequestMethod.POST)
@@ -228,13 +208,8 @@ public class HomeController extends GroupDocsViewer {
         return typeOut(viewerHandler.getPrintableHtmlHandler(request), MediaType.TEXT_HTML);
     }
 
-    /**
+    /*
      * Print document [GET request]
-     *
-     * @param callback
-     * @param data
-     * @param request
-     * @return
      */
     @Override
     @RequestMapping(value = GET_PRINTABLE_HTML_HANDLER, method = RequestMethod.GET)
