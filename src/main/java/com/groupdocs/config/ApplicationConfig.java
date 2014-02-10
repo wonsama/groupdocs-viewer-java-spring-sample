@@ -16,6 +16,10 @@ public class ApplicationConfig {
     protected String basePath;
     @Property(key = "groupdocs.viewer.licensePath")
     protected String licensePath;
+    @Property(key = "groupdocs.viewer.useAuthorization")
+    protected Boolean useAuthorization;
+    @Property(key = "groupdocs.viewer.useCache")
+    protected Boolean useCache;
     @Property(key = "groupdocs.viewer.showHeader")
     protected Boolean showHeader;
     @Property(key = "groupdocs.viewer.showThumbnails")
@@ -53,6 +57,22 @@ public class ApplicationConfig {
 
     public void setLicensePath(String licensePath) {
         this.licensePath = licensePath;
+    }
+
+    public Boolean useAuthorization() {
+        return useAuthorization;
+    }
+
+    public void setUseAuthorization(Boolean useAuthorization) {
+        this.useAuthorization = useAuthorization;
+    }
+
+    public Boolean useCache() {
+        return useCache;
+    }
+
+    public void setUseCache(Boolean useCache) {
+        this.useCache = useCache;
     }
 
     public Boolean getShowHeader() {

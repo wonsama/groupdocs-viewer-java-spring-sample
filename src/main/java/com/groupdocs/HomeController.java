@@ -48,11 +48,15 @@ public class HomeController extends GroupDocsViewer {
             String basePath = applicationConfig.getBasePath();
             // File license path
             String licensePath = applicationConfig.getLicensePath();
+            // Authorization
+            boolean useAuth = applicationConfig.useAuthorization();
+            // Use cache
+            boolean useCache = applicationConfig.useCache();
             // Assets path, where all js and css files will be stored
             String assetsDir = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getAbsolutePath() + "\\assets\\";
             // INITIALIZE GroupDocs Java Viewer Object
-            Assets assets = new Assets(assetsDir, DOCUMENT_VIEWER);
-            ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, licensePath, assets, Boolean.FALSE, Boolean.TRUE);
+            Assets assets = new Assets(assetsDir, "");
+            ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, licensePath, assets, useAuth, useCache);
             viewerHandler = new ViewerHandler(config /*, new CustomInputDataHandler(config)*/);
         }
         // Setting header in jsp page
