@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 
 /**
- * Created by liosha on 23.01.14.
+ * @author Aleksey Permyakov, Alex Bobkov
  */
 public class CustomInputDataHandler extends InputDataHandler {
     private final HashMap<String, String> fileId2FilePath = new HashMap<String, String>();
@@ -50,5 +50,15 @@ public class CustomInputDataHandler extends InputDataHandler {
             return FileType.valueOf(fileName.substring(fileName.lastIndexOf(".") + 1).toUpperCase());
         }
         return FileType.DIRECTORY;
+    }
+
+    @Override
+    public String saveFile(File file) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String saveFile(InputStream inputStream, String fileName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

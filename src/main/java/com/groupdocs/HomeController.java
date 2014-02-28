@@ -24,9 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * User: liosha
- * Date: 05.12.13
- * Time: 22:54
+ *
+ * @author Aleksey Permyakov, Alex Bobkov
  */
 @Controller
 public class HomeController extends GroupDocsViewer {
@@ -36,11 +35,12 @@ public class HomeController extends GroupDocsViewer {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return index(model, request, response, "", null);
+        return index(model, request, response, null, null, null);
     }
 
-    @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "fileId", required = false) String fileId, @RequestParam(value = "fileUrl", required = false) String fileUrl) throws Exception {
+    @RequestMapping(value = VIEW, method = RequestMethod.GET)
+    public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "filePath", required = false) String filePath, 
+            @RequestParam(value = "fileUrl", required = false) String fileUrl, @RequestParam(value = "fileId", required = false) String fileId) throws Exception {
         if (viewerHandler == null) {
             // Application path
             String appPath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
@@ -59,13 +59,15 @@ public class HomeController extends GroupDocsViewer {
         // Setting header in jsp page
         model.addAttribute("groupdocsHeader", viewerHandler.getHeader());
         // Initialization of Viewer with document from this path
-        GroupDocsFilePath groupDocsFilePath;
-        if (StringUtils.isNotEmpty(fileUrl)) {
-            groupDocsFilePath = new GroupDocsFilePath(fileUrl);
-        } else {
-            groupDocsFilePath = new GroupDocsFilePath(fileId);
+        String encodedPath = "";
+        if(StringUtils.isNotEmpty(fileUrl)) {
+            encodedPath = new GroupDocsFilePath(fileUrl).getPath();
+        }else if(StringUtils.isNotEmpty(filePath)){
+            encodedPath = new GroupDocsFilePath(filePath).getPath();
+        }else if(StringUtils.isNotEmpty(fileId)){
+            encodedPath = fileId;
         }
-        model.addAttribute("filePath", groupDocsFilePath.getPath());
+        model.addAttribute("filePath", encodedPath);
         // Viewer config
         model.addAttribute("showHeader", applicationConfig.getShowHeader());
         model.addAttribute("showThumbnails", applicationConfig.getShowThumbnails());
@@ -215,6 +217,15 @@ public class HomeController extends GroupDocsViewer {
     @RequestMapping(value = GET_PRINTABLE_HTML_HANDLER, method = RequestMethod.GET)
     public ResponseEntity<String> getPrintableHtmlHandler(String callback, String data, HttpServletRequest request) {
         return jsonOut(viewerHandler.getPrintableHtmlHandler(callback, data, request));
+    }
+    
+    /*
+     * Upload document
+     */
+    @Override
+    @RequestMapping(value = UPLOAD_FILE, method = RequestMethod.GET)
+    public Object uploadFileHandler(String filePath) {
+        return jsonOut(viewerHandler.uploadFileHandler(filePath));
     }
 
     protected static ResponseEntity<String> jsonOut(Object obj) {
