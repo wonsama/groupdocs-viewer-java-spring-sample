@@ -222,7 +222,6 @@ public class HomeController extends GroupDocsViewer {
     /*
      * Upload document
      */
-    @Override
     @RequestMapping(value = UPLOAD_FILE, method = RequestMethod.GET)
     public Object uploadFileHandler(String filePath) {
         return jsonOut(viewerHandler.uploadFileHandler(filePath));

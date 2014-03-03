@@ -53,11 +53,6 @@ public class CustomInputDataHandler extends InputDataHandler {
     }
 
     @Override
-    public String saveFile(File file) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public String saveFile(InputStream inputStream, String fileName) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
