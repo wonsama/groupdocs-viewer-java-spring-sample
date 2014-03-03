@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>GroupDocs Viewer for Java Sample</title>
+        <title>GroupDocs.Viewer for Java Sample</title>
         ${groupdocsHeader}
     </head> 
     <body>
