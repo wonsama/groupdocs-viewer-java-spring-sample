@@ -224,7 +224,7 @@ public class HomeController extends GroupDocsViewer {
      */
     @RequestMapping(value = UPLOAD_FILE, method = RequestMethod.GET)
     public Object uploadFileHandler(String filePath) {
-        return jsonOut(viewerHandler.uploadFileHandler(filePath));
+        return jsonOut(viewerHandler.uploadFile(filePath));
     }
 
     protected static ResponseEntity<String> jsonOut(Object obj) {
