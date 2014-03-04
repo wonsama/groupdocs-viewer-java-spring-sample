@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
  *
@@ -222,9 +225,10 @@ public class HomeController extends GroupDocsViewer {
     /*
      * Upload document
      */
-    @RequestMapping(value = UPLOAD_FILE, method = RequestMethod.GET)
-    public Object uploadFileHandler(String filePath) {
-        return jsonOut(viewerHandler.uploadFile(filePath));
+    @RequestMapping(value = UPLOAD_FILE, method = RequestMethod.POST)
+    public @ResponseBody Object uploadFileHandler(@RequestParam("fileName") MultipartFile file){
+        System.out.println(file.getName());
+        return jsonOut(viewerHandler.uploadFile(""));
     }
 
     protected static ResponseEntity<String> jsonOut(Object obj) {

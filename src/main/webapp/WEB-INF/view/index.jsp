@@ -7,8 +7,15 @@
         <meta charset="utf-8">
         <title>GroupDocs.Viewer for Java Sample</title>
         ${groupdocsHeader}
+        <script type="text/javascript" src="resources/js/gd.upload.js"></script>
     </head> 
     <body>
+        <div>
+            <form enctype="multipart/form-data" method="POST" id="uploadForm" action="UploadFile">
+                <input type="file" id="fileUpload" name="fileName"/>
+                <input type="submit" id="submitUpload" value="Upload"/>
+            </form>
+        </div>
         <div id="test" style="width:${width}px;height:${height}px;overflow:hidden;position:relative;margin-bottom:20px;background-color:gray;border:1px solid #ccc;"></div>
         <script type="text/javascript">
             $(function() {

@@ -14,13 +14,13 @@
 
 
     <mvc:annotation-driven />
-    <mvc:resources mapping="/assets/**" location="classpath:/assets/" />
+    <mvc:resources mapping="/resources/**" location="/resources/viewer/" />
     <spa:property-placeholder-annotations location="classpath:application.properties" />
 
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-	        <!-- Example: a logical view name of 'showMessage' is mapped to '/WEB-INF/jsp/showMessage.jsp' -->
-	        <property name="prefix" value="/WEB-INF/view/"/>
-	        <property name="suffix" value=".jsp"/>
-	</bean>
-
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+            <!-- Example: a logical view name of 'showMessage' is mapped to '/WEB-INF/jsp/showMessage.jsp' -->
+            <property name="prefix" value="/WEB-INF/view/"/>
+            <property name="suffix" value=".jsp"/>
+    </bean>
+    
 </beans>
