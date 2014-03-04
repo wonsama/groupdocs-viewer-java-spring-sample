@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
  *
@@ -226,9 +226,15 @@ public class HomeController extends GroupDocsViewer {
      * Upload document
      */
     @RequestMapping(value = UPLOAD_FILE, method = RequestMethod.POST)
-    public @ResponseBody Object uploadFileHandler(@RequestParam("fileName") MultipartFile file){
-        System.out.println(file.getName());
-        return jsonOut(viewerHandler.uploadFile(""));
+    public void uploadFileHandler(@RequestParam("fileName") MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException{
+        // Upload file
+        String uploadResponse = (String) viewerHandler.uploadFile(file.getInputStream(), file.getOriginalFilename());
+        // Convert upload response to json object
+        JSONObject obj = new JSONObject(uploadResponse);
+        // Get token id
+        String tokenId = obj.getString("tokenId");
+        // Redirect to uplaoded file
+        response.sendRedirect(request.getContextPath() + VIEW + "?fileId=" + tokenId);
     }
 
     protected static ResponseEntity<String> jsonOut(Object obj) {
