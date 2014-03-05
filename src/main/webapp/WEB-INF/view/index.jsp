@@ -7,9 +7,9 @@
         <meta charset="utf-8">
         <title>GroupDocs.Viewer for Java Sample</title>
         ${groupdocsHeader}
-        <script type="text/javascript" src="resources/js/gd.upload.js"></script>
     </head> 
     <body>
+        <h1>GroupDocs.Viewer for Java Sample</h1>
         <div>
             <form enctype="multipart/form-data" method="POST" id="uploadForm" action="UploadFile">
                 <input type="file" id="fileUpload" name="fileName"/>
