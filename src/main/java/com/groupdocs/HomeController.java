@@ -66,7 +66,7 @@ public class HomeController extends GroupDocsViewer {
         if(StringUtils.isNotEmpty(fileUrl)) {
             encodedPath = new GroupDocsFilePath(fileUrl).getPath();
         }else if(StringUtils.isNotEmpty(filePath)){
-            encodedPath = new GroupDocsFilePath(filePath).getPath();
+            encodedPath = new GroupDocsFilePath(filePath, viewerHandler.getConfiguration()).getPath();
         }else if(StringUtils.isNotEmpty(fileId)){
             encodedPath = fileId;
         }
