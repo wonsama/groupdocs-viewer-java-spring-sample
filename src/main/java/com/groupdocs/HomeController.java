@@ -3,7 +3,11 @@ package com.groupdocs;
 import com.google.gson.Gson;
 import com.groupdocs.config.ApplicationConfig;
 import com.groupdocs.viewer.config.ServiceConfiguration;
-import com.groupdocs.viewer.domain.GroupDocsFilePath;
+import com.groupdocs.viewer.domain.FileId;
+import com.groupdocs.viewer.domain.FilePath;
+import com.groupdocs.viewer.domain.FileUrl;
+import com.groupdocs.viewer.domain.GroupDocsPath;
+import com.groupdocs.viewer.domain.TokenId;
 import com.groupdocs.viewer.handlers.ViewerHandler;
 import com.groupdocs.viewer.resources.GroupDocsViewer;
 import org.apache.commons.lang.StringUtils;
@@ -38,12 +42,13 @@ public class HomeController extends GroupDocsViewer {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return index(model, request, response, null, null, null);
+        return index(model, request, response, null, null, null, null);
     }
 
     @RequestMapping(value = VIEW, method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "filePath", required = false) String filePath, 
-            @RequestParam(value = "fileUrl", required = false) String fileUrl, @RequestParam(value = "fileId", required = false) String fileId) throws Exception {
+            @RequestParam(value = "fileUrl", required = false) String fileUrl, @RequestParam(value = "fileId", required = false) String fileId,
+            @RequestParam(value = "tokenId", required = false) String tokenId) throws Exception {
         if (viewerHandler == null) {
             // Application path
             String appPath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
@@ -62,15 +67,22 @@ public class HomeController extends GroupDocsViewer {
         // Setting header in jsp page
         model.addAttribute("groupdocsHeader", viewerHandler.getHeader());
         // Initialization of Viewer with document from this path
-        String encodedPath = "";
-        if(StringUtils.isNotEmpty(fileUrl)) {
-            encodedPath = new GroupDocsFilePath(fileUrl).getPath();
-        }else if(StringUtils.isNotEmpty(filePath)){
-            encodedPath = new GroupDocsFilePath(filePath, viewerHandler.getConfiguration()).getPath();
-        }else if(StringUtils.isNotEmpty(fileId)){
-            encodedPath = fileId;
+        String fPath = null;
+        GroupDocsPath gPath;
+        if(fileId !=null && !fileId.isEmpty()){
+            gPath = new FileId(fileId);
+        }else if(filePath != null && !filePath.isEmpty()){
+            gPath = new FilePath(filePath, viewerHandler.getConfiguration());
+        }else if(tokenId != null && !tokenId.isEmpty()){
+            TokenId tki = new TokenId(tokenId);
+            if(tki.isExpired()){
+                fPath = "";
+            }
+            gPath = tki;
+        }else{
+            gPath = new FileUrl(fileUrl);
         }
-        model.addAttribute("filePath", encodedPath);
+        model.addAttribute("filePath", (fPath == null) ? gPath.getPath() : fPath);
         // Viewer config
         model.addAttribute("showHeader", applicationConfig.getShowHeader());
         model.addAttribute("showThumbnails", applicationConfig.getShowThumbnails());
@@ -228,7 +240,7 @@ public class HomeController extends GroupDocsViewer {
     @RequestMapping(value = UPLOAD_FILE, method = RequestMethod.POST)
     public void uploadFileHandler(@RequestParam("fileName") MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException{
         // Upload file
-        String uploadResponse = (String) viewerHandler.uploadFile(file.getInputStream(), file.getOriginalFilename());
+        String uploadResponse = (String) viewerHandler.uploadFile(file.getInputStream(), file.getOriginalFilename(), 0);
         // Convert upload response to json object
         JSONObject obj = new JSONObject(uploadResponse);
         // Get token id
