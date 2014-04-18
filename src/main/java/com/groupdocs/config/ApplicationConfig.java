@@ -4,11 +4,8 @@ import com.urbanmania.spring.beans.factory.config.annotations.Property;
 import org.springframework.stereotype.Component;
 
 /**
- * Created with IntelliJ IDEA.
- * User: liosha
- * Date: 10.12.13
- * Time: 10:18
- * To change this template use File | Settings | File Templates.
+ * 
+ * @author Aleksey Permyakov, Alex Bobkov
  */
 @Component
 public class ApplicationConfig {
@@ -20,12 +17,22 @@ public class ApplicationConfig {
     protected Boolean useAuthorization;
     @Property(key = "groupdocs.viewer.useCache")
     protected Boolean useCache;
-    @Property(key = "groupdocs.viewer.showHeader")
-    protected Boolean showHeader;
+    @Property(key = "groupdocs.viewer.useHtmlBasedEngine")
+    protected Boolean useHtmlBasedEngine;
+    @Property(key = "groupdocs.viewer.expirationDate")
+    protected Integer expirationDate;
+    @Property(key = "groupdocs.viewer.quality")
+    protected Integer quality;
     @Property(key = "groupdocs.viewer.showThumbnails")
     protected Boolean showThumbnails;
     @Property(key = "groupdocs.viewer.openThumbnails")
     protected Boolean openThumbnails;
+    @Property(key = "groupdocs.viewer.initialZoom")
+    protected Integer initialZoom;
+    @Property(key = "groupdocs.viewer.zoomToFitWidth")
+    protected Boolean zoomToFitWidth;
+    @Property(key = "groupdocs.viewer.zoomToFitHeight")
+    protected Boolean zoomToFitHeight;
     @Property(key = "groupdocs.viewer.width")
     protected Integer width;
     @Property(key = "groupdocs.viewer.height")
@@ -40,8 +47,20 @@ public class ApplicationConfig {
     protected Boolean showZoom;
     @Property(key = "groupdocs.viewer.showPaging")
     protected Boolean showPaging;
+    @Property(key = "groupdocs.viewer.showViewerStyleControl")
+    protected Boolean showViewerStyleControl;
     @Property(key = "groupdocs.viewer.showSearch")
     protected Boolean showSearch;
+    @Property(key = "groupdocs.viewer.preloadPagesCount")
+    protected Integer preloadPagesCount;
+    @Property(key = "groupdocs.viewer.supportTextSelection")
+    protected Boolean supportTextSelection;
+    @Property(key = "groupdocs.viewer.usePdfPrinting")
+    protected Boolean usePdfPrinting;
+    @Property(key = "groupdocs.viewer.showHeader")
+    protected Boolean showHeader;
+    @Property(key = "groupdocs.viewer.useInnerThumbnails")
+    protected Boolean useInnerThumbnails;
 
     public String getBasePath() {
         return basePath;
@@ -59,7 +78,7 @@ public class ApplicationConfig {
         this.licensePath = licensePath;
     }
 
-    public Boolean useAuthorization() {
+    public Boolean isUseAuthorization() {
         return useAuthorization;
     }
 
@@ -67,7 +86,7 @@ public class ApplicationConfig {
         this.useAuthorization = useAuthorization;
     }
 
-    public Boolean useCache() {
+    public Boolean isUseCache() {
         return useCache;
     }
 
@@ -75,15 +94,31 @@ public class ApplicationConfig {
         this.useCache = useCache;
     }
 
-    public Boolean getShowHeader() {
-        return showHeader;
+    public Boolean isUseHtmlBasedEngine() {
+        return useHtmlBasedEngine;
     }
 
-    public void setShowHeader(Boolean showHeader) {
-        this.showHeader = showHeader;
+    public void setUseHtmlBasedEngine(Boolean useHtmlBasedEngine) {
+        this.useHtmlBasedEngine = useHtmlBasedEngine;
     }
 
-    public Boolean getShowThumbnails() {
+    public Integer getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(Integer expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public Integer getQuality() {
+        return quality;
+    }
+
+    public void setQuality(Integer quality) {
+        this.quality = quality;
+    }
+
+    public Boolean isShowThumbnails() {
         return showThumbnails;
     }
 
@@ -91,12 +126,36 @@ public class ApplicationConfig {
         this.showThumbnails = showThumbnails;
     }
 
-    public Boolean getOpenThumbnails() {
+    public Boolean isOpenThumbnails() {
         return openThumbnails;
     }
 
     public void setOpenThumbnails(Boolean openThumbnails) {
         this.openThumbnails = openThumbnails;
+    }
+
+    public Integer getInitialZoom() {
+        return initialZoom;
+    }
+
+    public void setInitialZoom(Integer initialZoom) {
+        this.initialZoom = initialZoom;
+    }
+
+    public Boolean isZoomToFitWidth() {
+        return zoomToFitWidth;
+    }
+
+    public void setZoomToFitWidth(Boolean zoomToFitWidth) {
+        this.zoomToFitWidth = zoomToFitWidth;
+    }
+
+    public Boolean isZoomToFitHeight() {
+        return zoomToFitHeight;
+    }
+
+    public void setZoomToFitHeight(Boolean zoomToFitHeight) {
+        this.zoomToFitHeight = zoomToFitHeight;
     }
 
     public Integer getWidth() {
@@ -115,7 +174,7 @@ public class ApplicationConfig {
         this.height = height;
     }
 
-    public Boolean getShowFolderBrowser() {
+    public Boolean isShowFolderBrowser() {
         return showFolderBrowser;
     }
 
@@ -123,7 +182,7 @@ public class ApplicationConfig {
         this.showFolderBrowser = showFolderBrowser;
     }
 
-    public Boolean getShowPrint() {
+    public Boolean isShowPrint() {
         return showPrint;
     }
 
@@ -131,7 +190,7 @@ public class ApplicationConfig {
         this.showPrint = showPrint;
     }
 
-    public Boolean getShowDownload() {
+    public Boolean isShowDownload() {
         return showDownload;
     }
 
@@ -139,7 +198,7 @@ public class ApplicationConfig {
         this.showDownload = showDownload;
     }
 
-    public Boolean getShowZoom() {
+    public Boolean isShowZoom() {
         return showZoom;
     }
 
@@ -147,7 +206,7 @@ public class ApplicationConfig {
         this.showZoom = showZoom;
     }
 
-    public Boolean getShowPaging() {
+    public Boolean isShowPaging() {
         return showPaging;
     }
 
@@ -155,12 +214,60 @@ public class ApplicationConfig {
         this.showPaging = showPaging;
     }
 
-    public Boolean getShowSearch() {
+    public Boolean isShowViewerStyleControl() {
+        return showViewerStyleControl;
+    }
+
+    public void setShowViewerStyleControl(Boolean showViewerStyleControl) {
+        this.showViewerStyleControl = showViewerStyleControl;
+    }
+
+    public Boolean isShowSearch() {
         return showSearch;
     }
 
     public void setShowSearch(Boolean showSearch) {
         this.showSearch = showSearch;
     }
-    
+
+    public Integer getPreloadPagesCount() {
+        return preloadPagesCount;
+    }
+
+    public void setPreloadPagesCount(Integer preloadPagesCount) {
+        this.preloadPagesCount = preloadPagesCount;
+    }
+
+    public Boolean isSupportTextSelection() {
+        return supportTextSelection;
+    }
+
+    public void setSupportTextSelection(Boolean supportTextSelection) {
+        this.supportTextSelection = supportTextSelection;
+    }
+
+    public Boolean isUsePdfPrinting() {
+        return usePdfPrinting;
+    }
+
+    public void setUsePdfPrinting(Boolean usePdfPrinting) {
+        this.usePdfPrinting = usePdfPrinting;
+    }
+
+    public Boolean isShowHeader() {
+        return showHeader;
+    }
+
+    public void setShowHeader(Boolean showHeader) {
+        this.showHeader = showHeader;
+    }
+
+    public Boolean isUseInnerThumbnails() {
+        return useInnerThumbnails;
+    }
+
+    public void setUseInnerThumbnails(Boolean useInnerThumbnails) {
+        this.useInnerThumbnails = useInnerThumbnails;
+    }
+
 }

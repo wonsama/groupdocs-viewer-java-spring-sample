@@ -10,7 +10,7 @@ import com.groupdocs.viewer.domain.GroupDocsPath;
 import com.groupdocs.viewer.domain.TokenId;
 import com.groupdocs.viewer.handlers.ViewerHandler;
 import com.groupdocs.viewer.resources.GroupDocsViewer;
-import org.apache.commons.lang.StringUtils;
+import java.io.FileNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -57,9 +57,9 @@ public class HomeController extends GroupDocsViewer {
             // File license path
             String licensePath = applicationConfig.getLicensePath();
             // Authorization
-            boolean useAuth = applicationConfig.useAuthorization();
+            boolean useAuth = applicationConfig.isUseAuthorization();
             // Use cache
-            boolean useCache = applicationConfig.useCache();
+            boolean useCache = applicationConfig.isUseCache();
             // INITIALIZE GroupDocs Java Viewer Object
             ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, licensePath, useAuth, useCache);
             viewerHandler = new ViewerHandler(config /*, new CustomInputDataHandler(config)*/);
@@ -67,39 +67,49 @@ public class HomeController extends GroupDocsViewer {
         // Setting header in jsp page
         model.addAttribute("groupdocsHeader", viewerHandler.getHeader());
         // Initialization of Viewer with document from this path
-        String fPath = null;
-        GroupDocsPath gPath;
+        GroupDocsPath gPath = null;
         if(fileId !=null && !fileId.isEmpty()){
             gPath = new FileId(fileId);
         }else if(filePath != null && !filePath.isEmpty()){
             gPath = new FilePath(filePath, viewerHandler.getConfiguration());
+        }else if(fileUrl != null && !fileUrl.isEmpty()){
+            gPath = new FileUrl(fileUrl);
         }else if(tokenId != null && !tokenId.isEmpty()){
             TokenId tki = new TokenId(tokenId);
             if(tki.isExpired()){
-                fPath = "";
+                gPath = null;
+            }else{
+                gPath = tki;
             }
-            gPath = tki;
-        }else{
-            gPath = new FileUrl(fileUrl);
         }
-        model.addAttribute("filePath", (fPath == null) ? gPath.getPath() : fPath);
+        model.addAttribute("filePath", (gPath == null) ? "" : gPath.getPath());
         // Viewer config
-        model.addAttribute("showHeader", applicationConfig.getShowHeader());
-        model.addAttribute("showThumbnails", applicationConfig.getShowThumbnails());
-        model.addAttribute("openThumbnails", applicationConfig.getOpenThumbnails());
+        model.addAttribute("useHtmlBasedEngine", applicationConfig.isUseHtmlBasedEngine());
+        model.addAttribute("quality", applicationConfig.getQuality());
+        model.addAttribute("showThumbnails", applicationConfig.isShowThumbnails());
+        model.addAttribute("openThumbnails", applicationConfig.isOpenThumbnails());
+        model.addAttribute("initialZoom", applicationConfig.getInitialZoom());
+        model.addAttribute("zoomToFitWidth", applicationConfig.isZoomToFitWidth());
+        model.addAttribute("zoomToFitHeight", applicationConfig.isZoomToFitHeight());
         model.addAttribute("width", applicationConfig.getWidth());
         model.addAttribute("height", applicationConfig.getHeight());
-        model.addAttribute("showFolderBrowser", applicationConfig.getShowFolderBrowser());
-        model.addAttribute("showPrint", applicationConfig.getShowPrint());
-        model.addAttribute("showDownload", applicationConfig.getShowDownload());
-        model.addAttribute("showZoom", applicationConfig.getShowZoom());
-        model.addAttribute("showPaging", applicationConfig.getShowPaging());
-        model.addAttribute("showSearch", applicationConfig.getShowSearch());
+        model.addAttribute("showFolderBrowser", applicationConfig.isShowFolderBrowser());
+        model.addAttribute("showPrint", applicationConfig.isShowPrint());
+        model.addAttribute("showDownload", applicationConfig.isShowDownload());
+        model.addAttribute("showZoom", applicationConfig.isShowZoom());
+        model.addAttribute("showPaging", applicationConfig.isShowPaging());
+        model.addAttribute("showViewerStyleControl", applicationConfig.isShowViewerStyleControl());
+        model.addAttribute("showSearch", applicationConfig.isShowSearch());
+        model.addAttribute("preloadPagesCount", applicationConfig.getPreloadPagesCount());
+        model.addAttribute("supportTextSelection", applicationConfig.isSupportTextSelection());
+        model.addAttribute("usePdfPrinting", applicationConfig.isUsePdfPrinting());
+        model.addAttribute("showHeader", applicationConfig.isShowHeader());
+        model.addAttribute("useInnerThumbnails", applicationConfig.isUseInnerThumbnails());
         return "index";
     }
     
     /*
-     * Get JavaScript files for Viewer UI building
+     * Get JavaScript files for Viewer UI building [GET request]
      */
     @Override
     @RequestMapping(value = GET_JS_HANDLER, method = RequestMethod.GET)
@@ -108,7 +118,7 @@ public class HomeController extends GroupDocsViewer {
     }
 
     /*
-     * Get CSS files for Viewer UI building
+     * Get CSS files for Viewer UI building [GET request]
      */
     @Override
     @RequestMapping(value = GET_CSS_HANDLER, method = RequestMethod.GET)
@@ -117,13 +127,31 @@ public class HomeController extends GroupDocsViewer {
     }
 
     /*
-     * Get images for Viewer UI building
+     * Get images for Viewer UI building [GET request]
      */
     @Override
     @RequestMapping(value = GET_IMAGE_HANDLER, method = RequestMethod.GET)
     public void getImageHandler(@PathVariable("name") String name, HttpServletResponse response) throws IOException {
         System.out.println(name);
         viewerHandler.getImageHandler(name, response);
+    }
+    
+    /*
+     * Get Fonts [GET request]
+     */
+    @Override
+    @RequestMapping(value = GET_FONT_HANDLER, method = RequestMethod.GET)
+    public void getFontHandler(@PathVariable("name") String fontName, HttpServletResponse response) throws IOException {
+        viewerHandler.getFontHandler(fontName, response);
+    }
+    
+    /*
+     * Get HTML resources [GET request]
+     */
+    @Override
+    @RequestMapping(value = GET_HTML_RESOURCES_HANDLER, method = RequestMethod.GET)
+    public void getHtmlRecoucesHandler(@RequestParam("filePath") String filePath, HttpServletResponse response) throws FileNotFoundException, IOException {
+        viewerHandler.getHtmlRecoucesHandler(filePath, response);
     }
 
     /*
@@ -140,8 +168,8 @@ public class HomeController extends GroupDocsViewer {
      */
     @Override
     @RequestMapping(value = GET_DOCUMENT_PAGE_IMAGE_HANDLER, method = RequestMethod.GET)
-    public void getDocumentPageImageHandler(@RequestParam("path") String guid, @RequestParam("width") String width, @RequestParam("quality") Integer quality, @RequestParam("usePdf") Boolean usePdf, @RequestParam("pageIndex") Integer pageIndex, HttpServletResponse response) throws Exception {
-        viewerHandler.getDocumentPageImageHandler(guid, width, quality, usePdf, pageIndex, response);
+    public void getDocumentPageImageHandler(@RequestParam("path") String path, @RequestParam("width") Integer width, @RequestParam("quality") Integer quality, @RequestParam("usePdf") Boolean usePdf, @RequestParam("pageIndex") Integer pageIndex, HttpServletResponse response) throws Exception {
+        viewerHandler.getDocumentPageImageHandler(path, width, quality, usePdf, pageIndex, response);
     }
 
     /*
@@ -240,13 +268,22 @@ public class HomeController extends GroupDocsViewer {
     @RequestMapping(value = UPLOAD_FILE, method = RequestMethod.POST)
     public void uploadFileHandler(@RequestParam("fileName") MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException{
         // Upload file
-        String uploadResponse = (String) viewerHandler.uploadFile(file.getInputStream(), file.getOriginalFilename(), 0);
+        String uploadResponse = (String) viewerHandler.uploadFile(file.getInputStream(), file.getOriginalFilename(), applicationConfig.getExpirationDate());
         // Convert upload response to json object
         JSONObject obj = new JSONObject(uploadResponse);
         // Get token id
         String tokenId = obj.getString("tokenId");
         // Redirect to uplaoded file
-        response.sendRedirect(request.getContextPath() + VIEW + "?fileId=" + tokenId);
+        response.sendRedirect(VIEW + "?tokenId=" + tokenId);
+    }
+    
+    /*
+     * Get document page HTML [POST request]
+     */
+    @RequestMapping(value = GET_DOCUMENT_PAGE_HTML_HANDLER, method = RequestMethod.POST)
+    @Override
+    public void getDocumentPageHtmlHandler(HttpServletRequest request, HttpServletResponse response) {
+        viewerHandler.getDocumentPageHtmlHandler(request, response);
     }
 
     protected static ResponseEntity<String> jsonOut(Object obj) {
@@ -262,4 +299,5 @@ public class HomeController extends GroupDocsViewer {
         }
         return new ResponseEntity<String>(obj.toString(), httpHeaders, HttpStatus.CREATED);
     }
+
 }
