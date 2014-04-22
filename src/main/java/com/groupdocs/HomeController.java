@@ -177,8 +177,8 @@ public class HomeController extends GroupDocsViewer {
      */
     @Override
     @RequestMapping(value = VIEW_DOCUMENT_HANDLER, method = RequestMethod.POST)
-    public ResponseEntity<String> viewDocumentHandler(HttpServletRequest request) {
-        return jsonOut(viewerHandler.viewDocumentHandler(request));
+    public ResponseEntity<String> viewDocumentHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(viewerHandler.viewDocumentHandler(request, response));
     }
 
     /*
@@ -186,8 +186,8 @@ public class HomeController extends GroupDocsViewer {
      */
     @Override
     @RequestMapping(value = VIEW_DOCUMENT_HANDLER, method = RequestMethod.GET)
-    public ResponseEntity<String> viewDocumentHandler(String callback, String data, HttpServletRequest request) {
-        return jsonOut(viewerHandler.viewDocumentHandler(callback, data, request));
+    public ResponseEntity<String> viewDocumentHandler(String callback, String data, HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(viewerHandler.viewDocumentHandler(callback, data, request, response));
     }
 
     /*
@@ -195,8 +195,8 @@ public class HomeController extends GroupDocsViewer {
      */
     @Override
     @RequestMapping(value = LOAD_FILE_BROWSER_TREE_DATA_HANLER, method = RequestMethod.POST)
-    public ResponseEntity<String> loadFileBrowserTreeDataHandler(HttpServletRequest request) {
-        return jsonOut(viewerHandler.loadFileBrowserTreeDataHandler(request));
+    public ResponseEntity<String> loadFileBrowserTreeDataHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(viewerHandler.loadFileBrowserTreeDataHandler(request, response));
     }
 
     /*
@@ -204,8 +204,8 @@ public class HomeController extends GroupDocsViewer {
      */
     @Override
     @RequestMapping(value = LOAD_FILE_BROWSER_TREE_DATA_HANLER, method = RequestMethod.GET)
-    public ResponseEntity<String> loadFileBrowserTreeDataHandler(String callback, String data) {
-        return jsonOut(viewerHandler.loadFileBrowserTreeDataHandler(callback, data));
+    public ResponseEntity<String> loadFileBrowserTreeDataHandler(String callback, String data, HttpServletResponse response) {
+        return jsonOut(viewerHandler.loadFileBrowserTreeDataHandler(callback, data, response));
     }
 
     /*
@@ -213,8 +213,8 @@ public class HomeController extends GroupDocsViewer {
      */
     @Override
     @RequestMapping(value = GET_IMAGE_URL_HANDLER, method = RequestMethod.POST)
-    public ResponseEntity<String> getImageUrlsHandler(HttpServletRequest request) {
-        return jsonOut(new Gson().toJson(viewerHandler.getImageUrlsHandler(request)));
+    public ResponseEntity<String> getImageUrlsHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(new Gson().toJson(viewerHandler.getImageUrlsHandler(request, response)));
     }
 
     /*
@@ -222,8 +222,8 @@ public class HomeController extends GroupDocsViewer {
      */
     @Override
     @RequestMapping(value = GET_IMAGE_URL_HANDLER, method = RequestMethod.GET)
-    public ResponseEntity<String> getImageUrlsHandler(String callback, String data, HttpServletRequest request) {
-        return jsonOut(viewerHandler.getImageUrlsHandler(callback, data, request));
+    public ResponseEntity<String> getImageUrlsHandler(String callback, String data, HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(viewerHandler.getImageUrlsHandler(callback, data, request, response));
     }
 
     /*
@@ -231,8 +231,8 @@ public class HomeController extends GroupDocsViewer {
      */
     @Override
     @RequestMapping(value = GET_PDF_2_JAVA_SCRIPT_HANDLER, method = RequestMethod.POST)
-    public ResponseEntity<String> getPdf2JavaScriptHandler(HttpServletRequest request) {
-        return jsonOut(viewerHandler.getPdf2JavaScriptHandler(request));
+    public ResponseEntity<String> getPdf2JavaScriptHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(viewerHandler.getPdf2JavaScriptHandler(request, response));
     }
 
     /*
@@ -240,8 +240,8 @@ public class HomeController extends GroupDocsViewer {
      */
     @Override
     @RequestMapping(value = GET_PDF_2_JAVA_SCRIPT_HANDLER, method = RequestMethod.GET)
-    public ResponseEntity<String> getPdf2JavaScriptHandler(String callback, String data) {
-        return jsonOut(viewerHandler.getPdf2JavaScriptHandler(callback, data));
+    public ResponseEntity<String> getPdf2JavaScriptHandler(String callback, String data, HttpServletResponse response) {
+        return jsonOut(viewerHandler.getPdf2JavaScriptHandler(callback, data, response));
     }
 
     /*
@@ -249,8 +249,8 @@ public class HomeController extends GroupDocsViewer {
      */
     @Override
     @RequestMapping(value = GET_PRINTABLE_HTML_HANDLER, method = RequestMethod.POST)
-    public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request) {
-        return typeOut(viewerHandler.getPrintableHtmlHandler(request), MediaType.TEXT_HTML);
+    public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request, HttpServletResponse response) {
+        return typeOut(viewerHandler.getPrintableHtmlHandler(request, response), MediaType.TEXT_HTML);
     }
 
     /*
@@ -258,8 +258,8 @@ public class HomeController extends GroupDocsViewer {
      */
     @Override
     @RequestMapping(value = GET_PRINTABLE_HTML_HANDLER, method = RequestMethod.GET)
-    public ResponseEntity<String> getPrintableHtmlHandler(String callback, String data, HttpServletRequest request) {
-        return jsonOut(viewerHandler.getPrintableHtmlHandler(callback, data, request));
+    public ResponseEntity<String> getPrintableHtmlHandler(String callback, String data, HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(viewerHandler.getPrintableHtmlHandler(callback, data, request, response));
     }
     
     /*
