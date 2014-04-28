@@ -3,7 +3,7 @@ package com.groupdocs.handler;
 import com.groupdocs.viewer.config.ServiceConfiguration;
 import com.groupdocs.viewer.domain.FileType;
 import com.groupdocs.viewer.handlers.InputDataHandler;
-import org.apache.commons.codec.binary.Base64;
+import com.groupdocs.viewer.resources.Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,14 +20,14 @@ public class CustomInputDataHandler extends InputDataHandler {
     private String basePath = null;
 
     public CustomInputDataHandler(ServiceConfiguration serviceConfiguration) {
-        basePath = serviceConfiguration.getBasePath() + "/files/";
+        basePath = serviceConfiguration.getBasePath();
     }
 
     @Override
     public HashMap<String, String> getFileList(String directory) {
         File[] files = new File(basePath + directory).listFiles();
         for (File file : files) {
-            String fileId = new String(Base64.encodeBase64(file.getName().getBytes())) + Long.toString(file.length());
+            String fileId = Utils.encodeData(file.getAbsolutePath());
             fileId2FilePath.put(fileId, file.getAbsolutePath());
             fileId2FileName.put(fileId, file.getName());
         }
