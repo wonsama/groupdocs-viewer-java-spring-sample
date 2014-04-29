@@ -60,8 +60,10 @@ public class HomeController extends GroupDocsViewer {
             boolean useAuth = applicationConfig.isUseAuthorization();
             // Use cache
             boolean useCache = applicationConfig.isUseCache();
+            // Default width
+            int width = applicationConfig.getWidth();
             // INITIALIZE GroupDocs Java Viewer Object
-            ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, licensePath, useAuth, useCache);
+            ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, licensePath, useAuth, useCache, width);
             viewerHandler = new ViewerHandler(config /*, new CustomInputDataHandler(config)*/);
         }
         // Setting header in jsp page
