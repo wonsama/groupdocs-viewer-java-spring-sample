@@ -61,6 +61,8 @@ public class ApplicationConfig {
     protected Boolean showHeader;
     @Property(key = "groupdocs.viewer.useInnerThumbnails")
     protected Boolean useInnerThumbnails;
+    @Property(key = "groupdocs.viewer.encKey")
+    protected String encKey;
 
     public String getBasePath() {
         return basePath;
@@ -268,6 +270,14 @@ public class ApplicationConfig {
 
     public void setUseInnerThumbnails(Boolean useInnerThumbnails) {
         this.useInnerThumbnails = useInnerThumbnails;
+    }
+
+    public String getEncKey() {
+        return encKey;
+    }
+
+    public void setEncKey(String encKey) {
+        this.encKey = encKey;
     }
 
 }

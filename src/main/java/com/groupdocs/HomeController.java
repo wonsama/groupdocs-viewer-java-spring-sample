@@ -62,8 +62,10 @@ public class HomeController extends GroupDocsViewer {
             boolean useCache = applicationConfig.isUseCache();
             // Default width
             int width = applicationConfig.getWidth();
+            // Encryption key
+            String encryptionKey = applicationConfig.getEncKey();
             // INITIALIZE GroupDocs Java Viewer Object
-            ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, licensePath, useAuth, useCache, width);
+            ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, licensePath, useAuth, useCache, width, encryptionKey);
             viewerHandler = new ViewerHandler(config /*, new CustomInputDataHandler(config)*/);
         }
         // Setting header in jsp page
@@ -77,7 +79,7 @@ public class HomeController extends GroupDocsViewer {
         }else if(fileUrl != null && !fileUrl.isEmpty()){
             gPath = new FileUrl(fileUrl);
         }else if(tokenId != null && !tokenId.isEmpty()){
-            TokenId tki = new TokenId(tokenId);
+            TokenId tki = new TokenId(tokenId, applicationConfig.getEncKey());
             if(tki.isExpired()){
                 gPath = null;
             }else{
