@@ -278,7 +278,8 @@ public class HomeController extends GroupDocsViewer {
         // Get token id
         String tokenId = obj.getString("tokenId");
         // Redirect to uplaoded file
-        response.sendRedirect(VIEW + "?tokenId=" + tokenId);
+        String appPath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        response.sendRedirect(appPath + VIEW + "?tokenId=" + tokenId);
     }
     
     /*
