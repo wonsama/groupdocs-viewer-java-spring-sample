@@ -52,20 +52,9 @@ public class HomeController extends GroupDocsViewer {
         if (viewerHandler == null) {
             // Application path
             String appPath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-            // File storage path
-            String basePath = applicationConfig.getBasePath();
-            // File license path
-            String licensePath = applicationConfig.getLicensePath();
-            // Authorization
-            boolean useAuth = applicationConfig.isUseAuthorization();
-            // Use cache
-            boolean useCache = applicationConfig.isUseCache();
-            // Default width
-            int width = applicationConfig.getWidth();
-            // Encryption key
-            String encryptionKey = applicationConfig.getEncKey();
+            applicationConfig.setApplicationPath(appPath);
             // INITIALIZE GroupDocs Java Viewer Object
-            ServiceConfiguration config = new ServiceConfiguration(appPath, basePath, licensePath, useAuth, useCache, width, encryptionKey);
+            ServiceConfiguration config = new ServiceConfiguration(applicationConfig);
             viewerHandler = new ViewerHandler(config /*, new CustomInputDataHandler(config)*/);
         }
         // Setting header in jsp page
@@ -79,36 +68,17 @@ public class HomeController extends GroupDocsViewer {
         }else if(fileUrl != null && !fileUrl.isEmpty()){
             gPath = new FileUrl(fileUrl);
         }else if(tokenId != null && !tokenId.isEmpty()){
-            TokenId tki = new TokenId(tokenId, applicationConfig.getEncKey());
+            TokenId tki = new TokenId(tokenId, applicationConfig.getEncryptionKey());
             if(tki.isExpired()){
                 gPath = null;
             }else{
                 gPath = tki;
             }
         }
-        model.addAttribute("filePath", (gPath == null) ? "" : gPath.getPath());
-        // Viewer config
-        model.addAttribute("useHtmlBasedEngine", applicationConfig.isUseHtmlBasedEngine());
-        model.addAttribute("quality", applicationConfig.getQuality());
-        model.addAttribute("showThumbnails", applicationConfig.isShowThumbnails());
-        model.addAttribute("openThumbnails", applicationConfig.isOpenThumbnails());
-        model.addAttribute("initialZoom", applicationConfig.getInitialZoom());
-        model.addAttribute("zoomToFitWidth", applicationConfig.isZoomToFitWidth());
-        model.addAttribute("zoomToFitHeight", applicationConfig.isZoomToFitHeight());
-        model.addAttribute("width", applicationConfig.getWidth());
-        model.addAttribute("height", applicationConfig.getHeight());
-        model.addAttribute("showFolderBrowser", applicationConfig.isShowFolderBrowser());
-        model.addAttribute("showPrint", applicationConfig.isShowPrint());
-        model.addAttribute("showDownload", applicationConfig.isShowDownload());
-        model.addAttribute("showZoom", applicationConfig.isShowZoom());
-        model.addAttribute("showPaging", applicationConfig.isShowPaging());
-        model.addAttribute("showViewerStyleControl", applicationConfig.isShowViewerStyleControl());
-        model.addAttribute("showSearch", applicationConfig.isShowSearch());
-        model.addAttribute("preloadPagesCount", applicationConfig.getPreloadPagesCount());
-        model.addAttribute("supportTextSelection", applicationConfig.isSupportTextSelection());
-        model.addAttribute("usePdfPrinting", applicationConfig.isUsePdfPrinting());
-        model.addAttribute("showHeader", applicationConfig.isShowHeader());
-        model.addAttribute("useInnerThumbnails", applicationConfig.isUseInnerThumbnails());
+        String viewerId = "test";
+        String initialFilePath = (gPath == null) ? "" : gPath.getPath();
+        String locale = null;
+        model.addAttribute("viewerScript", viewerHandler.getViewerScript(viewerId, initialFilePath, locale));
         return "index";
     }
     
