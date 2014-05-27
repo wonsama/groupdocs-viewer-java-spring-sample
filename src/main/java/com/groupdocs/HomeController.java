@@ -133,8 +133,8 @@ public class HomeController extends GroupDocsViewer {
      */
     @Override
     @RequestMapping(value = GET_FILE_HANDLER, method = RequestMethod.GET)
-    public void getFileHandler(@RequestParam("path") String path, HttpServletResponse response) throws Exception {
-        viewerHandler.getFileHandler(path, response);
+    public void getFileHandler(@RequestParam("path") String path, @RequestParam("getPdf") boolean getPdf, HttpServletResponse response) throws Exception {
+        viewerHandler.getFileHandler(path, getPdf, response);
     }
 
     /*
