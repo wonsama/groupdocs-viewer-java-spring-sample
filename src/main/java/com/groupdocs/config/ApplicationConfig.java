@@ -107,6 +107,24 @@ public class ApplicationConfig implements ServiceConfigurationBase{
     protected String watermarkText;
     @Property(key = "groupdocs.viewer.supportPageReordering")
     protected boolean supportPageReordering;
+    @Property(key = "groupdocs.viewer.watermarkColor")
+    protected String watermarkColor;
+    @Property(key = "groupdocs.viewer.onlyShrinkLargePages")
+    protected boolean onlyShrinkLargePages;
+    @Property(key = "groupdocs.viewer.searchHighlightColor")
+    protected String searchHighlightColor;
+    @Property(key = "groupdocs.viewer.currentSearchHighlightColor")
+    protected String currentSearchHighlightColor;
+    @Property(key = "groupdocs.viewer.treatPhrasesInDoubleQuotesAsExactPhrases")
+    protected boolean treatPhrasesInDoubleQuotesAsExactPhrases;
+    @Property(key = "groupdocs.viewer.usePngImagesForHtmlBasedEngine")
+    protected boolean usePngImagesForHtmlBasedEngine;
+    @Property(key = "groupdocs.viewer.showOnePageInRow")
+    protected boolean showOnePageInRow;
+    @Property(key = "groupdocs.viewer.loadAllPagesOnSearch")
+    protected boolean loadAllPagesOnSearch;
+    @Property(key = "groupdocs.viewer.useEmScaling")
+    protected boolean useEmScaling;
 
     @Override
     public String getApplicationPath() {
@@ -547,6 +565,87 @@ public class ApplicationConfig implements ServiceConfigurationBase{
 
     public void setSupportPageReordering(boolean supportPageReordering) {
         this.supportPageReordering = supportPageReordering;
+    }
+
+    @Override
+    public String getWatermarkColor() {
+        return watermarkColor;
+    }
+
+    public void setWatermarkColor(String watermarkColor) {
+        this.watermarkColor = watermarkColor;
+    }
+
+    @Override
+    public boolean isOnlyShrinkLargePages() {
+        return onlyShrinkLargePages;
+    }
+
+    public void setOnlyShrinkLargePages(boolean onlyShrinkLargePages) {
+        this.onlyShrinkLargePages = onlyShrinkLargePages;
+    }
+
+    @Override
+    public String getSearchHighlightColor() {
+        return searchHighlightColor;
+    }
+
+    public void setSearchHighlightColor(String searchHighlightColor) {
+        this.searchHighlightColor = searchHighlightColor;
+    }
+
+    @Override
+    public String getCurrentSearchHighlightColor() {
+        return currentSearchHighlightColor;
+    }
+
+    public void setCurrentSearchHighlightColor(String currentSearchHighlightColor) {
+        this.currentSearchHighlightColor = currentSearchHighlightColor;
+    }
+
+    @Override
+    public boolean isTreatPhrasesInDoubleQuotesAsExactPhrases() {
+        return treatPhrasesInDoubleQuotesAsExactPhrases;
+    }
+
+    public void setTreatPhrasesInDoubleQuotesAsExactPhrases(boolean treatPhrasesInDoubleQuotesAsExactPhrases) {
+        this.treatPhrasesInDoubleQuotesAsExactPhrases = treatPhrasesInDoubleQuotesAsExactPhrases;
+    }
+
+    @Override
+    public boolean isUsePngImagesForHtmlBasedEngine() {
+        return usePngImagesForHtmlBasedEngine;
+    }
+
+    public void setUsePngImagesForHtmlBasedEngine(boolean usePngImagesForHtmlBasedEngine) {
+        this.usePngImagesForHtmlBasedEngine = usePngImagesForHtmlBasedEngine;
+    }
+
+    @Override
+    public boolean isShowOnePageInRow() {
+        return showOnePageInRow;
+    }
+
+    public void setShowOnePageInRow(boolean showOnePageInRow) {
+        this.showOnePageInRow = showOnePageInRow;
+    }
+
+    @Override
+    public boolean isLoadAllPagesOnSearch() {
+        return loadAllPagesOnSearch;
+    }
+
+    public void setLoadAllPagesOnSearch(boolean loadAllPagesOnSearch) {
+        this.loadAllPagesOnSearch = loadAllPagesOnSearch;
+    }
+
+    @Override
+    public boolean isUseEmScaling() {
+        return useEmScaling;
+    }
+
+    public void setUseEmScaling(boolean useEmScaling) {
+        this.useEmScaling = useEmScaling;
     }
 
 }
