@@ -35,7 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Aleksey Permyakov, Alex Bobkov
  */
 @Controller
-public class HomeController extends GroupDocsViewer {
+public class HomeController extends HomeContollerBase {
     @Autowired
     protected ApplicationConfig applicationConfig;
     protected ViewerHandler viewerHandler = null;
@@ -261,18 +261,14 @@ public class HomeController extends GroupDocsViewer {
         viewerHandler.getDocumentPageHtmlHandler(request, response);
     }
 
-    protected static ResponseEntity<String> jsonOut(Object obj) {
-        return typeOut(obj, MediaType.APPLICATION_JSON);
-    }
 
-    protected static ResponseEntity<String> typeOut(Object obj, MediaType mediaType) {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        if (mediaType == MediaType.APPLICATION_JSON) {
-            httpHeaders.set("Content-type", "application/json;charset=UTF-8");
-        } else {
-            httpHeaders.setContentType(mediaType);
-        }
-        return new ResponseEntity<String>(obj.toString(), httpHeaders, HttpStatus.CREATED);
+    /*
+    * Get pdf with print dialog [GET request]
+    */
+    @RequestMapping(value = GET_PDF_WITH_PRINT_DIALOG, method = RequestMethod.GET)
+    @Override
+    public void getPdfWithPrintDialog(@RequestParam("path") String path, HttpServletResponse response) {
+        viewerHandler.getPdfWithPrintDialog(path, response);
     }
 
 }
