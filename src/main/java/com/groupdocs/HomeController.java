@@ -9,11 +9,8 @@ import com.groupdocs.viewer.domain.FileUrl;
 import com.groupdocs.viewer.domain.GroupDocsPath;
 import com.groupdocs.viewer.domain.TokenId;
 import com.groupdocs.viewer.handlers.ViewerHandler;
-import com.groupdocs.viewer.resources.GroupDocsViewer;
 import java.io.FileNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -269,6 +266,15 @@ public class HomeController extends HomeContollerBase {
     @Override
     public void getPdfWithPrintDialog(@RequestParam("path") String path, HttpServletResponse response) {
         viewerHandler.getPdfWithPrintDialog(path, response);
+    }
+
+    /*
+    * Reorder pages [POST request]
+    */
+    @RequestMapping(value = REORDER_PAGE_HANDLER, method = RequestMethod.POST)
+    @Override
+    public Object reorderPageHandler(HttpServletRequest request, HttpServletResponse response) {
+        return viewerHandler.reorderPageHandler(request, response);
     }
 
 }
