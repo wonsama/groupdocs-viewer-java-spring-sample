@@ -185,7 +185,7 @@ public class HomeController extends HomeContollerBase {
     @Override
     @RequestMapping(value = GET_IMAGE_URL_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> getImageUrlsHandler(HttpServletRequest request, HttpServletResponse response) {
-        return jsonOut(new Gson().toJson(viewerHandler.getImageUrlsHandler(request, response)));
+        return jsonOut(viewerHandler.getImageUrlsHandler(request, response));
     }
 
     /*
