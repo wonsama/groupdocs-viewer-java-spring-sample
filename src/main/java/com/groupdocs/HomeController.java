@@ -74,7 +74,7 @@ public class HomeController extends HomeContollerBase {
         }
         String viewerId = "test";
         String initialFilePath = (gPath == null) ? "" : gPath.getPath();
-        String locale = null;
+        String locale = viewerHandler.getLocale();
         model.addAttribute("viewerScript", viewerHandler.getViewerScript(viewerId, initialFilePath, locale));
         return "index";
     }
