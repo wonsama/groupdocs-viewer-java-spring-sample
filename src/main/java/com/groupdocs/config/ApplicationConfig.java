@@ -19,6 +19,8 @@ public class ApplicationConfig implements ServiceConfigurationBase{
     protected boolean useAuthorization;
     @Property(key = "groupdocs.viewer.useCache")
     protected boolean useCache;
+    @Property(key = "groupdocs.viewer.useBrowserCache")
+    protected boolean useBrowserCache;
     @Property(key = "groupdocs.viewer.expirationDate")
     protected int expirationDate;
     @Property(key = "groupdocs.viewer.encryptionKey")
@@ -171,6 +173,15 @@ public class ApplicationConfig implements ServiceConfigurationBase{
         this.useCache = useCache;
     }
 
+    @Override
+    public boolean isUseBrowserCache() {
+        return useBrowserCache;
+    }
+
+    public void setUseBrowserCache(boolean useBrowserCache) {
+        this.useBrowserCache = useBrowserCache;
+    }
+    
     @Override
     public int getExpirationDate() {
         return expirationDate;
