@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ApplicationConfig implements ServiceConfigurationBase{
+    @Property(key = "groupdocs.viewer.applicationPath")
     protected String applicationPath;
     @Property(key = "groupdocs.viewer.filePath")
     protected String basePath;

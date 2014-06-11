@@ -1,6 +1,5 @@
 package com.groupdocs;
 
-import com.google.gson.Gson;
 import com.groupdocs.config.ApplicationConfig;
 import com.groupdocs.viewer.config.ServiceConfiguration;
 import com.groupdocs.viewer.domain.FileId;
@@ -47,9 +46,6 @@ public class HomeController extends HomeContollerBase {
             @RequestParam(value = "fileUrl", required = false) String fileUrl, @RequestParam(value = "fileId", required = false) String fileId,
             @RequestParam(value = "tokenId", required = false) String tokenId) throws Exception {
         if (viewerHandler == null) {
-            // Application path
-            String appPath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-            applicationConfig.setApplicationPath(appPath);
             // INITIALIZE GroupDocs Java Viewer Object
             ServiceConfiguration config = new ServiceConfiguration(applicationConfig);
             viewerHandler = new ViewerHandler(config /*, new CustomInputDataHandler(config)*/);
