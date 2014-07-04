@@ -2,11 +2,9 @@ package com.groupdocs;
 
 import com.groupdocs.config.ApplicationConfig;
 import com.groupdocs.viewer.config.ServiceConfiguration;
-import com.groupdocs.viewer.domain.FileId;
-import com.groupdocs.viewer.domain.FilePath;
-import com.groupdocs.viewer.domain.FileUrl;
-import com.groupdocs.viewer.domain.GroupDocsPath;
-import com.groupdocs.viewer.domain.TokenId;
+import com.groupdocs.viewer.domain.path.EncodedPath;
+import com.groupdocs.viewer.domain.path.GroupDocsPath;
+import com.groupdocs.viewer.domain.path.TokenId;
 import com.groupdocs.viewer.handlers.ViewerHandler;
 import java.io.FileNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +36,11 @@ public class HomeController extends HomeContollerBase {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return index(model, request, response, null, null, null, null);
+        return index(model, request, response, null, null);
     }
 
     @RequestMapping(value = VIEW, method = RequestMethod.GET)
-    public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "filePath", required = false) String filePath, 
-            @RequestParam(value = "fileUrl", required = false) String fileUrl, @RequestParam(value = "fileId", required = false) String fileId,
+    public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "file", required = false) String file, 
             @RequestParam(value = "tokenId", required = false) String tokenId) throws Exception {
         if (viewerHandler == null) {
             // INITIALIZE GroupDocs Java Viewer Object
@@ -53,23 +50,17 @@ public class HomeController extends HomeContollerBase {
         // Setting header in jsp page
         model.addAttribute("groupdocsHeader", viewerHandler.getHeader());
         // Initialization of Viewer with document from this path
-        GroupDocsPath gPath = null;
-        if(fileId !=null && !fileId.isEmpty()){
-            gPath = new FileId(fileId);
-        }else if(filePath != null && !filePath.isEmpty()){
-            gPath = new FilePath(filePath, viewerHandler.getConfiguration());
-        }else if(fileUrl != null && !fileUrl.isEmpty()){
-            gPath = new FileUrl(fileUrl);
+        GroupDocsPath path = null;
+        if(file != null && !file.isEmpty()){
+            path = new EncodedPath(file, viewerHandler.getConfiguration());
         }else if(tokenId != null && !tokenId.isEmpty()){
             TokenId tki = new TokenId(tokenId, applicationConfig.getEncryptionKey());
-            if(tki.isExpired()){
-                gPath = null;
-            }else{
-                gPath = tki;
+            if(!tki.isExpired()){
+                path = tki;
             }
         }
         String viewerId = "test";
-        String initialFilePath = (gPath == null) ? "" : gPath.getPath();
+        String initialFilePath = (path == null) ? "" : path.getPath();
         String locale = viewerHandler.getLocale();
         model.addAttribute("viewerScript", viewerHandler.getViewerScript(viewerId, initialFilePath, locale));
         return "index";
