@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
  *
  * @author Alex Bobkov
  */
-public abstract class HomeContollerBase extends GroupDocsViewer{
+public abstract class HomeControllerBase extends GroupDocsViewer{
     
     protected ResponseEntity<String> writeOutputJson(Object obj) {
         return writeOutput(obj, MediaType.APPLICATION_JSON);
@@ -36,13 +36,13 @@ public abstract class HomeContollerBase extends GroupDocsViewer{
         try {
             IOUtils.copy((InputStream) inputStream, response.getOutputStream());
         } catch (IOException ex) {
-            Logger.getLogger(HomeContollerBase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HomeControllerBase.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             if(inputStream != null){
                 try {
                     inputStream.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(HomeContollerBase.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(HomeControllerBase.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Aleksey Permyakov, Alex Bobkov
  */
 @Controller
-public class HomeController extends HomeContollerBase {
+public class HomeController extends HomeControllerBase {
     @Autowired
     protected ApplicationConfig applicationConfig;
     protected ViewerHandler viewerHandler = null;
