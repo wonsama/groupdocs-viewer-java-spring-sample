@@ -238,7 +238,7 @@ public class HomeController extends HomeControllerBase {
         // Get token id
         String tokenId = obj.getString("tokenId");
         // Redirect to uplaoded file
-        response.sendRedirect(applicationConfig.getApplicationPath() + VIEW + "?tokenId=" + tokenId);
+        response.sendRedirect("view?tokenId=" + tokenId);
     }
     
     /*
