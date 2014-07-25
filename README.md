@@ -1,4 +1,4 @@
-Groupdocs.Viewer for Java (Spring Sample) 2.2.0
+Groupdocs.Viewer for Java (Spring Sample) 2.3.0
 ===========================================
 
 1. Install GroupDocs.Viewer for Java library into maven http://groupdocs.com/java/document-viewer-library
