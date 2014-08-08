@@ -17,6 +17,8 @@ public class ApplicationConfig implements ServiceConfigurationBase{
     @Property(key = "groupdocs.viewer.licensePath")
     protected String licensePath;
     @Property(key = "groupdocs.viewer.localesPath")
+    protected String uploadPath;
+    @Property(key = "groupdocs.viewer.uploadPath")
     protected String localesPath;
     @Property(key = "groupdocs.viewer.useAuthorization")
     protected boolean useAuthorization;
@@ -156,6 +158,15 @@ public class ApplicationConfig implements ServiceConfigurationBase{
 
     public void setLicensePath(String licensePath) {
         this.licensePath = licensePath;
+    }
+
+    @Override
+    public String getUploadPath() {
+        return uploadPath;
+    }
+
+    public void setUploadPath(String uploadPath) {
+        this.uploadPath = uploadPath;
     }
 
     @Override
