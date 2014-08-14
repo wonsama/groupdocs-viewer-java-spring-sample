@@ -17,9 +17,9 @@ public class ApplicationConfig implements ServiceConfigurationBase{
     @Property(key = "groupdocs.viewer.licensePath")
     protected String licensePath;
     @Property(key = "groupdocs.viewer.localesPath")
-    protected String uploadPath;
-    @Property(key = "groupdocs.viewer.uploadPath")
     protected String localesPath;
+    @Property(key = "groupdocs.viewer.uploadPath")
+    protected String uploadPath;
     @Property(key = "groupdocs.viewer.useAuthorization")
     protected boolean useAuthorization;
     @Property(key = "groupdocs.viewer.useCache")
