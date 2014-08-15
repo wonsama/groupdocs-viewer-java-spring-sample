@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.groupdocs.samples</groupId>
-    <artifactId>groupdocs-viewer-tomcat</artifactId>
+    <artifactId>groupdocs-viewer-spring</artifactId>
     <version>2.4.0</version>
     <packaging>war</packaging>
   
@@ -9,37 +9,50 @@
     <url>http://maven.apache.org</url>
 	
     <properties>
-        <groupdocs.viewer>${project.version}</groupdocs.viewer>
-        
         <!-- Generic properties -->
         <java.version>1.6</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		
-        <!-- Web -->
-        <jsp.version>2.3.1</jsp.version>
-        <jstl.version>1.2</jstl.version>
-        <servlet.version>3.1.0</servlet.version>
-
+        <!-- GroupDocs -->
+        <groupdocs.viewer>${project.version}</groupdocs.viewer>
         <!-- Spring -->
         <spring-framework.version>3.2.5.RELEASE</spring-framework.version>
-
-        <!-- Logging -->
-        <logback.version>1.0.13</logback.version>
+        <!-- Servlet -->
+        <servlet.version>3.1.0</servlet.version>
+        <jstl.version>1.2</jstl.version>
+        <jsp.version>2.3.1</jsp.version>
+        <!-- Logging with SLF4J & LogBack -->
         <slf4j.version>1.7.5</slf4j.version>
-
-        <!-- Test -->
-        <junit.version>4.11</junit.version>
+        <logback.version>1.0.13</logback.version>
+        <!-- Properties -->
+        <spring-property-annotations.version>0.1.8</spring-property-annotations.version>
+        <!-- Json -->
+        <gson.version>2.2.4</gson.version>
+        <!-- Apache commons -->
+        <commons-io.version>2.4</commons-io.version>
+        <commons-fileupload.version>1.2.2</commons-fileupload.version>
     </properties>
 	
     <dependencies>
+        <!-- GroupDocs -->
+        <dependency>
+            <groupId>com.groupdocs</groupId>
+            <artifactId>groupdocs-viewer</artifactId>
+            <version>${groupdocs.viewer}</version>
+            <type>jar</type>
+        </dependency>
         <!-- Spring MVC -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring-framework.version}</version>
         </dependency>
-		
+        <!-- Spring and Transactions -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring-framework.version}</version>
+        </dependency>
         <!-- Other Web dependencies -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -58,14 +71,6 @@
             <version>${jsp.version}</version>
             <scope>provided</scope>
         </dependency>
-	
-        <!-- Spring and Transactions -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>${spring-framework.version}</version>
-        </dependency>
-
         <!-- Logging with SLF4J & LogBack -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -79,33 +84,26 @@
             <version>${logback.version}</version>
             <scope>runtime</scope>
         </dependency>
-        <!-- GroupDocs -->
-        <dependency>
-            <groupId>com.groupdocs</groupId>
-            <artifactId>groupdocs-viewer</artifactId>
-            <version>${groupdocs.viewer}</version>
-            <type>jar</type>
-        </dependency>
         <!-- Properties -->
         <dependency>
             <groupId>com.urbanmania</groupId>
             <artifactId>spring-property-annotations</artifactId>
-            <version>0.1.8</version>
+            <version>${spring-property-annotations.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.2.4</version>
+            <version>${gson.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.4</version>
+            <version>${commons-io.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
-            <version>1.2.2</version>
+            <version>${commons-fileupload.version}</version>
         </dependency>
     </dependencies>
     <build>
