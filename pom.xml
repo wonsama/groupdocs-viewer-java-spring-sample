@@ -9,7 +9,6 @@
     <url>http://maven.apache.org</url>
 	
     <properties>
-        
         <groupdocs.viewer>${project.version}</groupdocs.viewer>
         
         <!-- Generic properties -->
@@ -21,13 +20,9 @@
         <jsp.version>2.3.1</jsp.version>
         <jstl.version>1.2</jstl.version>
         <servlet.version>3.1.0</servlet.version>
-		
 
         <!-- Spring -->
         <spring-framework.version>3.2.5.RELEASE</spring-framework.version>
-
-        <!-- Hibernate / JPA -->
-        <hibernate.version>4.2.1.Final</hibernate.version>
 
         <!-- Logging -->
         <logback.version>1.0.13</logback.version>
@@ -35,11 +30,9 @@
 
         <!-- Test -->
         <junit.version>4.11</junit.version>
-
     </properties>
 	
     <dependencies>
-	
         <!-- Spring MVC -->
         <dependency>
             <groupId>org.springframework</groupId>
