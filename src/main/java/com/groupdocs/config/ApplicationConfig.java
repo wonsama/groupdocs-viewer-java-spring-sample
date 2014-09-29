@@ -1,6 +1,6 @@
 package com.groupdocs.config;
 
-import com.groupdocs.viewer.config.ServiceConfigurationBase;
+import com.groupdocs.viewer.config.IServiceConfiguration;
 import com.urbanmania.spring.beans.factory.config.annotations.Property;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * @author Aleksey Permyakov, Alex Bobkov
  */
 @Component
-public class ApplicationConfig implements ServiceConfigurationBase{
+public class ApplicationConfig implements IServiceConfiguration{
     @Property(key = "groupdocs.viewer.applicationPath")
     protected String applicationPath;
     @Property(key = "groupdocs.viewer.filePath")
@@ -21,57 +21,57 @@ public class ApplicationConfig implements ServiceConfigurationBase{
     @Property(key = "groupdocs.viewer.uploadPath")
     protected String uploadPath;
     @Property(key = "groupdocs.viewer.useAuthorization")
-    protected boolean useAuthorization;
+    protected Boolean useAuthorization;
     @Property(key = "groupdocs.viewer.useCache")
-    protected boolean useCache;
+    protected Boolean useCache;
     @Property(key = "groupdocs.viewer.useBrowserCache")
-    protected boolean useBrowserCache;
+    protected Boolean useBrowserCache;
     @Property(key = "groupdocs.viewer.expirationDate")
-    protected int expirationDate;
+    protected Integer expirationDate;
     @Property(key = "groupdocs.viewer.encryptionKey")
     protected String encryptionKey;
     @Property(key = "groupdocs.viewer.useHtmlBasedEngine")
-    protected boolean useHtmlBasedEngine;
+    protected Boolean useHtmlBasedEngine;
     @Property(key = "groupdocs.viewer.quality")
-    protected int quality;
+    protected Integer quality;
     @Property(key = "groupdocs.viewer.showThumbnails")
-    protected boolean showThumbnails;
+    protected Boolean showThumbnails;
     @Property(key = "groupdocs.viewer.openThumbnails")
-    protected boolean openThumbnails;
+    protected Boolean openThumbnails;
     @Property(key = "groupdocs.viewer.initialZoom")
-    protected int initialZoom;
+    protected Integer initialZoom;
     @Property(key = "groupdocs.viewer.zoomToFitWidth")
-    protected boolean zoomToFitWidth;
+    protected Boolean zoomToFitWidth;
     @Property(key = "groupdocs.viewer.zoomToFitHeight")
-    protected boolean zoomToFitHeight;
+    protected Boolean zoomToFitHeight;
     @Property(key = "groupdocs.viewer.width")
-    protected int width;
+    protected Integer width;
     @Property(key = "groupdocs.viewer.height")
-    protected int height;
+    protected Integer height;
     @Property(key = "groupdocs.viewer.backgroundColor")
     protected String backgroundColor;
     @Property(key = "groupdocs.viewer.showFolderBrowser")
-    protected boolean showFolderBrowser;
+    protected Boolean showFolderBrowser;
     @Property(key = "groupdocs.viewer.showPrint")
-    protected boolean showPrint;
+    protected Boolean showPrint;
     @Property(key = "groupdocs.viewer.showDownload")
-    protected boolean showDownload;
+    protected Boolean showDownload;
     @Property(key = "groupdocs.viewer.showZoom")
-    protected boolean showZoom;
+    protected Boolean showZoom;
     @Property(key = "groupdocs.viewer.showPaging")
-    protected boolean showPaging;
+    protected Boolean showPaging;
     @Property(key = "groupdocs.viewer.showViewerStyleControl")
-    protected boolean showViewerStyleControl;
+    protected Boolean showViewerStyleControl;
     @Property(key = "groupdocs.viewer.showSearch")
-    protected boolean showSearch;
+    protected Boolean showSearch;
     @Property(key = "groupdocs.viewer.preloadPagesCount")
-    protected int preloadPagesCount;
+    protected Integer preloadPagesCount;
     @Property(key = "groupdocs.viewer.viewerStyle")
-    protected int viewerStyle;
+    protected Integer viewerStyle;
     @Property(key = "groupdocs.viewer.supportTextSelection")
-    protected boolean supportTextSelection;
+    protected Boolean supportTextSelection;
     @Property(key = "groupdocs.viewer.usePdfPrinting")
-    protected boolean usePdfPrinting;
+    protected Boolean usePdfPrinting;
     @Property(key = "groupdocs.viewer.toolbarButtonsBoxShadowStyle")
     protected String toolbarButtonsBoxShadowStyle;
     @Property(key = "groupdocs.viewer.toolbarButtonsBoxShadowHoverStyle")
@@ -89,49 +89,69 @@ public class ApplicationConfig implements ServiceConfigurationBase{
     @Property(key = "groupdocs.viewer.toolbarButtonBorderHoverColor")
     protected String toolbarButtonBorderHoverColor;
     @Property(key = "groupdocs.viewer.thumbnailsContainerWidth")
-    protected int thumbnailsContainerWidth;
+    protected Integer thumbnailsContainerWidth;
     @Property(key = "groupdocs.viewer.showDownloadErrorsInPopup")
-    protected boolean showDownloadErrorsInPopup;
+    protected Boolean showDownloadErrorsInPopup;
     @Property(key = "groupdocs.viewer.showImageWidth")
-    protected boolean showImageWidth;
+    protected Boolean showImageWidth;
     @Property(key = "groupdocs.viewer.showHeader")
-    protected boolean showHeader;
+    protected Boolean showHeader;
     @Property(key = "groupdocs.viewer.minimumImageWidth")
-    protected int minimumImageWidth;
+    protected Integer minimumImageWidth;
     @Property(key = "groupdocs.viewer.enableStandardErrorHandling")
-    protected boolean enableStandardErrorHandling;
+    protected Boolean enableStandardErrorHandling;
     @Property(key = "groupdocs.viewer.useImageBasedPrinting")
-    protected boolean useImageBasedPrinting;
+    protected Boolean useImageBasedPrinting;
     @Property(key = "groupdocs.viewer.downloadPdfFile")
-    protected boolean downloadPdfFile;
+    protected Boolean downloadPdfFile;
     @Property(key = "groupdocs.viewer.searchForSeparateWords")
-    protected boolean searchForSeparateWords;
+    protected Boolean searchForSeparateWords;
     @Property(key = "groupdocs.viewer.preventTouchEventsBubbling")
-    protected boolean preventTouchEventsBubbling;
+    protected Boolean preventTouchEventsBubbling;
     @Property(key = "groupdocs.viewer.useInnerThumbnails")
-    protected boolean useInnerThumbnails;
+    protected Boolean useInnerThumbnails;
     @Property(key = "groupdocs.viewer.watermarkText")
     protected String watermarkText;
     @Property(key = "groupdocs.viewer.supportPageReordering")
-    protected boolean supportPageReordering;
+    protected Boolean supportPageReordering;
     @Property(key = "groupdocs.viewer.watermarkColor")
     protected String watermarkColor;
     @Property(key = "groupdocs.viewer.onlyShrinkLargePages")
-    protected boolean onlyShrinkLargePages;
+    protected Boolean onlyShrinkLargePages;
     @Property(key = "groupdocs.viewer.searchHighlightColor")
     protected String searchHighlightColor;
     @Property(key = "groupdocs.viewer.currentSearchHighlightColor")
     protected String currentSearchHighlightColor;
     @Property(key = "groupdocs.viewer.treatPhrasesInDoubleQuotesAsExactPhrases")
-    protected boolean treatPhrasesInDoubleQuotesAsExactPhrases;
+    protected Boolean treatPhrasesInDoubleQuotesAsExactPhrases;
     @Property(key = "groupdocs.viewer.usePngImagesForHtmlBasedEngine")
-    protected boolean usePngImagesForHtmlBasedEngine;
+    protected Boolean usePngImagesForHtmlBasedEngine;
     @Property(key = "groupdocs.viewer.showOnePageInRow")
-    protected boolean showOnePageInRow;
+    protected Boolean showOnePageInRow;
     @Property(key = "groupdocs.viewer.loadAllPagesOnSearch")
-    protected boolean loadAllPagesOnSearch;
+    protected Boolean loadAllPagesOnSearch;
     @Property(key = "groupdocs.viewer.useEmScaling")
-    protected boolean useEmScaling;
+    protected Boolean useEmScaling;
+    @Property(key = "groupdocs.viewer.maxCacheSize")
+    protected Long maxCacheSize;
+    @Property(key = "groupdocs.viewer.fileDisplayName")
+    private String fileDisplayName;
+    @Property(key = "groupdocs.viewer.jqueryFileDownloadCookieName")
+    private String jqueryFileDownloadCookieName;
+    @Property(key = "groupdocs.viewer.watermarkFontSize")
+    private Integer watermarkFontSize;
+    @Property(key = "groupdocs.viewer.watermarkPosition")
+    private String watermarkPosition;
+    @Property(key = "groupdocs.viewer.convertWordDocumentsCompletely")
+    private Boolean convertWordDocumentsCompletely;
+    @Property(key = "groupdocs.viewer.ignoreDocumentAbsence")
+    private Boolean ignoreDocumentAbsence;
+    @Property(key = "groupdocs.viewer.preloadPagesOnBrowserSide")
+    private Boolean preloadPagesOnBrowserSide;
+    @Property(key = "groupdocs.viewer.printWithWatermark")
+    private Boolean printWithWatermark;
+    @Property(key = "groupdocs.viewer.supportPageRotation")
+    private Boolean supportPageRotation;
 
     @Override
     public String getApplicationPath() {
@@ -161,15 +181,6 @@ public class ApplicationConfig implements ServiceConfigurationBase{
     }
 
     @Override
-    public String getUploadPath() {
-        return uploadPath;
-    }
-
-    public void setUploadPath(String uploadPath) {
-        this.uploadPath = uploadPath;
-    }
-
-    @Override
     public String getLocalesPath() {
         return localesPath;
     }
@@ -179,38 +190,47 @@ public class ApplicationConfig implements ServiceConfigurationBase{
     }
 
     @Override
-    public boolean isUseAuthorization() {
+    public String getUploadPath() {
+        return uploadPath;
+    }
+
+    public void setUploadPath(String uploadPath) {
+        this.uploadPath = uploadPath;
+    }
+
+    @Override
+    public Boolean isUseAuthorization() {
         return useAuthorization;
     }
 
-    public void setUseAuthorization(boolean useAuthorization) {
+    public void setUseAuthorization(Boolean useAuthorization) {
         this.useAuthorization = useAuthorization;
     }
 
     @Override
-    public boolean isUseCache() {
+    public Boolean isUseCache() {
         return useCache;
     }
 
-    public void setUseCache(boolean useCache) {
+    public void setUseCache(Boolean useCache) {
         this.useCache = useCache;
     }
 
     @Override
-    public boolean isUseBrowserCache() {
+    public Boolean isUseBrowserCache() {
         return useBrowserCache;
     }
 
-    public void setUseBrowserCache(boolean useBrowserCache) {
+    public void setUseBrowserCache(Boolean useBrowserCache) {
         this.useBrowserCache = useBrowserCache;
     }
-    
+
     @Override
-    public int getExpirationDate() {
+    public Integer getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(int expirationDate) {
+    public void setExpirationDate(Integer expirationDate) {
         this.expirationDate = expirationDate;
     }
 
@@ -224,83 +244,83 @@ public class ApplicationConfig implements ServiceConfigurationBase{
     }
 
     @Override
-    public boolean isUseHtmlBasedEngine() {
+    public Boolean isUseHtmlBasedEngine() {
         return useHtmlBasedEngine;
     }
 
-    public void setUseHtmlBasedEngine(boolean useHtmlBasedEngine) {
+    public void setUseHtmlBasedEngine(Boolean useHtmlBasedEngine) {
         this.useHtmlBasedEngine = useHtmlBasedEngine;
     }
 
     @Override
-    public int getQuality() {
+    public Integer getQuality() {
         return quality;
     }
 
-    public void setQuality(int quality) {
+    public void setQuality(Integer quality) {
         this.quality = quality;
     }
 
     @Override
-    public boolean isShowThumbnails() {
+    public Boolean isShowThumbnails() {
         return showThumbnails;
     }
 
-    public void setShowThumbnails(boolean showThumbnails) {
+    public void setShowThumbnails(Boolean showThumbnails) {
         this.showThumbnails = showThumbnails;
     }
 
     @Override
-    public boolean isOpenThumbnails() {
+    public Boolean isOpenThumbnails() {
         return openThumbnails;
     }
 
-    public void setOpenThumbnails(boolean openThumbnails) {
+    public void setOpenThumbnails(Boolean openThumbnails) {
         this.openThumbnails = openThumbnails;
     }
 
     @Override
-    public int getInitialZoom() {
+    public Integer getInitialZoom() {
         return initialZoom;
     }
 
-    public void setInitialZoom(int initialZoom) {
+    public void setInitialZoom(Integer initialZoom) {
         this.initialZoom = initialZoom;
     }
 
     @Override
-    public boolean isZoomToFitWidth() {
+    public Boolean isZoomToFitWidth() {
         return zoomToFitWidth;
     }
 
-    public void setZoomToFitWidth(boolean zoomToFitWidth) {
+    public void setZoomToFitWidth(Boolean zoomToFitWidth) {
         this.zoomToFitWidth = zoomToFitWidth;
     }
 
     @Override
-    public boolean isZoomToFitHeight() {
+    public Boolean isZoomToFitHeight() {
         return zoomToFitHeight;
     }
 
-    public void setZoomToFitHeight(boolean zoomToFitHeight) {
+    public void setZoomToFitHeight(Boolean zoomToFitHeight) {
         this.zoomToFitHeight = zoomToFitHeight;
     }
 
     @Override
-    public int getWidth() {
+    public Integer getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(Integer width) {
         this.width = width;
     }
 
     @Override
-    public int getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(Integer height) {
         this.height = height;
     }
 
@@ -314,101 +334,101 @@ public class ApplicationConfig implements ServiceConfigurationBase{
     }
 
     @Override
-    public boolean isShowFolderBrowser() {
+    public Boolean isShowFolderBrowser() {
         return showFolderBrowser;
     }
 
-    public void setShowFolderBrowser(boolean showFolderBrowser) {
+    public void setShowFolderBrowser(Boolean showFolderBrowser) {
         this.showFolderBrowser = showFolderBrowser;
     }
 
     @Override
-    public boolean isShowPrint() {
+    public Boolean isShowPrint() {
         return showPrint;
     }
 
-    public void setShowPrint(boolean showPrint) {
+    public void setShowPrint(Boolean showPrint) {
         this.showPrint = showPrint;
     }
 
     @Override
-    public boolean isShowDownload() {
+    public Boolean isShowDownload() {
         return showDownload;
     }
 
-    public void setShowDownload(boolean showDownload) {
+    public void setShowDownload(Boolean showDownload) {
         this.showDownload = showDownload;
     }
 
     @Override
-    public boolean isShowZoom() {
+    public Boolean isShowZoom() {
         return showZoom;
     }
 
-    public void setShowZoom(boolean showZoom) {
+    public void setShowZoom(Boolean showZoom) {
         this.showZoom = showZoom;
     }
 
     @Override
-    public boolean isShowPaging() {
+    public Boolean isShowPaging() {
         return showPaging;
     }
 
-    public void setShowPaging(boolean showPaging) {
+    public void setShowPaging(Boolean showPaging) {
         this.showPaging = showPaging;
     }
 
     @Override
-    public boolean isShowViewerStyleControl() {
+    public Boolean isShowViewerStyleControl() {
         return showViewerStyleControl;
     }
 
-    public void setShowViewerStyleControl(boolean showViewerStyleControl) {
+    public void setShowViewerStyleControl(Boolean showViewerStyleControl) {
         this.showViewerStyleControl = showViewerStyleControl;
     }
 
     @Override
-    public boolean isShowSearch() {
+    public Boolean isShowSearch() {
         return showSearch;
     }
 
-    public void setShowSearch(boolean showSearch) {
+    public void setShowSearch(Boolean showSearch) {
         this.showSearch = showSearch;
     }
 
     @Override
-    public int getPreloadPagesCount() {
+    public Integer getPreloadPagesCount() {
         return preloadPagesCount;
     }
 
-    public void setPreloadPagesCount(int preloadPagesCount) {
+    public void setPreloadPagesCount(Integer preloadPagesCount) {
         this.preloadPagesCount = preloadPagesCount;
     }
 
     @Override
-    public int getViewerStyle() {
+    public Integer getViewerStyle() {
         return viewerStyle;
     }
 
-    public void setViewerStyle(int viewerStyle) {
+    public void setViewerStyle(Integer viewerStyle) {
         this.viewerStyle = viewerStyle;
     }
 
     @Override
-    public boolean isSupportTextSelection() {
+    public Boolean isSupportTextSelection() {
         return supportTextSelection;
     }
 
-    public void setSupportTextSelection(boolean supportTextSelection) {
+    public void setSupportTextSelection(Boolean supportTextSelection) {
         this.supportTextSelection = supportTextSelection;
     }
 
     @Override
-    public boolean isUsePdfPrinting() {
+    public Boolean isUsePdfPrinting() {
         return usePdfPrinting;
     }
 
-    public void setUsePdfPrinting(boolean usePdfPrinting) {
+    public void setUsePdfPrinting(Boolean usePdfPrinting) {
         this.usePdfPrinting = usePdfPrinting;
     }
 
@@ -485,101 +505,101 @@ public class ApplicationConfig implements ServiceConfigurationBase{
     }
 
     @Override
-    public int getThumbnailsContainerWidth() {
+    public Integer getThumbnailsContainerWidth() {
         return thumbnailsContainerWidth;
     }
 
-    public void setThumbnailsContainerWidth(int thumbnailsContainerWidth) {
+    public void setThumbnailsContainerWidth(Integer thumbnailsContainerWidth) {
         this.thumbnailsContainerWidth = thumbnailsContainerWidth;
     }
 
     @Override
-    public boolean isShowDownloadErrorsInPopup() {
+    public Boolean isShowDownloadErrorsInPopup() {
         return showDownloadErrorsInPopup;
     }
 
-    public void setShowDownloadErrorsInPopup(boolean showDownloadErrorsInPopup) {
+    public void setShowDownloadErrorsInPopup(Boolean showDownloadErrorsInPopup) {
         this.showDownloadErrorsInPopup = showDownloadErrorsInPopup;
     }
 
     @Override
-    public boolean isShowImageWidth() {
+    public Boolean isShowImageWidth() {
         return showImageWidth;
     }
 
-    public void setShowImageWidth(boolean showImageWidth) {
+    public void setShowImageWidth(Boolean showImageWidth) {
         this.showImageWidth = showImageWidth;
     }
 
     @Override
-    public boolean isShowHeader() {
+    public Boolean isShowHeader() {
         return showHeader;
     }
 
-    public void setShowHeader(boolean showHeader) {
+    public void setShowHeader(Boolean showHeader) {
         this.showHeader = showHeader;
     }
 
     @Override
-    public int getMinimumImageWidth() {
+    public Integer getMinimumImageWidth() {
         return minimumImageWidth;
     }
 
-    public void setMinimumImageWidth(int minimumImageWidth) {
+    public void setMinimumImageWidth(Integer minimumImageWidth) {
         this.minimumImageWidth = minimumImageWidth;
     }
 
     @Override
-    public boolean isEnableStandardErrorHandling() {
+    public Boolean isEnableStandardErrorHandling() {
         return enableStandardErrorHandling;
     }
 
-    public void setEnableStandardErrorHandling(boolean enableStandardErrorHandling) {
+    public void setEnableStandardErrorHandling(Boolean enableStandardErrorHandling) {
         this.enableStandardErrorHandling = enableStandardErrorHandling;
     }
 
     @Override
-    public boolean isUseImageBasedPrinting() {
+    public Boolean isUseImageBasedPrinting() {
         return useImageBasedPrinting;
     }
 
-    public void setUseImageBasedPrinting(boolean useImageBasedPrinting) {
+    public void setUseImageBasedPrinting(Boolean useImageBasedPrinting) {
         this.useImageBasedPrinting = useImageBasedPrinting;
     }
 
     @Override
-    public boolean isDownloadPdfFile() {
+    public Boolean isDownloadPdfFile() {
         return downloadPdfFile;
     }
 
-    public void setDownloadPdfFile(boolean downloadPdfFile) {
+    public void setDownloadPdfFile(Boolean downloadPdfFile) {
         this.downloadPdfFile = downloadPdfFile;
     }
 
     @Override
-    public boolean isSearchForSeparateWords() {
+    public Boolean isSearchForSeparateWords() {
         return searchForSeparateWords;
     }
 
-    public void setSearchForSeparateWords(boolean searchForSeparateWords) {
+    public void setSearchForSeparateWords(Boolean searchForSeparateWords) {
         this.searchForSeparateWords = searchForSeparateWords;
     }
 
     @Override
-    public boolean isPreventTouchEventsBubbling() {
+    public Boolean isPreventTouchEventsBubbling() {
         return preventTouchEventsBubbling;
     }
 
-    public void setPreventTouchEventsBubbling(boolean preventTouchEventsBubbling) {
+    public void setPreventTouchEventsBubbling(Boolean preventTouchEventsBubbling) {
         this.preventTouchEventsBubbling = preventTouchEventsBubbling;
     }
 
     @Override
-    public boolean isUseInnerThumbnails() {
+    public Boolean isUseInnerThumbnails() {
         return useInnerThumbnails;
     }
 
-    public void setUseInnerThumbnails(boolean useInnerThumbnails) {
+    public void setUseInnerThumbnails(Boolean useInnerThumbnails) {
         this.useInnerThumbnails = useInnerThumbnails;
     }
 
@@ -593,11 +613,11 @@ public class ApplicationConfig implements ServiceConfigurationBase{
     }
 
     @Override
-    public boolean isSupportPageReordering() {
+    public Boolean isSupportPageReordering() {
         return supportPageReordering;
     }
 
-    public void setSupportPageReordering(boolean supportPageReordering) {
+    public void setSupportPageReordering(Boolean supportPageReordering) {
         this.supportPageReordering = supportPageReordering;
     }
 
@@ -611,11 +631,11 @@ public class ApplicationConfig implements ServiceConfigurationBase{
     }
 
     @Override
-    public boolean isOnlyShrinkLargePages() {
+    public Boolean isOnlyShrinkLargePages() {
         return onlyShrinkLargePages;
     }
 
-    public void setOnlyShrinkLargePages(boolean onlyShrinkLargePages) {
+    public void setOnlyShrinkLargePages(Boolean onlyShrinkLargePages) {
         this.onlyShrinkLargePages = onlyShrinkLargePages;
     }
 
@@ -638,48 +658,138 @@ public class ApplicationConfig implements ServiceConfigurationBase{
     }
 
     @Override
-    public boolean isTreatPhrasesInDoubleQuotesAsExactPhrases() {
+    public Boolean isTreatPhrasesInDoubleQuotesAsExactPhrases() {
         return treatPhrasesInDoubleQuotesAsExactPhrases;
     }
 
-    public void setTreatPhrasesInDoubleQuotesAsExactPhrases(boolean treatPhrasesInDoubleQuotesAsExactPhrases) {
+    public void setTreatPhrasesInDoubleQuotesAsExactPhrases(Boolean treatPhrasesInDoubleQuotesAsExactPhrases) {
         this.treatPhrasesInDoubleQuotesAsExactPhrases = treatPhrasesInDoubleQuotesAsExactPhrases;
     }
 
     @Override
-    public boolean isUsePngImagesForHtmlBasedEngine() {
+    public Boolean isUsePngImagesForHtmlBasedEngine() {
         return usePngImagesForHtmlBasedEngine;
     }
 
-    public void setUsePngImagesForHtmlBasedEngine(boolean usePngImagesForHtmlBasedEngine) {
+    public void setUsePngImagesForHtmlBasedEngine(Boolean usePngImagesForHtmlBasedEngine) {
         this.usePngImagesForHtmlBasedEngine = usePngImagesForHtmlBasedEngine;
     }
 
     @Override
-    public boolean isShowOnePageInRow() {
+    public Boolean isShowOnePageInRow() {
         return showOnePageInRow;
     }
 
-    public void setShowOnePageInRow(boolean showOnePageInRow) {
+    public void setShowOnePageInRow(Boolean showOnePageInRow) {
         this.showOnePageInRow = showOnePageInRow;
     }
 
     @Override
-    public boolean isLoadAllPagesOnSearch() {
+    public Boolean isLoadAllPagesOnSearch() {
         return loadAllPagesOnSearch;
     }
 
-    public void setLoadAllPagesOnSearch(boolean loadAllPagesOnSearch) {
+    public void setLoadAllPagesOnSearch(Boolean loadAllPagesOnSearch) {
         this.loadAllPagesOnSearch = loadAllPagesOnSearch;
     }
 
     @Override
-    public boolean isUseEmScaling() {
+    public Boolean isUseEmScaling() {
         return useEmScaling;
     }
 
-    public void setUseEmScaling(boolean useEmScaling) {
+    public void setUseEmScaling(Boolean useEmScaling) {
         this.useEmScaling = useEmScaling;
+    }
+
+    @Override
+    public Long getMaxCacheSize() {
+        return maxCacheSize;
+    }
+
+    public void setMaxCacheSize(Long maxCacheSize) {
+        this.maxCacheSize = maxCacheSize;
+    }
+
+    @Override
+    public String getFileDisplayName() {
+        return fileDisplayName;
+    }
+
+    public void setFileDisplayName(String fileDisplayName) {
+        this.fileDisplayName = fileDisplayName;
+    }
+
+    @Override
+    public String getJqueryFileDownloadCookieName() {
+        return jqueryFileDownloadCookieName;
+    }
+
+    public void setJqueryFileDownloadCookieName(String jqueryFileDownloadCookieName) {
+        this.jqueryFileDownloadCookieName = jqueryFileDownloadCookieName;
+    }
+
+    @Override
+    public Integer getWatermarkFontSize() {
+        return watermarkFontSize;
+    }
+
+    public void setWatermarkFontSize(Integer watermarkFontSize) {
+        this.watermarkFontSize = watermarkFontSize;
+    }
+
+    @Override
+    public String getWatermarkPosition() {
+        return watermarkPosition;
+    }
+
+    public void setWatermarkPosition(String watermarkPosition) {
+        this.watermarkPosition = watermarkPosition;
+    }
+
+    @Override
+    public Boolean isConvertWordDocumentsCompletely() {
+        return convertWordDocumentsCompletely;
+    }
+
+    public void setConvertWordDocumentsCompletely(Boolean convertWordDocumentsCompletely) {
+        this.convertWordDocumentsCompletely = convertWordDocumentsCompletely;
+    }
+
+    @Override
+    public Boolean isIgnoreDocumentAbsence() {
+        return ignoreDocumentAbsence;
+    }
+
+    public void setIgnoreDocumentAbsence(Boolean ignoreDocumentAbsence) {
+        this.ignoreDocumentAbsence = ignoreDocumentAbsence;
+    }
+
+    @Override
+    public Boolean isPreloadPagesOnBrowserSide() {
+        return preloadPagesOnBrowserSide;
+    }
+
+    public void setPreloadPagesOnBrowserSide(Boolean preloadPagesOnBrowserSide) {
+        this.preloadPagesOnBrowserSide = preloadPagesOnBrowserSide;
+    }
+
+    @Override
+    public Boolean isPrintWithWatermark() {
+        return printWithWatermark;
+    }
+
+    public void setPrintWithWatermark(Boolean printWithWatermark) {
+        this.printWithWatermark = printWithWatermark;
+    }
+
+    @Override
+    public Boolean isSupportPageRotation() {
+        return supportPageRotation;
+    }
+
+    public void setSupportPageRotation(Boolean supportPageRotation) {
+        this.supportPageRotation = supportPageRotation;
     }
 
 }

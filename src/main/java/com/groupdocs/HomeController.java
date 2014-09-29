@@ -191,24 +191,6 @@ public class HomeController extends HomeControllerBase {
     }
 
     /*
-     * Converts document to PDF and then to JavaScript for text search and selection [POST request]
-     */
-    @Override
-    @RequestMapping(value = GET_PDF_2_JAVA_SCRIPT_HANDLER, method = RequestMethod.POST)
-    public ResponseEntity<String> getPdf2JavaScriptHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(viewerHandler.getPdf2JavaScriptHandler(request, response));
-    }
-
-    /*
-     * Converts document to PDF and then to JavaScript for text search and selection [GET request]
-     */
-    @Override
-    @RequestMapping(value = GET_PDF_2_JAVA_SCRIPT_HANDLER, method = RequestMethod.GET)
-    public ResponseEntity<String> getPdf2JavaScriptHandler(String callback, String data, HttpServletResponse response) {
-        return writeOutputJson(viewerHandler.getPdf2JavaScriptHandler(callback, data, response));
-    }
-
-    /*
      * Print document [POST request]
      */
     @Override
