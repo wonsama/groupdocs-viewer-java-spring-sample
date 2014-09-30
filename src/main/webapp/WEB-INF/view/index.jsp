@@ -4,7 +4,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
     <head>
-        <meta charset="utf-8">
         <title>GroupDocs.Viewer for Java Spring Sample</title>
         ${groupdocsHeader}
     </head> 
