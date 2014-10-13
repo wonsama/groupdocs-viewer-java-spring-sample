@@ -3,7 +3,7 @@ package com.groupdocs.handler;
 import com.groupdocs.viewer.config.ServiceConfiguration;
 import com.groupdocs.viewer.domain.FileType;
 import com.groupdocs.viewer.handlers.input.InputDataHandler;
-import com.groupdocs.viewer.resources.Utils;
+import com.groupdocs.viewer.utils.Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
