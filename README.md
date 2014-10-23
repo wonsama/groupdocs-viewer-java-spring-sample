@@ -1,5 +1,5 @@
 ##GroupDocs.Viewer for Java
-####Spring Sample 2.4.1
+####Spring Sample 2.5.0
 ![Alt text](https://media.licdn.com/media/p/7/005/059/258/39b2da3.png "Optional title")
 
 <br/><br/>
