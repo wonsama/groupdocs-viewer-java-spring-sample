@@ -32,7 +32,17 @@ How-to install/run
 4. Open file `src\main\resources\application.properties` and update configuration (for example update groupdocs.viewer.filePath to set the path to the storage folder).
 5. Run file `run.command` by double click to start sample application (or from terminal).
 6. Open URL `http://127.0.0.1:8080/document-viewer/` in your browser, make sure that port 8080 is free (you can change port number in your tomcat configuration).
-<br/><br/><br/><br/>
+<br/><br/>
+
+
+How to view/open file documents
+---------------
+1. Go to http://127.0.0.1:8080/view?file=fileId
+2. Go to http://127.0.0.1:8080/view?file=path_to_file_from_root_dir
+3. Go to http://127.0.0.1:8080/view?file=url_to_file
+4. Go to http://127.0.0.1:8080/view?tokenId=tokenId
+<br/><br/>
+
 
 Description
 ---------------
