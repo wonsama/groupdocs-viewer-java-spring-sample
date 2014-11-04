@@ -253,4 +253,9 @@ public class HomeController extends HomeControllerBase {
         return writeOutputJson(viewerHandler.reorderPageHandler(request, response));
     }
 
+    @Override
+    public Object rotatePageHandler(HttpServletRequest request, HttpServletResponse response) {
+        return writeOutputJson(viewerHandler.rotatePageHandler(request, response));
+    }
+
 }
