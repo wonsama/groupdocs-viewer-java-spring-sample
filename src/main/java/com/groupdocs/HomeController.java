@@ -111,8 +111,8 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_HTML_RESOURCES_HANDLER, method = RequestMethod.GET)
-    public Object getHtmlRecoucesHandler(@RequestParam("filePath") String filePath, HttpServletResponse response){
-        writeOutput((InputStream) viewerHandler.getHtmlRecoucesHandler(filePath, response), response);
+    public Object getHtmlResourcesHandler(@RequestParam("filePath") String filePath, HttpServletResponse response){
+        writeOutput((InputStream) viewerHandler.getHtmlResourcesHandler(filePath, response), response);
         return null;
     }
 
