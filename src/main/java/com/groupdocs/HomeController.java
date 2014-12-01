@@ -253,6 +253,7 @@ public class HomeController extends HomeControllerBase {
         return writeOutputJson(viewerHandler.reorderPageHandler(request, response));
     }
 
+    @RequestMapping(value = ROTATE_PAGE_HANDLER, method = RequestMethod.POST)
     @Override
     public Object rotatePageHandler(HttpServletRequest request, HttpServletResponse response) {
         return writeOutputJson(viewerHandler.rotatePageHandler(request, response));
