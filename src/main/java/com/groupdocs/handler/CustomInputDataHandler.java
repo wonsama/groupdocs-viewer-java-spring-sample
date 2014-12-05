@@ -19,7 +19,7 @@ public class CustomInputDataHandler extends InputDataHandler{
     private String basePath = null;
 
     public CustomInputDataHandler(ServiceConfiguration serviceConfiguration) {
-        basePath = serviceConfiguration.getBasePath();
+        basePath = serviceConfiguration.getRootDir();
     }
 
     @Override
