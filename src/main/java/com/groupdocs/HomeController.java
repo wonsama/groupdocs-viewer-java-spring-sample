@@ -196,7 +196,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_PRINTABLE_HTML_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutput(viewerHandler.getPrintableHtmlHandler(request, response), MediaType.TEXT_HTML);
+        return writeOutput(viewerHandler.getPrintableHtmlHandler(request, response), MediaType.APPLICATION_JSON);
     }
 
     /*
