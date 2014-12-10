@@ -3,6 +3,7 @@ package com.groupdocs;
 import com.groupdocs.viewer.resources.GroupDocsViewer;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
@@ -46,5 +47,18 @@ public abstract class HomeControllerBase extends GroupDocsViewer{
                 }
             }
         }
+    }
+    
+    protected StringBuilder listToJson(List<String> list){
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for(int i = 0; i < list.size(); i++){
+            sb.append("\"").append(list.get(i)).append("\"");
+            if(i < list.size()-1){
+                sb.append(",");
+            }
+        }
+        sb.append("]");
+        return sb;
     }
 }

@@ -7,7 +7,6 @@ import com.groupdocs.viewer.domain.path.GroupDocsPath;
 import com.groupdocs.viewer.domain.path.TokenId;
 import com.groupdocs.viewer.handlers.ViewerHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.web.multipart.MultipartFile;
@@ -196,7 +196,8 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_PRINTABLE_HTML_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutput(viewerHandler.getPrintableHtmlHandler(request, response), MediaType.APPLICATION_JSON);
+        StringBuilder sb = listToJson((List<String>) viewerHandler.getPrintableHtmlHandler(request, response));
+        return writeOutputJson(sb);
     }
 
     /*
@@ -205,7 +206,8 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_PRINTABLE_HTML_HANDLER, method = RequestMethod.GET)
     public ResponseEntity<String> getPrintableHtmlHandler(String callback, String data, HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(viewerHandler.getPrintableHtmlHandler(callback, data, request, response));
+        StringBuilder sb = listToJson((List<String>) viewerHandler.getPrintableHtmlHandler(callback, data, request, response));
+        return writeOutputJson(sb);
     }
     
     /*
