@@ -71,7 +71,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_JS_HANDLER, method = RequestMethod.GET)
-    public Object getJsHandler(@RequestParam("script") String script, HttpServletResponse response){
+    public Object getJsHandler(@RequestParam("script") String script, HttpServletResponse response) throws Exception{
         writeOutput((InputStream) viewerHandler.getJsHandler(script, response), response);
         return null;
     }
@@ -81,7 +81,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_CSS_HANDLER, method = RequestMethod.GET)
-    public Object getCssHandler(@RequestParam("script") String script, HttpServletResponse response){
+    public Object getCssHandler(@RequestParam("script") String script, HttpServletResponse response) throws Exception{
         writeOutput((InputStream) viewerHandler.getCssHandler(script, response), response);
         return null;
     }
@@ -91,7 +91,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_IMAGE_HANDLER, method = RequestMethod.GET)
-    public Object getImageHandler(@PathVariable("name") String name, HttpServletResponse response){
+    public Object getImageHandler(@PathVariable("name") String name, HttpServletResponse response) throws Exception{
         writeOutput((InputStream) viewerHandler.getImageHandler(name, response), response);
         return null;
     }
@@ -101,7 +101,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_FONT_HANDLER, method = RequestMethod.GET)
-    public Object getFontHandler(@PathVariable("name") String fontName, HttpServletResponse response){
+    public Object getFontHandler(@PathVariable("name") String fontName, HttpServletResponse response) throws Exception{
         writeOutput((InputStream) viewerHandler.getFontHandler(fontName, response), response);
         return null;
     }
@@ -111,7 +111,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_HTML_RESOURCES_HANDLER, method = RequestMethod.GET)
-    public Object getHtmlResourcesHandler(@RequestParam("filePath") String filePath, HttpServletResponse response){
+    public Object getHtmlResourcesHandler(@RequestParam("filePath") String filePath, HttpServletResponse response) throws Exception{
         writeOutput((InputStream) viewerHandler.getHtmlResourcesHandler(filePath, response), response);
         return null;
     }
@@ -121,7 +121,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_FILE_HANDLER, method = RequestMethod.GET)
-    public Object getFileHandler(@RequestParam("path") String path, @RequestParam("getPdf") boolean getPdf, HttpServletResponse response){
+    public Object getFileHandler(@RequestParam("path") String path, @RequestParam("getPdf") boolean getPdf, HttpServletResponse response) throws Exception{
         writeOutput((InputStream) viewerHandler.getFileHandler(path, getPdf, response), response);
         return null;
     }
@@ -131,7 +131,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_DOCUMENT_PAGE_IMAGE_HANDLER, method = RequestMethod.GET)
-    public Object getDocumentPageImageHandler(@RequestParam("path") String path, @RequestParam("width") Integer width, @RequestParam("quality") Integer quality, @RequestParam("usePdf") Boolean usePdf, @RequestParam("pageIndex") Integer pageIndex, HttpServletResponse response){
+    public Object getDocumentPageImageHandler(@RequestParam("path") String path, @RequestParam("width") Integer width, @RequestParam("quality") Integer quality, @RequestParam("usePdf") Boolean usePdf, @RequestParam("pageIndex") Integer pageIndex, HttpServletResponse response) throws Exception{
         writeOutput((InputStream) viewerHandler.getDocumentPageImageHandler(path, width, quality, usePdf, pageIndex, response), response);
         return null;
     }
@@ -141,7 +141,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = VIEW_DOCUMENT_HANDLER, method = RequestMethod.POST)
-    public ResponseEntity<String> viewDocumentHandler(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<String> viewDocumentHandler(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return writeOutputJson(viewerHandler.viewDocumentHandler(request, response));
     }
 
@@ -150,7 +150,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = VIEW_DOCUMENT_HANDLER, method = RequestMethod.GET)
-    public ResponseEntity<String> viewDocumentHandler(String callback, String data, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<String> viewDocumentHandler(String callback, String data, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return writeOutputJson(viewerHandler.viewDocumentHandler(callback, data, request, response));
     }
 
@@ -159,7 +159,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = LOAD_FILE_BROWSER_TREE_DATA_HANLER, method = RequestMethod.POST)
-    public ResponseEntity<String> loadFileBrowserTreeDataHandler(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<String> loadFileBrowserTreeDataHandler(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return writeOutputJson(viewerHandler.loadFileBrowserTreeDataHandler(request, response));
     }
 
@@ -168,7 +168,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = LOAD_FILE_BROWSER_TREE_DATA_HANLER, method = RequestMethod.GET)
-    public ResponseEntity<String> loadFileBrowserTreeDataHandler(String callback, String data, HttpServletResponse response) {
+    public ResponseEntity<String> loadFileBrowserTreeDataHandler(String callback, String data, HttpServletResponse response) throws Exception {
         return writeOutputJson(viewerHandler.loadFileBrowserTreeDataHandler(callback, data, response));
     }
 
@@ -177,7 +177,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_IMAGE_URL_HANDLER, method = RequestMethod.POST)
-    public ResponseEntity<String> getImageUrlsHandler(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<String> getImageUrlsHandler(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return writeOutputJson(viewerHandler.getImageUrlsHandler(request, response));
     }
 
@@ -186,7 +186,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_IMAGE_URL_HANDLER, method = RequestMethod.GET)
-    public ResponseEntity<String> getImageUrlsHandler(String callback, String data, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<String> getImageUrlsHandler(String callback, String data, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return writeOutputJson(viewerHandler.getImageUrlsHandler(callback, data, request, response));
     }
 
@@ -195,7 +195,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_PRINTABLE_HTML_HANDLER, method = RequestMethod.POST)
-    public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request, HttpServletResponse response) throws Exception {
         StringBuilder sb = listToJson((List<String>) viewerHandler.getPrintableHtmlHandler(request, response));
         return writeOutputJson(sb);
     }
@@ -205,7 +205,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_PRINTABLE_HTML_HANDLER, method = RequestMethod.GET)
-    public ResponseEntity<String> getPrintableHtmlHandler(String callback, String data, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<String> getPrintableHtmlHandler(String callback, String data, HttpServletRequest request, HttpServletResponse response) throws Exception {
         StringBuilder sb = listToJson((List<String>) viewerHandler.getPrintableHtmlHandler(callback, data, request, response));
         return writeOutputJson(sb);
     }
@@ -214,7 +214,7 @@ public class HomeController extends HomeControllerBase {
      * Upload document
      */
     @RequestMapping(value = UPLOAD_FILE, method = RequestMethod.POST)
-    public void uploadFileHandler(@RequestParam("fileName") MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException{
+    public void uploadFileHandler(@RequestParam("fileName") MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException, Exception{
         // Upload file
         String uploadResponse = (String) viewerHandler.uploadFile(file.getInputStream(), file.getOriginalFilename(), applicationConfig.getExpirationDate());
         // Convert upload response to json object
@@ -230,7 +230,7 @@ public class HomeController extends HomeControllerBase {
      */
     @RequestMapping(value = GET_DOCUMENT_PAGE_HTML_HANDLER, method = RequestMethod.POST)
     @Override
-    public Object getDocumentPageHtmlHandler(HttpServletRequest request, HttpServletResponse response) {
+    public Object getDocumentPageHtmlHandler(HttpServletRequest request, HttpServletResponse response) throws Exception {
         writeOutput((InputStream) viewerHandler.getDocumentPageHtmlHandler(request, response), response);
         return null;
     }
@@ -241,7 +241,7 @@ public class HomeController extends HomeControllerBase {
     */
     @RequestMapping(value = GET_PDF_WITH_PRINT_DIALOG, method = RequestMethod.GET)
     @Override
-    public Object getPdfWithPrintDialog(@RequestParam("path") String path, HttpServletResponse response) {
+    public Object getPdfWithPrintDialog(@RequestParam("path") String path, HttpServletResponse response) throws Exception {
         writeOutput((InputStream) viewerHandler.getPdfWithPrintDialog(path, response), response);
         return null;
     }
@@ -251,13 +251,13 @@ public class HomeController extends HomeControllerBase {
     */
     @RequestMapping(value = REORDER_PAGE_HANDLER, method = RequestMethod.POST)
     @Override
-    public Object reorderPageHandler(HttpServletRequest request, HttpServletResponse response) {
+    public Object reorderPageHandler(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return writeOutputJson(viewerHandler.reorderPageHandler(request, response));
     }
 
     @RequestMapping(value = ROTATE_PAGE_HANDLER, method = RequestMethod.POST)
     @Override
-    public Object rotatePageHandler(HttpServletRequest request, HttpServletResponse response) {
+    public Object rotatePageHandler(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return writeOutputJson(viewerHandler.rotatePageHandler(request, response));
     }
 
