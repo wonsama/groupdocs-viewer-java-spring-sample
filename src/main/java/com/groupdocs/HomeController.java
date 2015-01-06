@@ -45,7 +45,11 @@ public class HomeController extends HomeControllerBase {
         if (viewerHandler == null) {
             // INITIALIZE GroupDocs Java Viewer Object
             ServiceConfiguration config = new ServiceConfiguration(applicationConfig);
-            viewerHandler = new ViewerHandler(config /*, new CustomInputDataHandler(config)*/);
+            //Uncomment this line to use Azure storage
+            //viewerHandler = new ViewerHandler(config, new AzureInputDataHandler("acount_name", "account_key"));
+            //Uncomment this line to use Amazon S3 storage
+            //viewerHandler = new ViewerHandler(config, new AmazonS3InputDataHandler("access_key", "secret_key", "bucket_name"));
+            viewerHandler = new ViewerHandler(config);
         }
         // Setting header in jsp page
         model.addAttribute("groupdocsHeader", viewerHandler.getHeader());

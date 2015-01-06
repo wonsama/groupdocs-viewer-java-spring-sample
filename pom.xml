@@ -111,6 +111,24 @@
             <version>20090211</version>
             <type>jar</type>
         </dependency>
+        
+        <!-- uncomment this dependency to use Azure storage -->
+        <!--
+        <dependency>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>azure-storage</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        -->
+        
+        <!-- uncomment this dependency to use Amazon S3 storage -->
+        <!--
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>1.8.3</version>
+        </dependency>
+        -->
     </dependencies>
     <build>
         <plugins>
