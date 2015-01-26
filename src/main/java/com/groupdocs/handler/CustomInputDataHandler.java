@@ -1,15 +1,20 @@
 package com.groupdocs.handler;
 
 import com.groupdocs.viewer.config.ServiceConfiguration;
-import com.groupdocs.viewer.domain.FileType;
+import com.groupdocs.viewer.domain.GroupDocsFileDescription;
 import com.groupdocs.viewer.handlers.input.InputDataHandler;
-import com.groupdocs.viewer.utils.Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 
 /**
  * @author Alex Bobkov
@@ -23,13 +28,54 @@ public class CustomInputDataHandler extends InputDataHandler{
     }
 
     @Override
-    public File[] getFileList(String directory) {
+    public List<GroupDocsFileDescription> getFileDescriptionList(String directory) {
         File[] files = new File(basePath + directory).listFiles();
-        for (File file : files) {
-            String fileId = Utils.encodeData(file.getName());
-            fileMap.put(fileId, file);
+        List<GroupDocsFileDescription> fileList = new ArrayList<GroupDocsFileDescription>();
+        for(File file : files){
+            //Generate file ID
+            String guid = Base64.encodeBase64String(file.getName().getBytes());
+            //Create file description object
+            GroupDocsFileDescription fileDescription = new GroupDocsFileDescription();
+            fileDescription.setGuid(guid);
+            fileDescription.setName(file.getName());
+            if (file.exists() && file.isFile()) {
+                //If file
+                fileDescription.setLastModified(file.lastModified());
+                fileDescription.setSize(file.length());
+            }else{
+                //If directory
+                fileDescription.setLastModified(0);
+                fileDescription.setSize(0);
+            }
+            fileList.add(fileDescription);
+            fileMap.put(guid, file);
         }
-        return files;
+        return fileList;
+    }
+    
+    @Override
+    public GroupDocsFileDescription getFileDescription(String guid) throws Exception {
+        //Create file description object
+        GroupDocsFileDescription fileDescription = new GroupDocsFileDescription();
+        fileDescription.setGuid(guid);
+        //Check if guid is initial directory
+        if(guid.isEmpty()){
+            fileDescription.setName("");
+        }else{
+            //Get file
+            File file = fileMap.get(guid);
+            fileDescription.setName(file.getName());
+            if (file.exists() && file.isFile()) {
+                //If file
+                fileDescription.setLastModified(file.lastModified());
+                fileDescription.setSize(file.length());
+            }else{
+                //If directory
+                fileDescription.setLastModified(0);
+                fileDescription.setSize(0);
+            }
+        }
+        return fileDescription;
     }
 
     @Override
@@ -42,16 +88,14 @@ public class CustomInputDataHandler extends InputDataHandler{
     }
 
     @Override
-    public FileType getFileType(String guid) {
-        String fileName = fileMap.get(guid).getName();
-        if (fileName.contains(".")) {
-            return FileType.valueOf(fileName.substring(fileName.lastIndexOf(".") + 1).toUpperCase());
-        }
-        return FileType.DIRECTORY;
+    public String saveFile(InputStream inputStream, String fileName, Integer timeToLive, String encryptedKey) throws FileNotFoundException, IOException {
+        //Generate file ID
+        String guid = Base64.encodeBase64String(fileName.getBytes());
+        //Save file
+        File saveFile = new File(basePath + "/" + fileName);
+        FileOutputStream outputStream = new FileOutputStream(saveFile);
+        IOUtils.copy(inputStream, outputStream);
+        return guid;
     }
 
-    @Override
-    public String saveFile(InputStream inputStream, String fileName, Integer timeToLive, String encryptedKey) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
