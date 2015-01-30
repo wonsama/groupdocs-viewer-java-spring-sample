@@ -8,7 +8,7 @@
         ${groupdocsHeader}
     </head> 
     <body>
-        <h1>GroupDocs.Viewer for Java Sample</h1>
+        <h1>GroupDocs.Viewer for Java Spring Sample</h1>
         <div>
             <form enctype="multipart/form-data" method="POST" id="uploadForm" action="UploadFile">
                 <input type="file" id="fileUpload" name="fileName"/>
