@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -76,8 +77,14 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_JS_HANDLER, method = RequestMethod.GET)
     public Object getJsHandler(@RequestParam("script") String script, HttpServletResponse response) throws Exception{
-        writeOutput((InputStream) viewerHandler.getJsHandler(script, response), response);
-        return null;
+        Object obj = viewerHandler.getJsHandler(script, response);
+        //cache handling
+        if(obj != null){
+            writeOutput((InputStream) obj, response);
+            return null;
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        }
     }
 
     /*
@@ -86,8 +93,14 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_CSS_HANDLER, method = RequestMethod.GET)
     public Object getCssHandler(@RequestParam("script") String script, HttpServletResponse response) throws Exception{
-        writeOutput((InputStream) viewerHandler.getCssHandler(script, response), response);
-        return null;
+        Object obj = viewerHandler.getCssHandler(script, response);
+        //cache handling
+        if(obj != null){
+            writeOutput((InputStream) obj, response);
+            return null;
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        }
     }
 
     /*
@@ -96,8 +109,14 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_IMAGE_HANDLER, method = RequestMethod.GET)
     public Object getImageHandler(@PathVariable("name") String name, HttpServletResponse response) throws Exception{
-        writeOutput((InputStream) viewerHandler.getImageHandler(name, response), response);
-        return null;
+        Object obj = viewerHandler.getImageHandler(name, response);
+        //cache handling
+        if(obj != null){
+            writeOutput((InputStream) obj, response);
+            return null;
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        }
     }
     
     /*
@@ -106,8 +125,14 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_FONT_HANDLER, method = RequestMethod.GET)
     public Object getFontHandler(@PathVariable("name") String fontName, HttpServletResponse response) throws Exception{
-        writeOutput((InputStream) viewerHandler.getFontHandler(fontName, response), response);
-        return null;
+        Object obj = viewerHandler.getFontHandler(fontName, response);
+        //cache handling
+        if(obj != null){
+            writeOutput((InputStream) obj, response);
+            return null;
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        }
     }
     
     /*
