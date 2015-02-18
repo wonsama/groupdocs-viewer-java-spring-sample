@@ -20,6 +20,8 @@ public class ApplicationConfig implements IServiceConfiguration{
     protected String localesPath;
     @Property(key = "groupdocs.viewer.uploadPath")
     protected String uploadPath;
+    @Property(key = "groupdocs.viewer.cachePath")
+    protected String cachePath;
     @Property(key = "groupdocs.viewer.useCache")
     protected Boolean useCache;
     @Property(key = "groupdocs.viewer.useBrowserCache")
@@ -194,6 +196,15 @@ public class ApplicationConfig implements IServiceConfiguration{
 
     public void setUploadPath(String uploadPath) {
         this.uploadPath = uploadPath;
+    }
+
+    @Override
+    public String getCachePath() {
+        return cachePath;
+    }
+
+    public void setCachePath(String cachePath) {
+        this.cachePath = cachePath;
     }
 
     @Override

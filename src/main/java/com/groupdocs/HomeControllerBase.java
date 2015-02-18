@@ -1,6 +1,8 @@
 package com.groupdocs;
 
 import com.groupdocs.viewer.resources.GroupDocsViewer;
+import com.groupdocs.viewer.resources.IGroupDocsViewer;
+import com.groupdocs.viewer.resources.IGroupDocsViewerIE;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -17,7 +19,7 @@ import org.springframework.http.ResponseEntity;
  *
  * @author Alex Bobkov
  */
-public abstract class HomeControllerBase extends GroupDocsViewer{
+public abstract class HomeControllerBase extends GroupDocsViewer implements IGroupDocsViewer, IGroupDocsViewerIE{
     
     protected ResponseEntity<String> writeOutputJson(Object obj) {
         return writeOutput(obj, MediaType.APPLICATION_JSON);

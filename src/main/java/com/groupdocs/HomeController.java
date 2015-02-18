@@ -76,8 +76,8 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_JS_HANDLER, method = RequestMethod.GET)
-    public Object getJsHandler(@RequestParam("script") String script, HttpServletResponse response) throws Exception{
-        Object obj = viewerHandler.getJsHandler(script, response);
+    public Object getJsHandler(@RequestParam("script") String script, HttpServletRequest request, HttpServletResponse response) throws Exception{
+        Object obj = viewerHandler.getJsHandler(script, request, response);
         //cache handling
         if(obj != null){
             writeOutput((InputStream) obj, response);
@@ -92,8 +92,8 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_CSS_HANDLER, method = RequestMethod.GET)
-    public Object getCssHandler(@RequestParam("script") String script, HttpServletResponse response) throws Exception{
-        Object obj = viewerHandler.getCssHandler(script, response);
+    public Object getCssHandler(@RequestParam("script") String script, HttpServletRequest request, HttpServletResponse response) throws Exception{
+        Object obj = viewerHandler.getCssHandler(script, request, response);
         //cache handling
         if(obj != null){
             writeOutput((InputStream) obj, response);
@@ -108,8 +108,8 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_IMAGE_HANDLER, method = RequestMethod.GET)
-    public Object getImageHandler(@PathVariable("name") String name, HttpServletResponse response) throws Exception{
-        Object obj = viewerHandler.getImageHandler(name, response);
+    public Object getImageHandler(@PathVariable("name") String name, HttpServletRequest request, HttpServletResponse response) throws Exception{
+        Object obj = viewerHandler.getImageHandler(name, request, response);
         //cache handling
         if(obj != null){
             writeOutput((InputStream) obj, response);
@@ -124,8 +124,8 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_FONT_HANDLER, method = RequestMethod.GET)
-    public Object getFontHandler(@PathVariable("name") String fontName, HttpServletResponse response) throws Exception{
-        Object obj = viewerHandler.getFontHandler(fontName, response);
+    public Object getFontHandler(@PathVariable("name") String fontName, HttpServletRequest request, HttpServletResponse response) throws Exception{
+        Object obj = viewerHandler.getFontHandler(fontName, request, response);
         //cache handling
         if(obj != null){
             writeOutput((InputStream) obj, response);
@@ -270,9 +270,8 @@ public class HomeController extends HomeControllerBase {
     */
     @RequestMapping(value = GET_PDF_WITH_PRINT_DIALOG, method = RequestMethod.GET)
     @Override
-    public Object getPdfWithPrintDialog(@RequestParam("path") String path, HttpServletResponse response) throws Exception {
-        writeOutput((InputStream) viewerHandler.getPdfWithPrintDialog(path, response), response);
-        return null;
+    public void getPdfWithPrintDialog(@RequestParam("path") String path, HttpServletResponse response) throws Exception {
+        viewerHandler.getPdfWithPrintDialog(path, response);
     }
 
     /*
