@@ -30,6 +30,8 @@ public class ApplicationConfig implements IServiceConfiguration{
     protected Integer expirationDate;
     @Property(key = "groupdocs.viewer.encryptionKey")
     protected String encryptionKey;
+    @Property(key = "groupdocs.viewer.encoding")
+    protected String encoding;
     @Property(key = "groupdocs.viewer.useHtmlBasedEngine")
     protected Boolean useHtmlBasedEngine;
     @Property(key = "groupdocs.viewer.quality")
@@ -241,6 +243,15 @@ public class ApplicationConfig implements IServiceConfiguration{
 
     public void setEncryptionKey(String encryptionKey) {
         this.encryptionKey = encryptionKey;
+    }
+
+    @Override
+    public String getEncoding() {
+        return encoding;
+    }
+
+    public void setEncoding(String encoding) {
+        this.encoding = encoding;
     }
 
     @Override
