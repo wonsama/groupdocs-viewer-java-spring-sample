@@ -2,19 +2,22 @@ package com.groupdocs.handler;
 
 import com.groupdocs.viewer.domain.GroupDocsFileDescription;
 import com.groupdocs.viewer.handlers.cache.ImageCacheDataHandler;
-import com.groupdocs.viewer.utils.Utils;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
+import java.security.SecureRandom;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * The type Local image cache handler.
+ *
  * @author Aleksey Permyakov on 17.03.2015.
  */
-public class LocalImageCacheHandler extends ImageCacheDataHandler {
+public class CustomImageCacheHandler extends ImageCacheDataHandler {
+    private static final SecureRandom random = new SecureRandom();
+
     /**
      * The Cache directory.
      */
@@ -22,19 +25,16 @@ public class LocalImageCacheHandler extends ImageCacheDataHandler {
 
     /**
      * Instantiates a new Local image cache handler.
+     *
      * @param cachePath the cache path
      */
-    public LocalImageCacheHandler(String cachePath) {
+    public CustomImageCacheHandler(String cachePath) {
         if (cachePath == null || cachePath.isEmpty() || "null".equalsIgnoreCase(cachePath)) {
-            try {
-                cacheDirectory = Utils.createTempDirectory("temporary_", "_cache").getAbsolutePath();
-            } catch (IOException e) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Can't create temporary directory");
-            }
+            cacheDirectory = createTempDirectory("temporary_", "_cache").getAbsolutePath();
         } else {
             cacheDirectory = cachePath;
         }
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Cache directory: " + cacheDirectory);
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Cache directory: " + cacheDirectory);
     }
 
     @Override
@@ -87,7 +87,9 @@ public class LocalImageCacheHandler extends ImageCacheDataHandler {
             inputStream = new FileInputStream(filePath);
             return IOUtils.toString(inputStream);
         } finally {
-            Utils.closeStreams(inputStream);
+            if (inputStream != null) {
+                inputStream.close();
+            }
         }
     }
 
@@ -99,15 +101,18 @@ public class LocalImageCacheHandler extends ImageCacheDataHandler {
             outputStream = new FileOutputStream(filePath);
             outputStream.write(content.getBytes());
         } finally {
-            Utils.closeStreams(outputStream);
+            if (outputStream != null) {
+                outputStream.close();
+            }
         }
     }
 
     /**
      * Make image path.
+     *
      * @param fileDescription the file description
-     * @param page the page
-     * @param width the width
+     * @param page            the page
+     * @param width           the width
      * @return the string
      */
     protected String makeImagePath(GroupDocsFileDescription fileDescription, Integer page, int width) {
@@ -123,6 +128,7 @@ public class LocalImageCacheHandler extends ImageCacheDataHandler {
 
     /**
      * Make pdf path.
+     *
      * @param fileDescription the file description
      * @return the string
      */
@@ -139,6 +145,7 @@ public class LocalImageCacheHandler extends ImageCacheDataHandler {
 
     /**
      * Make js path.
+     *
      * @param fileDescription the file description
      * @return the string
      */
@@ -150,5 +157,18 @@ public class LocalImageCacheHandler extends ImageCacheDataHandler {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Can't create directory: " + htmlFile.getAbsolutePath());
         }
         return htmlPath;
+    }
+
+    private File createTempDirectory(String prefix, String suffix) {
+        final String tmpDir = System.getProperty("java.io.tmpdir");
+        File tempCacheDir = new File(tmpDir + File.separator + prefix + Long.toString(random.nextLong()) + suffix);
+        int count = 100;
+        while ((tempCacheDir.exists() || !tempCacheDir.mkdirs()) && count-- > 0) {
+            tempCacheDir = new File(tmpDir + File.separator + prefix + Long.toString(random.nextLong()) + suffix);
+        }
+        if (count <= 0) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Can't create temp directory in " + tempCacheDir);
+        }
+        return tempCacheDir;
     }
 }

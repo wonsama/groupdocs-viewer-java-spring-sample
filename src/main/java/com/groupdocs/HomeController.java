@@ -50,7 +50,7 @@ public class HomeController extends HomeControllerBase {
             //viewerHandler = new ViewerHandler(config, new AzureInputDataHandler("acount_name", "account_key"));
             //Uncomment this line to use Amazon S3 storage
             //viewerHandler = new ViewerHandler(config, new AmazonS3InputDataHandler("access_key", "secret_key", "bucket_name"));
-            viewerHandler = new ViewerHandler(config /*, new LocalHtmlCacheHandler(config.getConfig().getCachePath())*/);
+            viewerHandler = new ViewerHandler(config /*, new CustomHtmlCacheHandler(config.getConfig().getCachePath())*/);
         }
         // Setting header in jsp page
         model.addAttribute("groupdocsHeader", viewerHandler.getHeader());
