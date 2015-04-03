@@ -140,7 +140,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_HTML_RESOURCES_HANDLER, method = { RequestMethod.GET, RequestMethod.HEAD })
-    public Object getHtmlResourcesHandler(@RequestParam("filePath") String filePath, @RequestParam("guid") String guid, @RequestParam("page") Integer page, @RequestParam("resourceName") String resourceName, HttpServletResponse response) throws Exception{
+    public Object getHtmlResourcesHandler(@RequestParam(required = false) String filePath, @RequestParam(required = false) String guid, @RequestParam(required = false) Integer page, @RequestParam(required = false) String resourceName, HttpServletResponse response) throws Exception{
         writeOutput((InputStream) viewerHandler.getHtmlResourcesHandler(filePath, guid, page, resourceName, response), response);
         return null;
     }
