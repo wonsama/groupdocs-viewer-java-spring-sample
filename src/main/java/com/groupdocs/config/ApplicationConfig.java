@@ -32,6 +32,8 @@ public class ApplicationConfig implements IServiceConfiguration{
     protected String encryptionKey;
     @Property(key = "groupdocs.viewer.encoding")
     protected String encoding;
+    @Property(key = "groupdocs.viewer.fontsPath")
+    protected String fontsPath;
     @Property(key = "groupdocs.viewer.useHtmlBasedEngine")
     protected Boolean useHtmlBasedEngine;
     @Property(key = "groupdocs.viewer.quality")
@@ -252,6 +254,15 @@ public class ApplicationConfig implements IServiceConfiguration{
 
     public void setEncoding(String encoding) {
         this.encoding = encoding;
+    }
+
+    @Override
+    public String getFontsPath() {
+        return fontsPath;
+    }
+
+    public void setFontsPath(String fontsPath) {
+        this.fontsPath = fontsPath;
     }
 
     @Override
