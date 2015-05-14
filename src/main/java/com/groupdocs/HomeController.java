@@ -83,7 +83,7 @@ public class HomeController extends HomeControllerBase {
             writeOutput((InputStream) obj, response);
             return null;
         }else{
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+            return new ResponseEntity(HttpStatus.NOT_MODIFIED);
         }
     }
 
@@ -99,7 +99,7 @@ public class HomeController extends HomeControllerBase {
             writeOutput((InputStream) obj, response);
             return null;
         }else{
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+            return new ResponseEntity(HttpStatus.NOT_MODIFIED);
         }
     }
 
@@ -115,7 +115,7 @@ public class HomeController extends HomeControllerBase {
             writeOutput((InputStream) obj, response);
             return null;
         }else{
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+            return new ResponseEntity(HttpStatus.NOT_MODIFIED);
         }
     }
     
@@ -131,7 +131,7 @@ public class HomeController extends HomeControllerBase {
             writeOutput((InputStream) obj, response);
             return null;
         }else{
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+            return new ResponseEntity(HttpStatus.NOT_MODIFIED);
         }
     }
     
