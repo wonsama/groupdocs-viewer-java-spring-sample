@@ -20,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
@@ -141,7 +144,11 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_HTML_RESOURCES_HANDLER, method = { RequestMethod.GET, RequestMethod.HEAD })
     public Object getHtmlResourcesHandler(@RequestParam(required = false) String filePath, @RequestParam(required = false) String guid, @RequestParam(required = false) Integer page, @RequestParam(required = false) String resourceName, HttpServletResponse response) throws Exception{
-        writeOutput((InputStream) viewerHandler.getHtmlResourcesHandler(filePath, guid, page, resourceName, response), response);
+        try {
+            writeOutput((InputStream) viewerHandler.getHtmlResourcesHandler(filePath, guid, page, resourceName, response), response);
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.WARNING, e.getMessage());
+        }
         return null;
     }
 
@@ -264,7 +271,6 @@ public class HomeController extends HomeControllerBase {
         return null;
     }
 
-
     /*
     * Get pdf with print dialog [GET request]
     */
@@ -288,5 +294,4 @@ public class HomeController extends HomeControllerBase {
     public Object rotatePageHandler(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return writeOutputJson(viewerHandler.rotatePageHandler(request, response));
     }
-
 }
