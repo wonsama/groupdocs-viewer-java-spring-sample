@@ -37,7 +37,9 @@ public abstract class HomeControllerBase extends GroupDocsViewer implements IGro
     
     protected void writeOutput(InputStream inputStream, HttpServletResponse response){
         try {
-            IOUtils.copy((InputStream) inputStream, response.getOutputStream());
+            if (inputStream != null) {
+                IOUtils.copy(inputStream, response.getOutputStream());
+            }
         } catch (IOException ex) {
             Logger.getLogger(HomeControllerBase.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
