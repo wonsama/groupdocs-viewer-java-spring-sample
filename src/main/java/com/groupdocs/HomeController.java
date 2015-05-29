@@ -168,7 +168,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_DOCUMENT_PAGE_IMAGE_HANDLER, method = RequestMethod.GET)
     public Object getDocumentPageImageHandler(@RequestParam("path") String path, @RequestParam("width") Integer width, @RequestParam("quality") Integer quality, @RequestParam("usePdf") Boolean usePdf, @RequestParam("pageIndex") Integer pageIndex, @RequestParam("isPrint") Boolean isPrint, HttpServletResponse response) throws Exception{
-        viewerHandler.getDocumentPageImageHandler(path, width, quality, usePdf, pageIndex, isPrint, response);
+        writeOutput(viewerHandler.getDocumentPageImageHandler(path, width, quality, usePdf, pageIndex, isPrint, response), response);
         return null;
     }
 
