@@ -13,7 +13,7 @@ How-to install/run
 3. Download sample sources to any directory.
 4. Open file `src\main\resources\application.properties` and update configuration (for example update groupdocs.viewer.filePath to set the path to the storage folder).
 5. Run file `run.bat` by double click to start sample application.
-6. Open URL `http://127.0.0.1:8080/document-viewer/` in your browser, make sure that port 8080 is free (you can change port number in your tomcat configuration).
+6. Open URL `http://127.0.0.1:8080/` in your browser, make sure that port 8080 is free (you can change port number in your tomcat configuration).
 <br/><br/>
 
 #####Linux
@@ -22,7 +22,7 @@ How-to install/run
 3. Download sample sources to any directory.
 4. Open file `src\main\resources\application.properties` and update configuration (for example update groupdocs.viewer.filePath to set the path to the storage folder).
 5. Run file `run.sh` by double click to start sample application (or from terminal).
-6. Open URL `http://127.0.0.1:8080/document-viewer/` in your browser, make sure that port 8080 is free (you can change port number in your tomcat configuration).
+6. Open URL `http://127.0.0.1:8080/` in your browser, make sure that port 8080 is free (you can change port number in your tomcat configuration).
 <br/><br/>
 
 #####MacOS
@@ -31,7 +31,7 @@ How-to install/run
 3. Download sample sources to any directory.
 4. Open file `src\main\resources\application.properties` and update configuration (for example update groupdocs.viewer.filePath to set the path to the storage folder).
 5. Run file `run.command` by double click to start sample application (or from terminal).
-6. Open URL `http://127.0.0.1:8080/document-viewer/` in your browser, make sure that port 8080 is free (you can change port number in your tomcat configuration).
+6. Open URL `http://127.0.0.1:8080/` in your browser, make sure that port 8080 is free (you can change port number in your tomcat configuration).
 <br/><br/>
 
 
