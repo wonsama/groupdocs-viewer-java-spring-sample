@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * @author Aleksey Permyakov, Alex Bobkov
  */
 @Component
-public class ApplicationConfig implements IServiceConfiguration{
+public class ApplicationConfig implements IServiceConfiguration {
     @Property(key = "groupdocs.viewer.applicationPath")
     protected String applicationPath;
     @Property(key = "groupdocs.viewer.filePath")
@@ -76,6 +76,8 @@ public class ApplicationConfig implements IServiceConfiguration{
     protected Boolean supportTextSelection;
     @Property(key = "groupdocs.viewer.usePdfPrinting")
     protected Boolean usePdfPrinting;
+    @Property(key = "groupdocs.viewer.pdfPrintMarginsEnabled")
+    protected Boolean pdfPrintMarginsEnabled;
     @Property(key = "groupdocs.viewer.toolbarButtonsBoxShadowStyle")
     protected String toolbarButtonsBoxShadowStyle;
     @Property(key = "groupdocs.viewer.toolbarButtonsBoxShadowHoverStyle")
@@ -139,23 +141,23 @@ public class ApplicationConfig implements IServiceConfiguration{
     @Property(key = "groupdocs.viewer.maxCacheSize")
     protected Long maxCacheSize;
     @Property(key = "groupdocs.viewer.fileDisplayName")
-    private String fileDisplayName;
+    protected String fileDisplayName;
     @Property(key = "groupdocs.viewer.jqueryFileDownloadCookieName")
-    private String jqueryFileDownloadCookieName;
+    protected String jqueryFileDownloadCookieName;
     @Property(key = "groupdocs.viewer.watermarkFontSize")
-    private Integer watermarkFontSize;
+    protected Integer watermarkFontSize;
     @Property(key = "groupdocs.viewer.watermarkPosition")
-    private String watermarkPosition;
+    protected String watermarkPosition;
     @Property(key = "groupdocs.viewer.convertWordDocumentsCompletely")
-    private Boolean convertWordDocumentsCompletely;
+    protected Boolean convertWordDocumentsCompletely;
     @Property(key = "groupdocs.viewer.ignoreDocumentAbsence")
-    private Boolean ignoreDocumentAbsence;
+    protected Boolean ignoreDocumentAbsence;
     @Property(key = "groupdocs.viewer.preloadPagesOnBrowserSide")
-    private Boolean preloadPagesOnBrowserSide;
+    protected Boolean preloadPagesOnBrowserSide;
     @Property(key = "groupdocs.viewer.printWithWatermark")
-    private Boolean printWithWatermark;
+    protected Boolean printWithWatermark;
     @Property(key = "groupdocs.viewer.supportPageRotation")
-    private Boolean supportPageRotation;
+    protected Boolean supportPageRotation;
 
     @Override
     public String getApplicationPath() {
@@ -448,6 +450,15 @@ public class ApplicationConfig implements IServiceConfiguration{
     @Override
     public Boolean isUsePdfPrinting() {
         return usePdfPrinting;
+    }
+
+    @Override
+    public Boolean isPdfPrintMarginsEnabled() {
+        return pdfPrintMarginsEnabled;
+    }
+
+    public void setPdfPrintMarginsEnabled(Boolean pdfPrintMarginsEnabled) {
+        this.pdfPrintMarginsEnabled = pdfPrintMarginsEnabled;
     }
 
     public void setUsePdfPrinting(Boolean usePdfPrinting) {
