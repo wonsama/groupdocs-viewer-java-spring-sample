@@ -158,6 +158,8 @@ public class ApplicationConfig implements IServiceConfiguration {
     protected Boolean printWithWatermark;
     @Property(key = "groupdocs.viewer.supportPageRotation")
     protected Boolean supportPageRotation;
+    @Property(key = "groupdocs.viewer.imageWebRequestTimeout")
+    protected Integer imageWebRequestTimeout;
 
     @Override
     public String getApplicationPath() {
@@ -261,6 +263,15 @@ public class ApplicationConfig implements IServiceConfiguration {
     @Override
     public String getFontsPath() {
         return fontsPath;
+    }
+
+    @Override
+    public Integer getImageWebRequestTimeout() {
+        return imageWebRequestTimeout;
+    }
+
+    public void setImageWebRequestTimeout(Integer imageWebRequestTimeout) {
+        this.imageWebRequestTimeout = imageWebRequestTimeout;
     }
 
     public void setFontsPath(String fontsPath) {
