@@ -181,6 +181,9 @@ public class ApplicationConfig implements IServiceConfiguration {
 
     @Override
     public String getLicensePath() {
+        if (licensePath == null || licensePath.isEmpty()) {
+            return System.getenv("GROUPDOCS_VIEWER");
+        }
         return licensePath;
     }
 
