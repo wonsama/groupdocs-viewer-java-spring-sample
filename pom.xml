@@ -144,6 +144,7 @@
                 <version>2.0</version>
                 <configuration>
                     <path>/</path>
+                    <port>8080</port>
                 </configuration>
             </plugin>
             <plugin>

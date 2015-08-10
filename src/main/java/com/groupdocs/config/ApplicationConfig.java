@@ -160,6 +160,8 @@ public class ApplicationConfig implements IServiceConfiguration {
     protected Boolean supportPageRotation;
     @Property(key = "groupdocs.viewer.imageWebRequestTimeout")
     protected Integer imageWebRequestTimeout;
+    @Property(key = "groupdocs.viewer.imageResolution")
+    protected Integer imageResolution;
 
     @Override
     public String getApplicationPath() {
@@ -271,6 +273,15 @@ public class ApplicationConfig implements IServiceConfiguration {
     @Override
     public Integer getImageWebRequestTimeout() {
         return imageWebRequestTimeout;
+    }
+
+    @Override
+    public Integer getImageResolution() {
+        return this.imageResolution;
+    }
+
+    public void setImageResolution(Integer imageResolution) {
+        this.imageResolution = imageResolution;
     }
 
     public void setImageWebRequestTimeout(Integer imageWebRequestTimeout) {
