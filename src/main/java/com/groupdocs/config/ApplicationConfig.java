@@ -48,6 +48,8 @@ public class ApplicationConfig implements IServiceConfiguration {
     protected Boolean zoomToFitWidth;
     @Property(key = "groupdocs.viewer.zoomToFitHeight")
     protected Boolean zoomToFitHeight;
+    @Property(key = "groupdocs.viewer.customDocumentCss")
+    protected String customDocumentCss;
     @Property(key = "groupdocs.viewer.width")
     protected Integer width;
     @Property(key = "groupdocs.viewer.height")
@@ -353,6 +355,15 @@ public class ApplicationConfig implements IServiceConfiguration {
 
     public void setZoomToFitHeight(Boolean zoomToFitHeight) {
         this.zoomToFitHeight = zoomToFitHeight;
+    }
+
+    @Override
+    public String getCustomDocumentCss() {
+        return customDocumentCss;
+    }
+
+    public void setCustomDocumentCss(String customDocumentCss) {
+        this.customDocumentCss = customDocumentCss;
     }
 
     @Override
