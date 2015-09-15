@@ -38,13 +38,7 @@ public class HomeController extends HomeControllerBase {
     protected ViewerHandler viewerHandler = null;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return index(model, request, response, null, null);
-    }
-
-    @RequestMapping(value = VIEW, method = RequestMethod.GET)
-    public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "file", required = false) String file, 
-            @RequestParam(value = "tokenId", required = false) String tokenId) throws Exception {
+    public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "file", required = false) String file, @RequestParam(value = "tokenId", required = false) String tokenId) throws Exception {
         if (viewerHandler == null) {
             // INITIALIZE GroupDocs Java Viewer Object
             ServiceConfiguration config = new ServiceConfiguration(applicationConfig);
@@ -257,7 +251,10 @@ public class HomeController extends HomeControllerBase {
         // Get token id
         String tokenId = obj.getString("tokenId");
         // Redirect to uplaoded file
-        response.sendRedirect("view?tokenId=" + tokenId);
+        final ServiceConfiguration configuration = viewerHandler.getConfiguration();
+        final String applicationPath = configuration.getApplicationPath();
+        response.sendRedirect((
+                applicationPath == null || "null".equalsIgnoreCase(applicationPath) || applicationPath.trim().isEmpty() ? "/" : applicationPath) + "?tokenId=" + tokenId);
     }
     
     /*
