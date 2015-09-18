@@ -164,6 +164,8 @@ public class ApplicationConfig implements IServiceConfiguration {
     protected Integer imageWebRequestTimeout;
     @Property(key = "groupdocs.viewer.imageResolution")
     protected Integer imageResolution;
+    @Property(key = "groupdocs.viewer.useVirtualScrolling")
+    protected boolean useVirtualScrolling;
 
     @Override
     public String getApplicationPath() {
@@ -360,6 +362,15 @@ public class ApplicationConfig implements IServiceConfiguration {
     @Override
     public String getCustomDocumentCss() {
         return customDocumentCss;
+    }
+
+    @Override
+    public boolean isUseVirtualScrolling() {
+        return useVirtualScrolling;
+    }
+
+    public void setUseVirtualScrolling(boolean useVirtualScrolling) {
+        this.useVirtualScrolling = useVirtualScrolling;
     }
 
     public void setCustomDocumentCss(String customDocumentCss) {
