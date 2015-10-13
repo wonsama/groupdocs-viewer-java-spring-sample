@@ -166,6 +166,8 @@ public class ApplicationConfig implements IServiceConfiguration {
     protected Integer imageResolution;
     @Property(key = "groupdocs.viewer.useVirtualScrolling")
     protected boolean useVirtualScrolling;
+    @Property(key = "groupdocs.viewer.showHiddenSlides")
+    protected Boolean showHiddenSlides;
 
     @Override
     public String getApplicationPath() {
@@ -282,6 +284,15 @@ public class ApplicationConfig implements IServiceConfiguration {
     @Override
     public Integer getImageResolution() {
         return this.imageResolution;
+    }
+
+    @Override
+    public Boolean isShowHiddenSlides() {
+        return showHiddenSlides;
+    }
+
+    public void setShowHiddenSlides(Boolean showHiddenSlides) {
+        this.showHiddenSlides = showHiddenSlides;
     }
 
     public void setImageResolution(Integer imageResolution) {
