@@ -168,6 +168,8 @@ public class ApplicationConfig implements IServiceConfiguration {
     protected boolean useVirtualScrolling;
     @Property(key = "groupdocs.viewer.showHiddenSlides")
     protected Boolean showHiddenSlides;
+    @Property(key = "groupdocs.viewer.showHiddenSheets")
+    protected Boolean showHiddenSheets;
 
     @Override
     public String getApplicationPath() {
@@ -289,6 +291,11 @@ public class ApplicationConfig implements IServiceConfiguration {
     @Override
     public Boolean isShowHiddenSlides() {
         return showHiddenSlides;
+    }
+
+    @Override
+    public Boolean isShowHiddenSheets() {
+        return showHiddenSheets;
     }
 
     public void setShowHiddenSlides(Boolean showHiddenSlides) {
